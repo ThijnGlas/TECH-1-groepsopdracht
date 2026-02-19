@@ -12,21 +12,12 @@ html {
 }
 
 :root {
-    --font-color: #051B0D;
-    --lght-font-color: rgba(5, 27, 13, 0.6);
-    --white: #fff;
-    --black: #000;
-    --bgwhite: #F2F2F2;
-    --drkgreen: #385C45;
-    --drkrgreen: hsl(142, 24%, 19%);
-    --lghtgreen: #D0DED5;
-    --red: #ED1822;
-    --drkred: hsl(357, 86%, 41%);
+    --background-clr: #F8F8F8;
 }
 
 
 body {
-    background-color: black;
+    background-color: var(--background-clr);
     color: white;
 }
 
