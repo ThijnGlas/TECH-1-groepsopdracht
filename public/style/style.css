@@ -1,0 +1,61 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ======================= custom properties ======================= */
+
+:root {
+    --background-clr: #F8F8F8;
+    
+}
+
+
+/* ======================= fonts ======================= */
+
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+/* ======================= algemene styling ======================= */
+
+
+body {
+    background-color: var(--background-clr);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'helveticaneue', arial;
+}
+
+h1{
+    font-family: 'helveticaneue', arial;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2{
+    font-family: 'helveticaneue', arial;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+p{
+    font-family: 'helveticaneue', arial;
+    font-style:italic;
+    font-weight: lighter;
+}
+
