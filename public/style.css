@@ -13,12 +13,13 @@ html {
 
 :root {
     --background-clr: #F8F8F8;
+    
 }
 
 
 body {
     background-color: var(--background-clr);
-    color: white;
+
 }
 
 a {
