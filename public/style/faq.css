@@ -1,14 +1,65 @@
+
+/* ======================= fonts ======================= */
+
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+@font-face{
+    font-display: swap;
+	font-family: 'helveticaneue-italic';
+	font-style: italic;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+
+
+/* ======================= algemene styling ======================= */
+
+
+ 
 main section{
-    width: 65%;
-    justify-content: center;
-    margin: 2em auto;
+    max-width: 90%;
+    width: 44em; 
+    margin: 2em auto; 
+    font-family: 'helveticaneue', Arial, sans-serif;
+}
+
+main section h1{
+    font-family: helvetica-neue-lt-pro, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2em;
+}
+
+main section h2{
+    font-family: helvetica-neue-lt-pro, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1em;
+    margin: .5em 0 .5em 0;
+}
+
+main section p{
+    font-family: helvetica-neue-lt-pro, sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    margin: .5em 0 0 0;
 }
 
 main article{
-    padding:2em;
-    margin: 2em auto;
-    background-color: white;
-    border: 3px solid black;
+    width: 100%; 
+    padding: 1em; 
+    background: #fff; 
+    border: 3px solid black; 
+    cursor: pointer;
 }
 
 
@@ -16,10 +67,38 @@ footer{
     display: flex;
     text-align: center;
     justify-content: center;
-    /* max-width: 65%; */
 }
 
 footer p{
-    font-style: normal;
+    font-family: 'helveticaneue';
     font-size: 1em;
+}
+
+
+/* ======================= openklappende article styling ======================= */
+
+
+article.open {
+    border-color:rgba(235, 76, 76, 1);
+}
+
+
+article p{
+    max-height: 0; 
+    opacity: 0; 
+    transform: translateY(-6px); 
+    overflow: hidden; 
+    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+article p.visible{
+   max-height: 500px; /* groot genoeg voor je tekst */ 
+   opacity: 1; 
+   transform: translateY(0);
+}
+
+main section h1 { text-align: left; }
+main article { max-width: 40.5em; 
+    margin: 1em auto; 
+    margin-left: 0;
 }
