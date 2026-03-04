@@ -1,0 +1,17 @@
+
+console.log("FAQ script werkt!");
+
+const articles = document.querySelectorAll("article");
+
+articles.forEach(article => {
+    article.addEventListener("click", () => {
+
+        article.classList.toggle("open");
+
+        
+        const antwoord = article.querySelector("p");
+
+
+        antwoord.classList.toggle("visible");
+    });
+});
