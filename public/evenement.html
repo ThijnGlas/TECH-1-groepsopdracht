@@ -44,8 +44,8 @@
 
       <nav class="menu" id="menu">
         <ul>
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">EVENTS</a></li>
+          <li><a href="./index.html">HOME</a></li>
+          <li><a href="./evenement.html">EVENTS</a></li>
           <li><a href="#">TICKETS</a></li>
           <li><a href="#">PRE-REGISTER</a></li>
           <li><a href="#">ARTISTS</a></li>
@@ -54,6 +54,57 @@
         </ul>
       </nav>
     </header>
+
+    <main class="events-page">
+      <header class="events-header">
+        <h1>Events</h1>
+
+        <div class="filters">
+          <button type="button">Locatie ▾</button>
+          <button type="button">Datum ▾</button>
+        </div>
+      </header>
+
+      <section class="events-grid">
+        <article class="event-card highlight">
+          <figure>
+            <img
+              src="./img/lagerwal-amsterdam-noord.jpg"
+              alt="Lagerwal Amsterdam Noord"
+            />
+            <figcaption>
+              <div class="event-info">
+                <div>
+                  <h2>Lagerwal</h2>
+                  <p>Amsterdam Noord</p>
+                  <time datetime="2026-07-21">21 juli 2026</time>
+                </div>
+                <a class="ticket-btn" href="#">Tickets →</a>
+              </div>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article class="event-card">
+          <figure>
+            <img
+              src="./img/Levenslang Amsterdam by day 1_1.png"
+              alt="Levenslang Amsterdam"
+            />
+            <figcaption>
+              <div class="event-info">
+                <div>
+                  <h2>Levenslang</h2>
+                  <p>Amsterdam Noord</p>
+                  <time datetime="2026-08-03">3 augustus 2026</time>
+                </div>
+                <a class="ticket-btn" href="#">Tickets →</a>
+              </div>
+            </figcaption>
+          </figure>
+        </article>
+      </section>
+    </main>
     <script src="./js/home.js"></script>
   </body>
 </html>
