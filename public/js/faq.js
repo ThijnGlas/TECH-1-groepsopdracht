@@ -3,7 +3,6 @@ function toggleMenu() {
   document.getElementById("hamburger").classList.toggle("active");
 }
 
-console.log("FAQ script werkt!");
 
 const articles = document.querySelectorAll("article");
 

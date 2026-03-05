@@ -202,8 +202,7 @@ header {
 
 main {
   padding: 100px 0;
-  background-color: #F8F8F8;
-
+  background-color: var(--background-clr);
   display: flex;
   flex-direction: column;
   align-items: center;
