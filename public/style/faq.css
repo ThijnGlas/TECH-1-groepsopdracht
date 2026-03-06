@@ -19,6 +19,35 @@
 		url(./fonts/helveticaneue.woff2) format("woff")
 }
 
+body {
+    background-color: var(--background-clr);
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    font-family: 'helveticaneue', arial;
+    margin: 0;
+    background: #f3f4f6;
+}
+
+h1{
+    font-family: 'helveticaneue', arial;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2{
+    font-family: 'helveticaneue', arial;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+p{
+    font-family: 'helveticaneue', arial;
+    font-style:italic;
+    font-weight: lighter;
+}
+
 
 
 /* ======================= algemene styling ======================= */
@@ -31,7 +60,9 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 16px 50px;
-  height: 80px;
+  height: 130px;
+        background: #ffffff;
+
 }
 
 /* SOCIALS */
@@ -64,7 +95,7 @@ header {
 }
 
 .logo img {
-  height: 40px;
+  height: 30px;
   display: block;
 }
 
