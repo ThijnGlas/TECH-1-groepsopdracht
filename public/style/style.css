@@ -36,16 +36,10 @@ html {
 
 body {
     background-color: var(--background-clr);
-    /* display: flex; */
-    flex-direction: column;
-    align-items: center;
     font-family: 'helveticaneue', arial;
-<<<<<<<<< Temporary merge branch 1
     color: var(--black);
-=========
     margin: 0;
     background: #f3f4f6;
->>>>>>>>> Temporary merge branch 2
 }
 
 h1{
@@ -113,7 +107,7 @@ a {
     background-color: var(--cendo-red);
 
 }
-=========
+
 /* HEADER */
 
 header {
@@ -136,7 +130,7 @@ header {
   }
   
   .socials a {
-    color: #333;
+    color: #000;
     font-size: 32px;
     transition: transform 0.2s ease, color 0.2s ease;
   }
@@ -179,7 +173,7 @@ header {
     display: block;
     height: 4px;
     width: 100%;
-    background: #333;
+    background: #000;
     border-radius: 3px;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
@@ -240,9 +234,9 @@ header {
   
   .menu a {
     text-decoration: none;
-    color: #333;
+    color: var(--black);
     font-size: 28px;
-    font-family: Helvetica;
+    font-family: 'helveticaneue', arial;
     padding-left: 20px;
     transition: color 0.15s ease;
   }
@@ -251,8 +245,26 @@ header {
     color: #EB4C4B;
   }
   
+
+  main{
+   display: flex;
+   flex-direction: column;
+    align-items: center;
+    margin: 2em 0;
+}
+
+main section{
+  width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+
   footer{
     display: flex;
     text-align: center;
     justify-content: center;
 }
+
+
