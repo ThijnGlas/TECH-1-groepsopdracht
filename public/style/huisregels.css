@@ -1,0 +1,53 @@
+
+/* ======================= fonts ======================= */
+
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+*{
+    font-family: 'helveticaneue';
+}
+
+h1{
+    font-family: helvetica-neue-lt-pro, sans-serif;
+    text-transform: uppercase;
+}
+
+p strong{
+    font-family: helvetica-neue-lt-pro, sans-serif;
+}
+
+
+/* ======================= content positionering ======================= */
+
+main section{
+    max-width: 90%;
+    width: 44em; 
+    margin: 2em auto; 
+    font-family: 'helveticaneue', Arial, sans-serif;
+}
+
+
+footer{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+
+footer{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+footer p{
+    font-family: 'helveticaneue';
+    font-size: 1em;
+}
