@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/evenement.css" />
+    <link rel="stylesheet" href="./style/style.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <main>
+      <section>
+        <div class="buttons-naast-elklaar">
+          <a href="" class="btn-evenementen1"><img src="./img/arrow.svg" alt="arrow"> Terug naar evenementen overzicht</a>
+          <a href="" class="btn-evenementen2">Tickets halen <img src="./img/arrow.svg" alt="arrow"></a>
+        </div>
+        <article class="event-card">
+          <div class="event-content">
+            <h1>Lagerwal</h1>
+            <div class="event-info">
+              <p>3 augustus 2026, 16:00 - 23:00</p>
+              <p>Amsterdam-Noord</p>
+            </div>
+            <div class="line-up">
+              <p>Ruben Verhoeven B2B Thijn Glas</p>
+              <p>Lasse top</p>
+              <p>Job de Jong</p>
+              <p>Rooléh</p> 
+            </div>
+          </div>
+
+          <div class="event-image-wrapper">
+            <img src="./img/lagerwal-groot.png" alt="foto van lagerwal">
+          </div>
+        </article>
+      </section>
+    </main>
+    <%- include('partials/footer') %>
+  </body>
+</html>
