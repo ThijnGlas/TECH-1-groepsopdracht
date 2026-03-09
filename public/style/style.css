@@ -40,12 +40,9 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: 'helveticaneue', arial;
-<<<<<<<<< Temporary merge branch 1
     color: var(--black);
-=========
     margin: 0;
     background: #f3f4f6;
->>>>>>>>> Temporary merge branch 2
 }
 
 h1{
