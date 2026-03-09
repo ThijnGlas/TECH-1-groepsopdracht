@@ -11,8 +11,11 @@ const PORT = 3000;
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
-// 👉 public map gebruiken
 app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.get("/events", (req, res) => {
+  res.render("events");
+});
 
 async function start() {
   try {

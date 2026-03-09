@@ -1,0 +1,79 @@
+
+
+main{
+    width: 65%;
+    justify-content: center;
+    margin: 2em 0;
+}
+
+main section{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+
+main section > .top-main{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px; 
+    justify-items: center;
+    margin: 0 auto;
+}
+
+.event-wrapper article{
+    width: 100%;
+}
+
+.event-wrapper article img {
+    display: block;
+    width: 100%; 
+    height: auto;
+}
+
+.event-wrapper article > div{
+    display: flex; 
+    padding: 24px 21px ;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 4px solid var(--black);
+}
+
+
+.event-wrapper article > div .event-naam{
+    display: flex;
+    
+    flex-direction: column;
+    gap: 5px;
+}
+
+.event-wrapper article > div .event-naam h2{
+    text-transform: uppercase;
+}
+
+.event-wrapper article:hover{
+    color: var(--cendo-red);
+    cursor: pointer;
+}
+
+.event-wrapper article:hover > div{
+    border: 4px solid var(--cendo-red);
+}
+
+.event-wrapper article:hover .btn{
+    background-color: var(--cendo-red);
+}
+
+@media (max-width: 1200px) {
+    .event-wrapper {
+        grid-template-columns: 1fr; /* 1 artikel per rij */
+    }
+}

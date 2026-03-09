@@ -50,7 +50,6 @@ p{
 
 
 
-/* ======================= algemene styling ======================= */
 
 /* HEADER */
 
@@ -231,17 +230,6 @@ main article{
     cursor: pointer;
 }
 
-
-footer{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-}
-
-footer p{
-    font-family: 'helveticaneue';
-    font-size: 1em;
-}
 
 
 /* ======================= openklappende article styling ======================= */
