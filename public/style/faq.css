@@ -1,94 +1,123 @@
-
 /* ======================= fonts ======================= */
 
 @font-face {
-	font-display: swap;
-	font-family: 'helveticaneue';
-	font-style: normal;
-	font-weight: 400;
-	src: url(./fonts/helveticaneue.woff2) format("woff2"),
-		url(./fonts/helveticaneue.woff2) format("woff")
-}
-
-@font-face{
     font-display: swap;
-	font-family: 'helveticaneue-italic';
-	font-style: italic;
-	font-weight: 400;
-	src: url(./fonts/helveticaneue.woff2) format("woff2"),
-		url(./fonts/helveticaneue.woff2) format("woff")
+    font-family: 'helveticaneue';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./fonts/helveticaneue.woff2) format("woff2"),
+        url(./fonts/helveticaneue.woff2) format("woff");
 }
 
+@font-face {
+    font-display: swap;
+    font-family: 'helveticaneue-italic';
+    font-style: italic;
+    font-weight: 400;
+    src: url(./fonts/helveticaneue.woff2) format("woff2"),
+        url(./fonts/helveticaneue.woff2) format("woff");
+}
 
+/* ======================= algemene styling ======================= */
 
-
-
-
-
- 
-main section{
-    max-width: 90%;
-    width: 44em; 
-    margin: 2em auto; 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     font-family: 'helveticaneue', Arial, sans-serif;
+    background: #F8F8F8;
 }
 
-main section h1{
+main {
+    width: 100%;
+    display: block;
+}
+
+main section {
+    max-width: 40.5em;
+    width: 44em;
+    margin: 2em auto;
+    font-family: 'helveticaneue', Arial, sans-serif;
+    box-sizing: border-box;
+    gap: 0;
+}
+
+main section h1 {
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 2em;
+    text-align: left;
 }
 
-main section h2{
+main section h2 {
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 1em;
-    margin: .5em 0 .5em 0;
+    margin: .5em 0;
 }
 
-main section p{
+main section p {
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: italic;
     font-weight: 400;
     margin: .5em 0 0 0;
+    line-height: 1.45;
+    color: #111;
 }
 
-main article{
-    width: 100%; 
-    padding: 1em; 
-    background: #fff; 
-    border: 3px solid black; 
+main article {
+    width: 100%;
+    max-width: 40.5em;
+    padding: 1em;
+    background: #fff;
+    border: 3px solid black;
     cursor: pointer;
+    margin: 1em auto; /* zorgt dat article horizontaal gecentreerd staat */
+    box-sizing: border-box;
 }
-
-
 
 /* ======================= openklappende article styling ======================= */
 
-
 article.open {
-    border-color:rgba(235, 76, 76, 1);
+    border-color: rgba(235, 76, 76, 1);
 }
 
-
-article p{
-    max-height: 0; 
-    opacity: 0; 
-    transform: translateY(-6px); 
-    overflow: hidden; 
+article p {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    overflow: hidden;
     transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
 
-article p.visible{
-   max-height: 500px; /* groot genoeg voor je tekst */ 
-   opacity: 1; 
+article p.visible {
+   max-height: 500px; /* groot genoeg voor je tekst */
+   opacity: 1;
    transform: translateY(0);
 }
 
-main section h1 { text-align: left; }
-main article { max-width: 40.5em; 
-    margin: 1em auto; 
-    margin-left: 0;
+/* ======================= responsive tweaks ======================= */
+
+@media (max-width: 48rem) {
+    main section {
+        width: calc(100% - 2rem);
+        max-width: 100%;
+        margin: 1rem auto;
+    }
+
+    main article {
+        max-width: 100%;
+        margin: .75rem auto;
+        padding: .9rem;
+    }
+
+    main section h1 {
+        font-size: 1.6em;
+    }
+
+    main section h2 {
+        font-size: 0.95em;
+    }
 }

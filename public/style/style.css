@@ -77,9 +77,6 @@ p{
 }
 
 
-<<<<<<< HEAD
-
-=======
 a {   
     all: unset;
     font-family: 'helveticaneue', arial;
@@ -110,7 +107,6 @@ a {
     background-color: var(--cendo-red);
 
 }
->>>>>>> origin/main
 
 /* HEADER */
 
