@@ -29,6 +29,7 @@ app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
 
+
 app.get("/cms/events", (req, res) => {
   res.render("events-cms");
 });
