@@ -150,8 +150,18 @@ header{
     grid-template-columns: 70% 30%;
 }
 
-.dashboard-wrapper > .content-wrapper{
-    
+/* .dashboard-wrapper > .content-wrapper > div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+} */
+
+
+.dashboard-wrapper  .content-wrapper{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 
