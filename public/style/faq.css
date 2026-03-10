@@ -1,48 +1,5 @@
-/* ======================= fonts ======================= */
 
-@font-face {
-    font-display: swap;
-    font-family: 'helveticaneue';
-    font-style: normal;
-    font-weight: 400;
-    src: url(./fonts/helveticaneue.woff2) format("woff2"),
-        url(./fonts/helveticaneue.woff2) format("woff");
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'helveticaneue-italic';
-    font-style: italic;
-    font-weight: 400;
-    src: url(./fonts/helveticaneue.woff2) format("woff2"),
-        url(./fonts/helveticaneue.woff2) format("woff");
-}
-
-/* ======================= algemene styling ======================= */
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'helveticaneue', Arial, sans-serif;
-    background: #F8F8F8;
-}
-
-main {
-    width: 100%;
-    display: block;
-}
-
-main section {
-    max-width: 40.5em;
-    width: 44em;
-    margin: 2em auto;
-    font-family: 'helveticaneue', Arial, sans-serif;
-    box-sizing: border-box;
-    gap: 0;
-}
-
-main section h1 {
+main section h1{
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: normal;
     font-weight: 700;
