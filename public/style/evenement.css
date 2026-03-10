@@ -1,199 +1,78 @@
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-html {
-    scroll-behavior: smooth;
-}
-
-/* ======================= custom properties ======================= */
-
-:root {
-    --background-clr: #F8F8F8;
-    
-}
-
-
-/* ======================= fonts ======================= */
-
-@font-face {
-	font-display: swap;
-	font-family: 'helveticaneue';
-	font-style: normal;
-	font-weight: 400;
-	src: url(./fonts/helveticaneue.woff2) format("woff2"),
-		url(./fonts/helveticaneue.woff2) format("woff")
-}
-
-/* ======================= algemene styling ======================= */
-
-
-body {
-    background-color: var(--background-clr);
-    /* display: flex; */
-    flex-direction: column;
-    align-items: center;
-    font-family: 'helveticaneue', arial;
-    margin: 0;
-    background: #f3f4f6;
-}
-
-h1{
-    font-family: 'helveticaneue', arial;
-    font-size: 2em;
-    font-weight: bold;
-}
-
-h2{
-    font-family: 'helveticaneue', arial;
-    font-size: 1em;
-    font-weight: bold;
-    margin-bottom: 1em;
-}
-
-p{
-    font-family: 'helveticaneue', arial;
-    font-style:italic;
-    font-weight: lighter;
-}
-
-/* HEADER */
-
-header {
-  position: relative;
+.event-card {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 16px 50px;
-  height: 80px;
+  overflow: hidden;
+  background: #FFFFFF;
+  color: #000000;
+  border: 4px solid #000000;
 }
 
-/* SOCIALS */
-
-.socials ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
+.event-content {
+  padding: 32px;
 }
 
-.socials a {
-  color: #333;
-  font-size: 32px;
-  transition: transform 0.2s ease, color 0.2s ease;
+.event-image-wrapper {
+  width: 300px;
+  height: 100%;
+  overflow: hidden;
 }
 
-.socials a:hover {
-  transform: scale(1.2);
-  color: #EB4C4B;
-}
-
-/* LOGO */
-
-.logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.logo img {
-  height: 40px;
-  display: block;
-}
-
-/* HAMBURGER */
-
-.hamburger {
-  width: 30px;
-  height: 22px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 1100;
-
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.hamburger span {
-  display: block;
-  height: 4px;
+.event-image-wrapper img {
   width: 100%;
-  background: #333;
-  border-radius: 3px;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: center;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.hamburger.active span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+.buttons-naast-elklaar {
+  display: flex;
+  justify-content: space-between;
 }
 
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
-
-/* MENU */
-
-.menu {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 420px;
-  height: 100vh;
-  background: white;
-  border-left: 4px solid #EB4C4B;
-  padding: 0 40px;
-
+.line-up {
+  padding-top: 16px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+
+.line-up p {
+  font-weight: bold;
+}
+
+.event-info {
+  padding-top: 16px;
+}
+
+.event-info p {
+  font-size: 12px;
+}
+
+.btn-evenementen1{
+  padding: 0.6em 0.85em;
+  background-color: var(--black);
+  color: var(--white);
+  display: inline-flex;
   justify-content: center;
-
-  opacity: 0;
-  transform: translateX(100%);
-  pointer-events: none;
-
-  transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
-  z-index: 1000;
+  align-items: center;
+  box-sizing: border-box;
+  gap: 16px;
+  height: min-content;
 }
 
-.menu.active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
+.btn-evenementen1 img {
+  transform: rotate(180deg);
 }
 
-.menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menu li {
-  margin: 14px 0;
-}
-
-.menu a {
-  text-decoration: none;
-  color: #333;
-  font-size: 28px;
-  font-family: Helvetica;
-  padding-left: 20px;
-  transition: color 0.15s ease;
-}
-
-.menu a:hover {
-  color: #EB4C4B;
+.btn-evenementen2{
+  padding: 0.6em 0.85em;
+  background-color: var(--cendo-red);
+  color: var(--white);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 16px;
+    height: min-content;
 }
