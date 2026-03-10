@@ -12,6 +12,10 @@
   "description": "",
   "dependencies": {
     "dotenv": "^17.3.1",
+<<<<<<< HEAD
+    "ejs": "^5.0.1",
+=======
+>>>>>>> 09d19392a8ad51c64d3abc73bfa63f8dff031c13
     "express": "^5.2.1",
     "mongodb": "^7.1.0"
   }
