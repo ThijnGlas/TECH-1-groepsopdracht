@@ -14,6 +14,7 @@ const client = new MongoClient(uri);
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
+  console.log('dsfjko')
   res.render("index");
 });
 app.get("/faq", (req, res) => {
