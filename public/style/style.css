@@ -139,10 +139,14 @@ header {
   .socials a i{
     color: #000;
   }
-  
-  .socials a:hover {
-    transform: scale(1.2);
+
+    .socials a i {
+transition: color 0.15s ease;
+    }
+
+  .socials a:hover i {
     color: #EB4C4B;
+    cursor: pointer;
   }
   
   /* LOGO */

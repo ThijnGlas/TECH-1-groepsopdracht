@@ -1,0 +1,19 @@
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+@font-face{
+    font-display: swap;
+	font-family: 'helveticaneue-italic';
+	font-style: italic;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+

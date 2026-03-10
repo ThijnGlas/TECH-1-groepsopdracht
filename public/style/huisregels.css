@@ -1,53 +1,66 @@
-
-/* ======================= fonts ======================= */
+/* ======================= Fonts ======================= */
 
 @font-face {
-	font-display: swap;
-	font-family: 'helveticaneue';
-	font-style: normal;
-	font-weight: 400;
-	src: url(./fonts/helveticaneue.woff2) format("woff2"),
-		url(./fonts/helveticaneue.woff2) format("woff")
-}
-
-*{
     font-family: 'helveticaneue';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/helveticaneue.woff2') format('woff2'),
+         url('./fonts/helveticaneue.woff') format('woff');
 }
 
-h1{
-    font-family: helvetica-neue-lt-pro, sans-serif;
-    text-transform: uppercase;
-}
-
-p strong{
-    font-family: helvetica-neue-lt-pro, sans-serif;
-}
-
-
-/* ======================= content positionering ======================= */
-
-main section{
-    max-width: 90%;
-    width: 44em; 
-    margin: 2em auto; 
+body {
     font-family: 'helveticaneue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
+/* ======================= Headings ======================= */
 
-footer{
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'helveticaneue', Arial, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 1em 0 0.5em 0;
+}
+
+p strong {
+    font-family: 'helveticaneue', Arial, sans-serif;
+    font-weight: 600;
+}
+
+/* ======================= Layout & Content ======================= */
+
+main {
+    padding: 2em 1em;
+}
+
+main section {
+    max-width: 800px; /* iets meer flexibel dan 44em */
+    margin: 0 auto 2em auto;
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+main section p {
+    margin-bottom: 1.2em;
+}
+
+/* ======================= Footer ======================= */
+
+footer {
     display: flex;
-    text-align: center;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5em 0;
+    background-color: #f5f5f5;
 }
 
-
-footer{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-}
-
-footer p{
-    font-family: 'helveticaneue';
+footer p {
+    font-family: 'helveticaneue', Arial, sans-serif;
     font-size: 1em;
+    margin: 0;
 }
