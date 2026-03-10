@@ -28,6 +28,10 @@ app.get("/events", (req, res) => {
 app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
+app.get("/login", (req, res) => {
+  res.render("login-cms");
+});
+
 
 async function start() {
   try {
