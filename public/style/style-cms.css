@@ -1,0 +1,176 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ======================= custom properties ======================= */
+
+:root {
+    --background-clr: #F8F8F8;
+    --white: #FFFFFF;
+    --black: #000000;
+    --cendo-red: #EB4C4C;
+}
+
+
+/* ======================= fonts ======================= */
+
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+/* ======================= algemene styling ======================= */
+
+
+body {
+    background-color: var(--background-clr);
+    font-family: 'helveticaneue', arial;
+    color: var(--black);
+    margin: 0;
+    background: #f3f4f6;
+}
+
+h1{
+    font-family: 'helveticaneue', arial;
+    font-size: 2.25em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+h2{
+    font-family: 'helveticaneue', arial;
+    font-size: 1.875em;
+    font-weight: bold;
+}
+
+h3{
+    font-family: 'helveticaneue', arial;
+    font-size: 1.625em;
+    font-weight: bold;
+}
+
+h4{
+    font-family: 'helveticaneue', arial;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+
+
+p{
+    font-family: 'helveticaneue', arial;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+
+a {   
+    all: unset;
+    font-family: 'helveticaneue', arial;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.btn{
+    padding: 1em 1.5em;
+    background-color: var(--black);
+    color: var(--white);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 16px;
+    height: min-content;
+}
+
+.btn img{
+    height: 1em;
+    width: auto;
+}
+
+.btn-hover{
+
+    background-color: var(--cendo-red);
+
+}
+
+header{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    height: 40px;
+    display: block;
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    margin: 14px 0;
+  }
+  
+  .menu a {
+    text-decoration: none;
+    color: var(--black);
+    font-size: 28px;
+    font-family: 'helveticaneue', arial;
+    padding-left: 20px;
+    transition: color 0.15s ease;
+  }
+  
+  .menu a:hover {
+    color: #EB4C4B;
+    cursor: pointer;
+  }
+
+.dashboard-wrapper{
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+/* .dashboard-wrapper > .content-wrapper > div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+} */
+
+
+.dashboard-wrapper  .content-wrapper{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+.dashboard-wrapper .top{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dashboard-wrapper .top h1{
+    margin-right: auto;
+}

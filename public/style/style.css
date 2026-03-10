@@ -260,6 +260,7 @@ header {
     justify-content: space-between;
     padding: 16px 50px;
     height: 100px;
+    background-color: #fff;
   }
   
   /* SOCIALS */
@@ -273,14 +274,22 @@ header {
   }
   
   .socials a {
-    color: #000;
+
     font-size: 32px;
     transition: transform 0.2s ease, color 0.2s ease;
   }
-  
-  .socials a:hover {
-    transform: scale(1.2);
+
+  .socials a i{
+    color: #000;
+  }
+
+    .socials a i {
+transition: color 0.15s ease;
+    }
+
+  .socials a:hover i {
     color: #EB4C4B;
+    cursor: pointer;
   }
   
   /* LOGO */
@@ -386,6 +395,7 @@ header {
   
   .menu a:hover {
     color: #EB4C4B;
+    cursor: pointer;
   }
   
 
@@ -393,7 +403,7 @@ header {
    display: flex;
    flex-direction: column;
     align-items: center;
-    margin: 2em 0;
+    margin: 3em 0;
 }
 
 main section{
@@ -404,10 +414,16 @@ main section{
 }
 
 
-  footer{
+  footer{ 
+    width: 100%;
     display: flex;
     text-align: center;
     justify-content: center;
+    margin: 64px 0px ;
 }
+
+
+
+
 
 
