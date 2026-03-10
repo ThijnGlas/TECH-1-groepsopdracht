@@ -86,7 +86,7 @@ a {
 }
 
 .btn{
-    padding: 1em 1.5em;
+    padding: .5em 1.5em;
     background-color: var(--black);
     color: var(--white);
     display: inline-flex;
@@ -102,131 +102,41 @@ a {
     width: auto;
 }
 
-.btn-hover{
-
+.btn:hover{
     background-color: var(--cendo-red);
 
 }
 
-/* HEADER */
-
-header {
-    position: relative;
+header{
+    height: 100px;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 16px 50px;
-    height: 100px;
-    background-color: #FFFFFF;
-  }
-  
-  /* SOCIALS */
-  
-  .socials ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .socials a {
+    justify-content: center;
+    background-color: white;
+}
 
-    font-size: 32px;
-    transition: transform 0.2s ease, color 0.2s ease;
-  }
-
-  .socials a i{
-    color: #000;
-  }
-  
-  .socials a:hover {
-    transform: scale(1.2);
-    color: #EB4C4B;
-  }
-  
-  /* LOGO */
-  
-  .logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .logo img {
+.logo{
     height: 40px;
     display: block;
   }
-  
-  /* HAMBURGER */
-  
-  .hamburger {
-    width: 30px;
-    height: 22px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 1100;
-  
-    background: none;
-    border: none;
-    padding: 0;
-  }
-  
-  .hamburger span {
-    display: block;
-    height: 4px;
-    width: 100%;
-    background: #000;
-    border-radius: 3px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-  }
-  
-  .hamburger.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-  
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  
-  .hamburger.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
-  
-  /* MENU */
-  
-  .menu {
+
+  .menu{
+    background-color: white;
+    border-left:5px #EB4C4C solid;
     position: fixed;
     top: 0;
     right: 0;
-    width: 420px;
     height: 100vh;
-    background: white;
-    border-left: 4px solid #EB4C4B;
-    padding: 0 40px;
-  
+    width: 350px;            /* pas breedte naar wens aan */
+    padding: 180px 20px 20px 20px; /* bovenpadding = headerhoogte zodat inhoud niet onder header begint */
+    box-shadow: -6px 0 18px rgba(16,24,40,0.06);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-  
-    opacity: 0;
-    transform: translateX(100%);
-    pointer-events: none;
-  
-    transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
-    z-index: 1000;
+    gap: 18px;
+    z-index: 10;
   }
-  
-  .menu.active {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-  }
-  
+
   .menu ul {
     list-style: none;
     padding: 0;
@@ -234,7 +144,7 @@ header {
   }
   
   .menu li {
-    margin: 14px 0;
+    margin: 20px 0;
   }
   
   .menu a {
@@ -244,39 +154,72 @@ header {
     font-family: 'helveticaneue', arial;
     padding-left: 20px;
     transition: color 0.15s ease;
+    text-transform:uppercase !important;
   }
   
   .menu a:hover {
     color: #EB4C4B;
     cursor: pointer;
   }
-  
 
-  main{
-   display: flex;
-   flex-direction: column;
-    align-items: center;
-    margin: 2em 0;
+.dashboard-wrapper{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    max-width: 100%;
+    margin-left: 5em;
 }
 
-main section{
-  width: 65%;
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-}
-
-
-  footer{ 
+/* .dashboard-wrapper > .content-wrapper > div{
     width: 100%;
     display: flex;
-    text-align: center;
     justify-content: center;
-    margin: 64px 0px ;
+} */
+
+
+.dashboard-wrapper  .content-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 3em;
+}
+
+
+.dashboard-wrapper .top{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dashboard-wrapper .top h1{
+    margin-right: auto;
 }
 
 
 
+/* ======================= table/userlist ======================= */
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 3px #000000 solid;
+  margin-top: 2em;
+}
 
+td, th {
+  border-bottom: 3px solid black;
+  border-bottom: 1px solid #000; /* dunne interne lijnen */
+  padding: 12px;
+}
 
+.btn-position td :last-of-type a{
+  margin-left: auto; 
+  display: inline-block; 
+}
+
+.btn-position td:last-child {
+  display: flex;
+}
+.btn-position td:last-child a {
+  margin-left: auto;
+}

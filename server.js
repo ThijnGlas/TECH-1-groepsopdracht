@@ -33,6 +33,14 @@ app.get("/login", (req, res) => {
 });
 
 
+app.get("/cms/events", (req, res) => {
+  res.render("events-cms");
+});
+
+app.get("/cms/users", (req, res) => {
+  res.render("users-cms");
+});
+
 async function start() {
   try {
     await client.connect();
