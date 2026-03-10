@@ -1,148 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/events.css">
+    <link rel="stylesheet" href="./style/style.css" />
+    <link rel="stylesheet" href="./style/events.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-</head>
+  </head>
 
-<body>
+  <body>
     <%- include('partials/header') %>
     <main>
-        <section>
-            <div class="top-main">
-                <h1>Events</h1>
-                <div>
-                    <select name="locatie" id="locatie">
-                        <option value="Amsterdam">Amsterdam</option>
-                        <option value="Haarlem">Haarlem</option>
-                        <option value="Utrecht">Utrecht</option>
-                        <option value="Castricum">Castricum</option>
-                    </select>
-                    <select name="Datum" id="Datum">
-                        <option value="Juli">Juli</option>
-                        <option value="Augustus">Augustus</option>
-                        <option value="September">September</option>
-                    </select>
+      <section>
+        <div class="top-main">
+          <h1>Events</h1>
+          <div>
+            <select name="locatie" id="locatie">
+              <option value="Amsterdam">Amsterdam</option>
+              <option value="Haarlem">Haarlem</option>
+              <option value="Utrecht">Utrecht</option>
+              <option value="Castricum">Castricum</option>
+            </select>
+            <select name="Datum" id="Datum">
+              <option value="Juli">Juli</option>
+              <option value="Augustus">Augustus</option>
+              <option value="September">September</option>
+            </select>
+          </div>
+        </div>
+        <div class="event-wrapper">
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
                 </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
             </div>
-            <div class="event-wrapper">
-
-                
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
-                    <article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article><article class="event" onclick="location.href='/evenement';">
-                        <img src="./img/lagerwal.png" alt="foto van lagerwal">
-                        <div>
-                            <div class="event-naam">
-                                <h2>Lagerwal</h2>
-                                <div class="event-beschrijving">
-                                    <p>Amsterdam Noord</p>
-                                    <p>21 juli 2026</p>
-                                </div>
-                            </div>
-                            <a class="btn" href="">Tickets <img src="./img/arrow.svg" alt="arrow"></a>
-                        </div>
-                    </article>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
             </div>
-        </section>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
+            </div>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
+            </div>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
+            </div>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
+            </div>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
+            </div>
+          </article>
+          <article class="event" onclick="location.href = 'LINK_HIER'">
+            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
+            <div>
+              <div class="event-naam">
+                <h2>Lagerwal</h2>
+                <div class="event-beschrijving">
+                  <p>Amsterdam Noord</p>
+                  <p>21 juli 2026</p>
+                </div>
+              </div>
+              <a class="btn" href=""
+                >Tickets <img src="./img/arrow.svg" alt="arrow"
+              /></a>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
     <%- include('partials/footer') %>
-</body>
-
+  </body>
 </html>

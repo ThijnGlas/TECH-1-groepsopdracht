@@ -1,0 +1,55 @@
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  /* margin: 0 auto;  */
+}
+
+.hero-box {
+  position: relative; 
+  width: 80%; 
+  height: 430px; 
+  background: #cfcfcf;
+  margin: 0 auto; 
+}
+
+.hero-box::before,
+.hero-box::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 6px solid black;
+}
+
+.hero-box::before {
+  bottom: 0;
+  left: 0;
+  border-top: none;
+  border-right: none;
+}
+
+.hero-box::after {
+  top: 0;
+  right: 0;
+  border-bottom: none;
+  border-left: none;
+}
+
+.cta {
+  margin-top: 40px;
+}
+
+.btn {
+  background: black;
+  color: white;
+  padding: 14px 28px;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background: #333;
+}

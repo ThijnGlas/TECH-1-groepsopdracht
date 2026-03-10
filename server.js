@@ -7,6 +7,7 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
+const xss = require("xss");
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
@@ -32,6 +33,7 @@ app.get("/huisregels", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login-cms");
 });
+
 
 
 app.get("/cms/events", (req, res) => {
