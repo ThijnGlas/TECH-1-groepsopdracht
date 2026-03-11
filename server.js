@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
-const xss = require("xss");
+// const xss = require("xss");
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
@@ -42,6 +42,9 @@ app.get("/cms/events", (req, res) => {
 
 app.get("/cms/users", (req, res) => {
   res.render("users-cms");
+});
+app.get("/cms/createuser", (req, res) => {
+  res.render("createUser-cms");
 });
 
 async function start() {
