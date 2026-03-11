@@ -407,7 +407,7 @@ transition: color 0.15s ease;
 }
 
 main section{
-  width: 65%;
+    width: 65%;
     display: flex;
     flex-direction: column;
     gap: 2em;
