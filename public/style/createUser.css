@@ -1,0 +1,16 @@
+form > div{
+    display: flex;
+    gap: 32px;
+}
+
+form > div > div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+form input{
+    padding: 10px;
+    border: 1px solid #000;
+    font-size: 16px;
+}
