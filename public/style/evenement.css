@@ -14,7 +14,7 @@
 
 .event-image-wrapper {
   width: 300px;
-  height: 100%;
+  min-height: 100%;
   overflow: hidden;
 }
 
@@ -39,6 +39,7 @@
 
 .line-up p {
   font-weight: bold;
+  font-size: 1.5em;
 }
 
 .event-info {
@@ -46,7 +47,7 @@
 }
 
 .event-info p {
-  font-size: 12px;
+  font-size: 1em;
 }
 
 .btn-evenementen1{
@@ -75,4 +76,8 @@
     box-sizing: border-box;
     gap: 16px;
     height: min-content;
+}
+
+main section {
+  margin-top: 5em;
 }

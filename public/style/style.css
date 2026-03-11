@@ -85,6 +85,10 @@ a {
     font-weight: lighter;
 }
 
+a:hover {   
+    cursor: pointer;
+}
+
 .btn{
     padding: 1em 1.5em;
     background-color: var(--black);
@@ -117,6 +121,7 @@ header {
     justify-content: space-between;
     padding: 16px 50px;
     height: 100px;
+    background-color: #fff;
   }
   
   /* SOCIALS */
