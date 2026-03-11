@@ -1,60 +1,287 @@
 
+<<<<<<< HEAD
+/* ======================= fonts ======================= */
+
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+@font-face{
+    font-display: swap;
+	font-family: 'helveticaneue-italic';
+	font-style: italic;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+body {
+    background-color: var(--background-clr);
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    font-family: 'helveticaneue', arial;
+    margin: 0;
+    background: #f3f4f6;
+}
+
+h1{
+    font-family: 'helveticaneue', arial;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2{
+    font-family: 'helveticaneue', arial;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+p{
+    font-family: 'helveticaneue', arial;
+    font-style:italic;
+    font-weight: lighter;
+}
+
+
+
+
+/* HEADER */
+
+header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 50px;
+  height: 130px;
+        background: #ffffff;
+
+}
+
+/* SOCIALS */
+
+.socials ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.socials a {
+  color: #333;
+  font-size: 32px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.socials a:hover {
+  transform: scale(1.2);
+  color: #EB4C4B;
+}
+
+/* LOGO */
+
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo img {
+  height: 30px;
+  display: block;
+}
+
+/* HAMBURGER */
+
+.hamburger {
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1100;
+
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.hamburger span {
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: #333;
+  border-radius: 3px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* MENU */
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  height: 100vh;
+  background: white;
+  border-left: 4px solid #EB4C4B;
+  padding: 0 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  opacity: 0;
+  transform: translateX(100%);
+  pointer-events: none;
+
+  transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+  z-index: 1000;
+}
+
+.menu.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin: 14px 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 28px;
+  font-family: Helvetica;
+  padding-left: 20px;
+  transition: color 0.15s ease;
+}
+
+.menu a:hover {
+  color: #EB4C4B;
+}
+
+
+
+ 
+main section{
+    max-width: 90%;
+    width: 44em; 
+    margin: 2em auto; 
+    font-family: 'helveticaneue', Arial, sans-serif;
+=======
+main section{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+>>>>>>> 0fd7f56 (style cms dashboard styling toegevoegd)
+}
+
 main section h1{
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 2em;
+    text-align: left;
 }
 
-main section h2{
+main section h2 {
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 1em;
-    margin: .5em 0 .5em 0;
+    margin: .5em 0;
 }
 
-main section p{
+main section p {
     font-family: helvetica-neue-lt-pro, sans-serif;
     font-style: italic;
     font-weight: 400;
     margin: .5em 0 0 0;
+    line-height: 1.45;
+    color: #111;
 }
 
-main article{
-    width: 100%; 
-    padding: 1em; 
-    background: #fff; 
-    border: 3px solid black; 
+main article {
+    width: 100%;
+    padding: 1em;
+    background: #fff;
+    border: 3px solid black;
     cursor: pointer;
+    box-sizing: border-box;
 }
-
-
 
 /* ======================= openklappende article styling ======================= */
 
-
 article.open {
-    border-color:rgba(235, 76, 76, 1);
+    border-color: rgba(235, 76, 76, 1);
 }
 
-
-article p{
-    max-height: 0; 
-    opacity: 0; 
-    transform: translateY(-6px); 
-    overflow: hidden; 
+article p {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    overflow: hidden;
     transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
 
-article p.visible{
-   max-height: 500px; /* groot genoeg voor je tekst */ 
-   opacity: 1; 
+article p.visible {
+   max-height: 500px; /* groot genoeg voor je tekst */
+   opacity: 1;
    transform: translateY(0);
 }
 
-main section h1 { text-align: left; }
-main article { max-width: 40.5em; 
-    margin: 1em auto; 
-    margin-left: 0;
+/* ======================= responsive tweaks ======================= */
+
+@media (max-width: 48rem) {
+    main section {
+        width: calc(100% - 2rem);
+        max-width: 100%;
+        margin: 1rem auto;
+    }
+
+    main article {
+        max-width: 100%;
+        margin: .75rem auto;
+        padding: .9rem;
+    }
+
+    main section h1 {
+        font-size: 1.6em;
+    }
+
+    main section h2 {
+        font-size: 0.95em;
+    }
 }

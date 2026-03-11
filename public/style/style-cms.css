@@ -86,7 +86,7 @@ a {
 }
 
 .btn{
-    padding: 1em 1.5em;
+    padding: .5em 1.5em;
     background-color: var(--black);
     color: var(--white);
     display: inline-flex;
@@ -102,8 +102,7 @@ a {
     width: auto;
 }
 
-.btn-hover{
-
+.btn:hover{
     background-color: var(--cendo-red);
 
 }
@@ -114,11 +113,29 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
 }
 
 .logo{
-    height: 40px;
+    height:40px;
+    width: 105px;
     display: block;
+  }
+
+  .menu{
+    background-color: white;
+    border-left:5px #EB4C4C solid;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 350px;            /* pas breedte naar wens aan */
+    padding: 180px 20px 20px 20px; /* bovenpadding = headerhoogte zodat inhoud niet onder header begint */
+    box-shadow: -6px 0 18px rgba(16,24,40,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 10;
   }
 
   .menu ul {
@@ -128,7 +145,7 @@ header{
   }
   
   .menu li {
-    margin: 14px 0;
+    margin: 20px 0;
   }
   
   .menu a {
@@ -138,6 +155,7 @@ header{
     font-family: 'helveticaneue', arial;
     padding-left: 20px;
     transition: color 0.15s ease;
+    text-transform:uppercase !important;
   }
   
   .menu a:hover {
@@ -148,6 +166,8 @@ header{
 .dashboard-wrapper{
     display: grid;
     grid-template-columns: 70% 30%;
+    max-width: 100%;
+    margin-left: 5em;
 }
 
 /* .dashboard-wrapper > .content-wrapper > div{
@@ -158,10 +178,11 @@ header{
 
 
 .dashboard-wrapper  .content-wrapper{
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-top: 3em;
 }
 
 
@@ -173,4 +194,33 @@ header{
 
 .dashboard-wrapper .top h1{
     margin-right: auto;
+}
+
+
+
+/* ======================= table/userlist ======================= */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 3px #000000 solid;
+  margin-top: 2em;
+}
+
+td, th {
+  border-bottom: 3px solid black;
+  border-bottom: 1px solid #000; /* dunne interne lijnen */
+  padding: 12px;
+}
+
+.btn-position td :last-of-type a{
+  margin-left: auto; 
+  display: inline-block; 
+}
+
+.btn-position td:last-child {
+  display: flex;
+}
+.btn-position td:last-child a {
+  margin-left: auto;
 }

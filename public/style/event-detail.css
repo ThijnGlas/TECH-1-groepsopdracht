@@ -1,0 +1,186 @@
+*{
+    font-family: 'helveticaneue';
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ======================= custom properties ======================= */
+
+:root {
+    --background-clr: #F8F8F8;
+}
+
+/* ======================= fonts ======================= */
+
+@font-face {
+    font-display: swap;
+    font-family: 'helveticaneue';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./fonts/helveticaneue.woff2) format("woff2"),
+        url(./fonts/helveticaneue.woff2) format("woff");
+}
+
+/* ======================= algemene styling ======================= */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'helveticaneue', arial;
+}
+
+h1{
+    text-transform: uppercase;
+    font-size: 2em;
+    margin-bottom: 0;
+    font-family: helvetica-neue-lt-pro, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
+p{
+    font-family: 'helveticaneue', arial;
+    font-style:italic;
+    font-weight: lighter;
+    font-size: .8em;
+}
+
+li{
+    font-family: helvetica-neue-lt-pro, sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    list-style: none;
+}
+
+ul{
+    padding-left:0;
+    margin-top:1em;
+}
+
+main section {
+    max-width: 100%;
+    width: 50em;
+    margin: 2em auto;
+}
+
+/* ======================= button styling ======================= */
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  font-size: 1em;
+  padding: .5em .8em;
+  margin: 0;
+}
+
+.back-button img {
+  height: 1em;
+  width: auto;
+  display: block;
+}
+
+.back-button-position{
+    margin:1em 0 1em 0;
+}
+
+/* container voor beide knoppen: zelfde max-width als main section zodat randen uitlijnen */
+.button-position{
+    display:flex;
+    align-items: center;
+    width: 100%;
+    max-width: 50em;    /* gelijk aan main section width */
+    margin: 1em auto;
+    padding: 0;          /* verwijder horizontale padding die ruimte kan veroorzaken */
+    gap: 1rem;
+}
+
+/* ticket knop naar rechts duwen */
+.ticket-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+    background-color: rgba(235, 76, 76, 1);
+    font-size: 1em;
+    padding: .5em .8em;
+    margin-left: auto;   /* duwt de knop naar de uiterste rechterkant */
+    margin-right: 0;     /* expliciet geen rechterruimte */
+}
+
+.ticket-button img {
+  height: 1em;
+  width: auto;
+  display: block;      /* voorkomt inline whitespace */
+}
+
+/* optionele position wrappers verwijderen of resetten */
+.ticket-button-position,
+.back-button-position{
+    margin: 0;
+    padding: 0;
+}
+
+/* ======================= evenement detail styling ======================= */
+
+.event-detail{
+    display:flex;
+    gap:1.2rem;
+    padding:1em;
+    border: .2em solid black;
+}
+.event-info{
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.event-info p{
+    margin-top: 0;
+}
+
+.event-detail img {
+  width: 45%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  object-position:right;
+}
+
+.event-meta {
+  display: flex;
+  align-items: center;
+  gap: 4em;
+}
+
+.event-meta p {
+  margin: 0;
+}
+
+.temperature {
+  white-space: nowrap;
+}
+
+/* ======================= footer styling ======================= */
+
+footer{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
