@@ -115,7 +115,8 @@ header{
 }
 
 .logo{
-    height: 40px;
+    height:40px;
+    width: 105px;
     display: block;
   }
 
@@ -193,6 +194,24 @@ header{
     margin-right: auto;
 }
 
+/* ======================= SearchBar ======================= */
+
+form {
+  margin: 20px 0;
+}
+
+form input[type="text"] {
+  width: 300px; /* lengte van de zoekbalk */
+  padding: .3em 1.2em;
+  border: 3px solid black;
+  font-size: 16px;
+  outline: none;
+  height: min-content;
+}
+
+form input[type="text"]::placeholder {
+  color: #555;
+}
 
 
 /* ======================= table/userlist ======================= */

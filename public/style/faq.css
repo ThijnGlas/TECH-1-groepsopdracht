@@ -193,11 +193,16 @@ header {
 
 
  
-main section{
+.articles{
     max-width: 90%;
-    width: 44em; 
+    width: 40em; 
     margin: 2em auto; 
     font-family: 'helveticaneue', Arial, sans-serif;
+    gap: 1em;
+}
+
+main{
+  padding:0;
 }
 
 main section h1{
