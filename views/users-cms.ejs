@@ -18,108 +18,27 @@
             <form action="">
               <input type="text" name="search" placeholder="Gebruiker zoeken" />
             </form>
-            <a class="btn" href="">Gebruiker aanmaken</a>
+            <a class="btn" href="/cms/createuser">Gebruiker aanmaken</a>
           </div>
           <table>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Thijn Glas</td>
-              <td>Rol</td>
-              <td><a class="btn" href="">Gebruiker wijzigen</a></td>
-            </tr>
+            <% users.forEach((user, index) => { %>
+              <tr class="btn-position">
+                <td><%= index + 1 %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role || 'Geen rol' %></td>
+                <td>
+                  <a class="btn" href="/cms/users/edit/<%= user._id %>">Gebruiker wijzigen</a>
+                  <form action="/cms/users/delete/<%= user._id %>" method="POST" style="display:inline;">
+                    <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')">Verwijderen</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
           </table>
         </div>
       </div>
-      <div class="menu-section">
-        <nav class="menu" id="menu">
-          <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/gebruikers">Gebruikers</a></li>
-            <li><a href="/events">Events</a></li>
-            <li><a href="/tickets">Tickets</a></li>
-            <li><a href="/locaties">Locaties</a></li>
-          </ul>
-          <a href="">Uitloggen</a>
-        </nav>
-      </div>
+      <%- include('partials/header-cms') %>
     </div>
   </body>
 </html>

@@ -72,7 +72,6 @@ h4{
 p{
     font-family: 'helveticaneue', arial;
     font-size: 1em;
-    font-style: italic;
     font-weight: lighter;
 }
 
@@ -81,7 +80,6 @@ a {
     all: unset;
     font-family: 'helveticaneue', arial;
     font-size: 1em;
-    font-style: italic;
     font-weight: lighter;
 }
 
@@ -104,7 +102,7 @@ a {
 
 .btn:hover{
     background-color: var(--cendo-red);
-
+  cursor: pointer;
 }
 
 header{
@@ -196,6 +194,24 @@ header{
     margin-right: auto;
 }
 
+/* ======================= SearchBar ======================= */
+
+form {
+  margin: 20px 0;
+}
+
+form input[type="text"] {
+  width: 300px; /* lengte van de zoekbalk */
+  padding: .3em 1.2em;
+  border: 3px solid black;
+  font-size: 16px;
+  outline: none;
+  height: min-content;
+}
+
+form input[type="text"]::placeholder {
+  color: #555;
+}
 
 
 /* ======================= table/userlist ======================= */
@@ -219,8 +235,12 @@ td, th {
 }
 
 .btn-position td:last-child {
-  display: flex;
+  text-align: right;
 }
 .btn-position td:last-child a {
   margin-left: auto;
+}
+
+button{
+   all: unset;
 }

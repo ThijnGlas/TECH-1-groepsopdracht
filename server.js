@@ -2,20 +2,28 @@ import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
 import path from "path";
+import usersRoutes from "./routes/users.js"; // je bestaande users router
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
+import xss from "xss";
 // const xss = require("xss");
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
+// Middleware
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// EJS view engine
 app.set("view engine", "ejs");
+
+// --- Algemene pagina routes ---
 app.get("/", (req, res) => {
-  console.log('dsfjko')
   res.render("index");
 });
 app.get("/faq", (req, res) => {
@@ -45,18 +53,18 @@ app.get("/contact", (req, res) => {
 app.get("/cms/events", (req, res) => {
   res.render("events-cms");
 });
-
-app.get("/cms/users", (req, res) => {
-  res.render("users-cms");
-});
 app.get("/cms/createuser", (req, res) => {
-  res.render("createUser-cms");
+  res.render("createUser-cms"); // form om nieuwe user aan te maken
 });
 
+// --- Users routes via users.js ---
 async function start() {
   try {
     await client.connect();
     console.log("Verbonden met MongoDB");
+
+    const db = client.db("CENDO");
+    app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
 
     app.listen(PORT, () => {
       console.log(`Server draait op http://localhost:${PORT}`);

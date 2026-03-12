@@ -2,35 +2,23 @@
 .event-card {
   display: flex;
   justify-content: space-between;
-  padding: 16px 50px;
-  height: 130px;
 background: #ffffff;
 
 }
 
-/* SOCIALS */
-
-.socials ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
-}
-
-.socials a {
-  color: #333;
-  font-size: 32px;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
 
 .event-content {
   padding: 32px;
 }
 
 .event-image-wrapper {
+<<<<<<< HEAD
   width: 300px;
   min-height: 100%;
+=======
+  width: 40%;
+  height: 100%;
+>>>>>>> 6a47a85dc2f72b76ffef9640a73fce6b64a45606
   overflow: hidden;
 }
 
@@ -49,15 +37,25 @@ background: #ffffff;
 
 .line-up p {
   font-weight: bold;
+<<<<<<< HEAD
   font-size: 1.5em;
+=======
+  font-size: 21px;
+>>>>>>> 6a47a85dc2f72b76ffef9640a73fce6b64a45606
 }
 
 .event-info {
   padding-top: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-info p {
+<<<<<<< HEAD
   font-size: 1em;
+=======
+  font-size: 16px;
+>>>>>>> 6a47a85dc2f72b76ffef9640a73fce6b64a45606
 }
 
 .btn-evenementen1{
@@ -140,9 +138,6 @@ gap: 30px;
   background: white;
   transition: border 0.3s ease;
 }
-.event-card:hover {
-  border: 3px solid #EB4C4B;
-}
 
 /* Button verandert als de kaart wordt gehoverd */
 .event-card:hover .ticket-btn {
@@ -153,18 +148,13 @@ gap: 30px;
 
 .event-card img {
 width: 100%;
-height: 180px;
+height: 100%;
 object-fit: cover;
+display: block;
 }
 
 /* INFO GEDEELTE */
 
-.event-info {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 18px;
-}
 
 .event-info h3 {
 margin: 0;
