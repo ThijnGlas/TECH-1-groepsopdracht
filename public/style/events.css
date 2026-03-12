@@ -63,3 +63,28 @@ main section > .top-main{
         grid-template-columns: 1fr; /* 1 artikel per rij */
     }
 }
+/* 
+select {
+    background-color: black;
+    color: white;
+    padding: 10px 40px 10px 15px;
+} */
+
+select {
+  padding: 10px 60px 10px 15px;
+  font-size: 16px;
+  color: white;
+
+  appearance: none; /* standaard browser pijl uitzetten */
+
+  background-image: url("../img/angle-down-solid-full.svg");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  background-color: black;
+}
+
+select:hover{
+    background-color: var(--cendo-red);
+    border: var(--cendo-red) 1px solid;
+}
