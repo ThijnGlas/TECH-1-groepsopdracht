@@ -102,7 +102,7 @@ a {
 
 .btn:hover{
     background-color: var(--cendo-red);
-
+  cursor: pointer;
 }
 
 header{
@@ -216,8 +216,12 @@ td, th {
 }
 
 .btn-position td:last-child {
-  display: flex;
+  text-align: right;
 }
 .btn-position td:last-child a {
   margin-left: auto;
+}
+
+button{
+   all: unset;
 }
