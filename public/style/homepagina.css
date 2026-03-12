@@ -6,11 +6,18 @@
 }
 
 .hero-box {
-  position: relative; 
-  width: 80%; 
-  height: 430px; 
-  background: #cfcfcf;
-  margin: 0 auto; 
+  position: relative;
+  width: 65%;
+  height: 430px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.hero-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .hero-box::before,

@@ -12,8 +12,13 @@ background: #ffffff;
 }
 
 .event-image-wrapper {
+<<<<<<< HEAD
+  width: 300px;
+  min-height: 100%;
+=======
   width: 40%;
   height: 100%;
+>>>>>>> 6a47a85dc2f72b76ffef9640a73fce6b64a45606
   overflow: hidden;
 }
 
@@ -32,7 +37,11 @@ background: #ffffff;
 
 .line-up p {
   font-weight: bold;
+<<<<<<< HEAD
+  font-size: 1.5em;
+=======
   font-size: 21px;
+>>>>>>> 6a47a85dc2f72b76ffef9640a73fce6b64a45606
 }
 
 .event-info {
@@ -42,7 +51,11 @@ background: #ffffff;
 }
 
 .event-info p {
+<<<<<<< HEAD
+  font-size: 1em;
+=======
   font-size: 16px;
+>>>>>>> 6a47a85dc2f72b76ffef9640a73fce6b64a45606
 }
 
 .btn-evenementen1{

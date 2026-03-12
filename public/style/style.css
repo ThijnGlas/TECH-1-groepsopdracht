@@ -225,6 +225,10 @@ a {
     font-weight: lighter;
 }
 
+a:hover {   
+    cursor: pointer;
+}
+
 .btn{
     padding: 1em 1.5em;
     background-color: var(--black);

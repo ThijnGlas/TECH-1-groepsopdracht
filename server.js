@@ -38,9 +38,18 @@ app.get("/events", (req, res) => {
 app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
+app.get("/artists", (req, res) => {
+  res.render("artists");
+});
 app.get("/login", (req, res) => {
   res.render("login-cms");
 });
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
+
+
+
 app.get("/cms/events", (req, res) => {
   res.render("events-cms");
 });
