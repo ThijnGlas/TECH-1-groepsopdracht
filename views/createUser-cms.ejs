@@ -5,54 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../style/style-cms.css" />
-    <link rel="stylesheet" href="../style/createUser.css">
+    <link rel="stylesheet" href="/style/style-cms.css" />
+    <link rel="stylesheet" href="/style/createUser.css">
 </head>
 
 <body>
-    <header>
-        <img class="logo" src="../img/logo.svg" alt="">
-    </header>
+    <%- include('partials/header-cms') %>
     <div class="dashboard-wrapper">
         <div class="content-wrapper">
             <div>
                 <div class="top">
-                    <h1>Gebruiker aanpassen</h1>
+                    <h1>
+                        <%= editMode ? "Gebruiker aanpassen" : "Nieuwe gebruiker aanmaken" %>
+                    </h1>
                 </div>
-                <form action="/cms/users/create" method="POST">
+                <form action="<%= editMode ? '/cms/users/edit/' + user._id : '/cms/users/create' %>" method="POST">
                     <div class="lft-clm">
                         <div>
                             <label for="naam">Gebruikersnaam:</label>
-                            <input name="username" type="text" id="naam" required>
+                            <input name="username" type="text" id="naam" value="<%= user ? user.username : '' %>"
+                                required>
                         </div>
                         <div>
                             <label for="mail">Email:</label>
-                            <input name="email" type="email" id="mail" required>
+                            <input name="email" type="email" id="mail" value="<%= user ? user.email : '' %>" required>
                         </div>
                     </div>
                     <div class="rgt-clm">
                         <div>
                             <label for="password">Wachtwoord:</label>
-                            <input name="password" type="password" id="password" required>
+                            <input name="password" type="password" id="password" <%=editMode ? '' : 'required' %>
+                            placeholder="<%= editMode ? 'Laat leeg als je niets wilt veranderen' : '' %>"
+                                >
                         </div>
                         <div class="info">
                             <div>
                                 <p>Gebruiker aangemaakt:</p>
-                                <p>...</p>
+                                <p>
+                                    <%= user && user.createdAt ? user.createdAt.toLocaleString() : '...' %>
+                                </p>
                             </div>
                             <div>
                                 <p>Laatste keer gezien:</p>
-                                <p>...</p>
+                                <p>
+                                    <%= user && user.lastSeen ? user.lastSeen.toLocaleString() : '...' %>
+                                </p>
                             </div>
                         </div>
-
                     </div>
-
-                    <input class="btn" type="submit" value="Gebruiker opslaan">
+                    <input class="btn" type="submit" value="<%= editMode ? 'Opslaan' : 'Gebruiker opslaan' %>">
                 </form>
             </div>
         </div>
-        <%- include('partials/header-cms') %>
+        <%- include('partials/sidebar-cms') %>
 
     </div>
 </body>
