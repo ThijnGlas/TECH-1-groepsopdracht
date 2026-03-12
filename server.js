@@ -36,6 +36,9 @@ app.get("/artists", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login-cms");
 });
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
 
 
 
