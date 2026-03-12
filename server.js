@@ -54,7 +54,10 @@ app.get("/cms/events", (req, res) => {
   res.render("events-cms");
 });
 app.get("/cms/createuser", (req, res) => {
-  res.render("createUser-cms"); // form om nieuwe user aan te maken
+  res.render("createUser-cms", {
+    editMode: false,
+    user: null
+  });
 });
 
 // --- Users routes via users.js ---
