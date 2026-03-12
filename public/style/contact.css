@@ -1,0 +1,54 @@
+.contact-item p {
+  text-decoration: underline;
+}
+
+.contactpagina-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6em;
+  width: 100%;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+
+.contact-divider{
+  width: 1px;
+  background: black;
+  height: 230px;
+}
+
+.contact-item{
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.contact-item i{
+  font-size: 20px;
+  margin-right: 16px;
+}
+
+.social-item{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.social-item i{
+  font-size: 24px;
+}
+
+.social-item:hover div,
+.social-item:hover i {
+    color: #EB4C4B;
+    cursor: pointer;
+  }
+
+  .contact-item:hover div,
+.contact-item:hover i{
+    color: #EB4C4B;
+    cursor: pointer;
+  }

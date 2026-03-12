@@ -1,0 +1,46 @@
+.content-wrapper > div {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+form > div{
+    display: flex;
+    gap: 32px;
+}
+
+form > div > div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+form input{
+    padding: 10px;
+    min-width: 400px;
+    border: 3px solid #000;
+    font-size: 16px 10px;
+}
+
+form .btn{
+    min-width: 0px;
+}
+
+form > div > div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} 
+
+form .info{
+    display: flex;
+    flex-direction:row;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+form .info div{
+    display: flex;
+    flex-direction:column;
+    gap: 10px;
+}
