@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
+import bcrypt from "bcrypt";
 import path from "path";
 
 dotenv.config();
@@ -13,6 +14,9 @@ const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   console.log('dsfjko')
@@ -45,6 +49,33 @@ app.get("/cms/users", (req, res) => {
 });
 app.get("/cms/createuser", (req, res) => {
   res.render("createUser-cms");
+});
+
+app.post("/cms/createuser", async (req, res) => {
+  try {
+
+    const db = client.db("CENDO");
+
+    const { username, email, password } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = {
+      username: username,
+      email: email,
+      password: hashedPassword,
+      role: "admin",
+      createdAt: new Date()
+    };
+
+    await db.collection("users").insertOne(newUser);
+
+    res.redirect("/cms/users");
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Fout bij gebruiker aanmaken");
+  }
 });
 
 async function start() {

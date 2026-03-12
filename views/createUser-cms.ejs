@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../style/style-cms.css" />
-    <link rel="stylesheet" href="../style/events-cms.css">
+    <link rel="stylesheet" href="../style/createUser.css">
 </head>
 <body>
     <header>
@@ -16,31 +16,37 @@
             <div>
                 <div class="top">
                     <h1>Gebruiker aanpassen</h1>
-                    <a class="btn" href="">Gebruiker opslaan</a>
                 </div>
-                <form action="">
+                <form action="/cms/createuser" method="POST">
                     <div class="lft-clm">
                         <div>
-                            <label for="naam">Naam:</label>
-                            <input type="text" id="naam">
+                            <label for="naam">Gebruikersnaam:</label>
+                            <input name="username" type="text" id="naam" required>
                         </div>
                         <div>
                             <label for="mail">Email:</label>
-                            <input type="text" id="mail">
+                            <input name="email" type="email" id="mail" required>
                         </div> 
                     </div>
                     <div class="rgt-clm">
                         <div>
-                            <label for="naam">Wachtwoord:</label>
-                            <input type="text" id="naam">
+                            <label for="password">Wachtwoord:</label>
+                            <input name="password" type="password" id="password" required>
                         </div>
-                        <div>
-                            <p>last seen:</p>
-                            <p>03-02-2026</p>
+                        <div class="info">
+                            <div>
+                                <p>Gebruiker aangemaakt:</p>
+                                <p>...</p>
+                            </div>
+                            <div>
+                                <p>Laatste keer gezien:</p>
+                                <p>...</p>
+                            </div>
                         </div>
+                        
                     </div>
                     
-                    
+                    <input class="btn" type="submit" value="Gebruiker opslaan">
                 </form>
             </div>    
             </div>
