@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
-const xss = require("xss");
+import xss from "xss";
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);

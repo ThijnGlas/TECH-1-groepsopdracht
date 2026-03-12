@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 /* ======================= fonts ======================= */
 
 @font-face {
@@ -194,18 +193,16 @@ header {
 
 
  
-main section{
+.articles{
     max-width: 90%;
-    width: 44em; 
+    width: 40em; 
     margin: 2em auto; 
     font-family: 'helveticaneue', Arial, sans-serif;
-=======
-main section{
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
->>>>>>> 0fd7f56 (style cms dashboard styling toegevoegd)
+    gap: 1em;
+}
+
+main{
+  padding:0;
 }
 
 main section h1{
