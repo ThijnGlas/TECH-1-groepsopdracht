@@ -1,0 +1,87 @@
+@font-face{
+    font-family: "NewAmsterdam";
+    font-weight: 1200;
+    src: url(./fonts/new-amsterdam.woff2) format('woff2'); 
+}
+
+h1 {
+    font-family: "NewAmsterdam";
+    font-size: 4em;
+    color: #EB4C4B;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+main .marquee-wrapper {
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%;
+}
+
+.marquee-wrapper {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 100px;
+  margin-top: 28px;
+}
+
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2rem;
+  min-width: max-content;
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+p {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 480px;
+  padding: 0 1.5rem;
+}
+
+.form-section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-section input[type="email"] {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid currentColor;
+  background: transparent;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.form-section input[type="email"]:focus {
+  border-color: #000;
+  opacity: 1;
+}
+
+.form-section button {
+    margin-bottom: 128px;
+}

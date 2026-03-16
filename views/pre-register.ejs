@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/pre-register.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <main>
+      <section class="marquee-wrapper">
+        <div class="marquee-group">
+          <h1>BE THE FIRST TO KNOW · </h1>
+          <h1>BE THE FIRST TO KNOW · </h1>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <h1>BE THE FIRST TO KNOW · </h1>
+          <h1>BE THE FIRST TO KNOW · </h1>
+        </div>
+      </section>
+
+      <p>Be the first to hear about our upcoming events, secret pop-ups, and exclusive drops.</p>
+
+      <section class="form-section">
+        <form onsubmit="handleSubmit(event)">
+          <input type="email" id="emailInput" placeholder="Your email here..." />
+          <button class="btn" type="submit">Pre-Register</button>
+        </form>
+      </section>
+    </main>
+    <%- include('partials/footer') %>
+  </body>
+</html>
