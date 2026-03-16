@@ -51,7 +51,10 @@ app.get("/contact", (req, res) => {
 
 
 app.get("/cms/createuser", (req, res) => {
-  res.render("createUser-cms"); // form om nieuwe user aan te maken
+  res.render("createUser-cms", {
+    editMode: false,
+    user: null
+  });
 });
 
 app.get("/cms/createevent", (req, res) => {
