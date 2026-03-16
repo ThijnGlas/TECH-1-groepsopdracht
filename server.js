@@ -3,6 +3,7 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import path from "path";
 import usersRoutes from "./routes/users.js"; // je bestaande users router
+import eventsRoutes from "./routes/events.js";
 
 dotenv.config();
 
@@ -49,12 +50,12 @@ app.get("/contact", (req, res) => {
 });
 
 
-
-app.get("/cms/events", (req, res) => {
-  res.render("events-cms");
-});
 app.get("/cms/createuser", (req, res) => {
   res.render("createUser-cms"); // form om nieuwe user aan te maken
+});
+
+app.get("/cms/createevent", (req, res) => {
+  res.render("createEvent-cms");
 });
 
 // --- Users routes via users.js ---
@@ -65,6 +66,7 @@ async function start() {
 
     const db = client.db("CENDO");
     app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
+    app.use("/cms/events", eventsRoutes(db));
 
     app.listen(PORT, () => {
       console.log(`Server draait op http://localhost:${PORT}`);
