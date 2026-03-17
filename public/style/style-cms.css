@@ -92,6 +92,7 @@ a {
     align-items: center;
     box-sizing: border-box;
     gap: 16px;
+    border: none;
     height: min-content;
 }
 
@@ -202,6 +203,7 @@ form {
 
 form input[type="text"],
 form input[type="email"],
+form input[type="number"],
 form input[type="password"] {
   width: 300px;
   padding: 10px;
