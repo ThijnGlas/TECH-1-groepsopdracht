@@ -47,6 +47,12 @@ app.get("/login", (req, res) => {
 app.get("/contact", (req, res) => {
   res.render("contact");
 });
+app.get("/pre-register", (req, res) => {
+  res.render("pre-register");
+});
+app.get("/houserules", (req, res) => {
+  res.render("houserules");
+});
 
 
 
