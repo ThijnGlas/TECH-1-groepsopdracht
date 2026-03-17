@@ -1,18 +1,30 @@
-@font-face{
-    font-family: "NewAmsterdam";
-    font-weight: 1200;
-    src: url(./fonts/new-amsterdam.woff2) format('woff2'); 
+@font-face {
+    font-family: "New Amsterdam Regular";
+    src: url("https://db.onlinewebfonts.com/t/407640015e732f2da47af2fd6eeb75c8.eot");
+    src: url("https://db.onlinewebfonts.com/t/407640015e732f2da47af2fd6eeb75c8.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/407640015e732f2da47af2fd6eeb75c8.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/407640015e732f2da47af2fd6eeb75c8.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/407640015e732f2da47af2fd6eeb75c8.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/407640015e732f2da47af2fd6eeb75c8.svg#New Amsterdam Regular")format("svg");
 }
 
 h1 {
-    font-family: "NewAmsterdam";
-    font-size: 4em;
-    color: #EB4C4B;
-    margin: 0;
-    padding: 0;
-    flex-shrink: 0;
-    white-space: nowrap;
-    line-height: 1;
+  font-family: "New Amsterdam Regular";
+  font-size: 4em;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 0.5px #EB4C4B;
+  letter-spacing: 0.04em;
+}
+
+h1::after {
+    content: '·';
+    padding-right: 2rem;
+    padding-left: 2rem;
 }
 
 main .marquee-wrapper {
@@ -29,18 +41,26 @@ main .marquee-wrapper {
   margin-top: 28px;
 }
 
+main section:not(.marquee-wrapper) {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+
 .marquee-group {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 2rem;
-  min-width: max-content;
-  animation: scroll 20s linear infinite;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0;
+    min-width: max-content;
+    animation: scroll 30s linear infinite;
 }
 
 @keyframes scroll {
   from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+  to   { transform: translateX(-50%); }
 }
 
 p {
@@ -83,5 +103,5 @@ p {
 }
 
 .form-section button {
-    margin-bottom: 128px;
+    margin-bottom: 90px;
 }

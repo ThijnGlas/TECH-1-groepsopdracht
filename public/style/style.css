@@ -239,6 +239,7 @@ a:hover {
     box-sizing: border-box;
     gap: 16px;
     height: min-content;
+    border: none;
 }
 
 .btn img{
