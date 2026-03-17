@@ -91,7 +91,6 @@ p {
   border: 2px solid currentColor;
   background: transparent;
   outline: none;
-  text-align: center;
   transition: border-color 0.2s;
 }
 
