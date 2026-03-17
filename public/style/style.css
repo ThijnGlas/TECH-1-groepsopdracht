@@ -246,12 +246,7 @@ a:hover {
     width: auto;
 }
 
-<<<<<<< HEAD
-.btn:hover{
-
-=======
 .btn-hover{
->>>>>>> d57e34b27caf1cf8fad26b9d74f578ff49216436
     background-color: var(--cendo-red);
 }
   
