@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Events</title>
     <link rel="stylesheet" href="../style/style-cms.css" />
   </head>
   <body>
     <header>
       <img class="logo" src="../img/logo.svg" alt="" />
     </header>
+
     <div class="dashboard-wrapper">
       <div class="content-wrapper">
         <div>
@@ -18,111 +19,32 @@
             <form action="">
               <input type="text" name="search" placeholder="Evenement zoeken" />
             </form>
-            <a class="btn" href="">Evenement aanmaken</a>
+            <a class="btn" href="/cms/createevent">Evenement aanmaken</a>
           </div>
+
           <table>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal/td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
-            <tr class="btn-position">
-              <td>1</td>
-              <td>Lagerwal</td>
-              <td>Datum</td>
-              <td><a class="btn" href="">Evenement wijzigen</a></td>
-            </tr>
+            <% events.forEach((event, index) => { %>
+              <tr class="btn-position">
+                <td><%= index + 1 %></td>
+                <td><%= event.title %></td>
+                <td><%= new Date(event.date).toLocaleDateString('nl-NL') %></td>
+                <td><%= event.location || 'Geen locatie' %></td>
+                <td>
+                  <a class="btn" href="/cms/events/edit/<%= event._id %>">Evenement wijzigen</a>
+                  <form action="/cms/events/delete/<%= event._id %>" method="POST" style="display:inline;">
+                    <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?')">
+                      Verwijderen
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
           </table>
+
         </div>
       </div>
-      <div class="menu-section">
-        <nav class="menu" id="menu">
-          <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/gebruikers">Gebruikers</a></li>
-            <li><a href="/events">Events</a></li>
-            <li><a href="/tickets">Tickets</a></li>
-            <li><a href="/locaties">Locaties</a></li>
-          </ul>
-          <a href="">Uitloggen</a>
-        </nav>
-      </div>
-            
-        </div>
-        <%- include('partials/header-cms') %>
+
+      <%- include('partials/header-cms') %>
     </div>
   </body>
 </html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event aanmaken</title>
+    <link rel="stylesheet" href="../style/style-cms.css" />
+    <link rel="stylesheet" href="../style/createUser.css">
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="../img/logo.svg" alt="">
+    </header>
+    <div class="dashboard-wrapper">
+        <div class="content-wrapper">
+            <div>
+                <div class="top">
+                    <h1>Evenement aanmaken</h1>
+                </div>
+                <form action="/cms/events/create" method="POST">
+                    <div class="lft-clm">
+                        <div>
+                            <label for="title">Titel:</label>
+                            <input name="title" type="text" id="title" required>
+                        </div>
+                        <div>
+                            <label for="date">Datum:</label>
+                            <input name="date" type="date" id="date" required>
+                        </div>
+                    </div>
+
+                    <div class="rgt-clm">
+                        <div>
+                            <label for="location">Locatie:</label>
+                            <input name="location" type="text" id="location">
+                        </div>
+
+                        <div class="info">
+                            <div>
+                                <p>Event aangemaakt:</p>
+                                <p>nieuw event</p>
+                            </div>
+                            <div>
+                                <p>Status:</p>
+                                <p>nog niet opgeslagen</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input class="btn" type="submit" value="Evenement opslaan">
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

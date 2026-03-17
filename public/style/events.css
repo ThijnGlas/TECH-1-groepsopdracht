@@ -63,12 +63,8 @@ main section > .top-main{
         grid-template-columns: 1fr; /* 1 artikel per rij */
     }
 }
-/* 
-select {
-    background-color: black;
-    color: white;
-    padding: 10px 40px 10px 15px;
-} */
+
+/* ======================= filter button styling ======================= */
 
 select {
   padding: 10px 60px 10px 15px;
