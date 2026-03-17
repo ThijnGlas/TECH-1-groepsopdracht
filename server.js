@@ -50,6 +50,9 @@ app.get("/contact", (req, res) => {
 app.get("/pre-register", (req, res) => {
   res.render("pre-register");
 });
+app.get("/houserules", (req, res) => {
+  res.render("houserules");
+});
 
 
 
