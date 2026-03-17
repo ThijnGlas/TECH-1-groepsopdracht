@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Locaties</title>
+    <link rel="stylesheet" href="../style/style-cms.css" />
+  </head>
+  <body>
+    <header>
+      <img class="logo" src="../img/logo.svg" alt="" />
+    </header>
+
+    <div class="dashboard-wrapper">
+      <div class="content-wrapper">
+        <div>
+          <div class="top">
+            <h1>Locaties</h1>
+            <form action="/cms/locations" method="GET">
+              <input
+                type="text"
+                name="search"
+                placeholder="Locatie zoeken"
+                value="<%= search || '' %>"
+              />
+              <button class="btn" type="submit">Zoeken</button>
+            </form>
+            <a class="btn" href="/cms/createlocation">Locatie aanmaken</a>
+          </div>
+
+          <table>
+            <% if (locations.length > 0) { %>
+              <% locations.forEach((location, index) => { %>
+                <tr class="btn-position">
+                  <td><%= index + 1 %></td>
+                  <td><%= location.name %></td>
+                  <td><%= location.address %></td>
+                  <td><%= location.city %></td>
+                  <td><%= location.capacity %></td>
+                  <td>
+                    <a class="btn" href="/cms/locations/edit/<%= location._id %>">Locatie wijzigen</a>
+                    <form action="/cms/locations/delete/<%= location._id %>" method="POST" style="display:inline;">
+                      <button
+                        class="btn"
+                        type="submit"
+                        onclick="return confirm('Weet je zeker dat je deze locatie wilt verwijderen?')"
+                      >
+                        Verwijderen
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="6">Geen locaties gevonden.</td>
+              </tr>
+            <% } %>
+          </table>
+        </div>
+      </div>
+
+      <%- include('partials/sidebar-cms') %>
+    </div>
+  </body>
+</html>
