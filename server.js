@@ -1,17 +1,19 @@
 import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
-import path from "path";
-import usersRoutes from "./routes/users.js"; // je bestaande users router
+import usersRoutes from "./routes/users.js"; 
 import eventsRoutes from "./routes/events.js";
 import locationsRoutes from "./routes/locations.js";
+
+// import path from "path";
+// import xss from "xss";
+// const xss = require("xss");
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
-import xss from "xss";
-// const xss = require("xss");
+
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
@@ -84,7 +86,7 @@ async function start() {
     console.log("Verbonden met MongoDB");
 
     const db = client.db("CENDO");
-    
+
     app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));

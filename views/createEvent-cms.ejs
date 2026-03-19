@@ -41,15 +41,15 @@
 
                             <div class="lineup-input">
                                 <input type="text" id="lineupInput" placeholder="Artiest toevoegen">
-                                <button type="button" id="addLineupBtn">add</button>
+                                <button class="btn" type="button" id="addLineupBtn">add</button>
                             </div>
 
                             <ul id="lineupList">
                                 <% if (event && event.lineup) { %>
                                     <% event.lineup.forEach((artist) => { %>
-                                        <li>
+                                        <li class="lineup-name">
                                             <span><%= artist %></span>
-                                            <button type="button" class="removeLineup">x</button>
+                                            <button class="btn" type="button" class="removeLineup">x</button>
                                         </li>
                                     <% }) %>
                                 <% } %>
@@ -105,6 +105,7 @@
             if (!input.value.trim()) return;
 
             const li = document.createElement("li");
+            li.classList.add("lineup-name");
             li.innerHTML = `<span>${input.value}</span> <button type="button" class="removeLineup">x</button>`;
             list.appendChild(li);
 
