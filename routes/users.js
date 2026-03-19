@@ -19,9 +19,9 @@ export default function usersRoutes(db) {
 
       const newUser = {
         username,
-        email,
+        email: email.trim().toLowerCase(), 
         password: hashedPassword,
-        role: "admin",          // je kunt dit uitbreiden later
+        role: "admin",          
         createdAt: new Date(),
       };
 
@@ -46,7 +46,7 @@ router.get("/edit/:id", async (req, res) => {
     }
 
     res.render("createUser-cms", { 
-      user,      // bestaande data om in form te vullen
+      user,      
       editMode: true
     });
   } catch (err) {
