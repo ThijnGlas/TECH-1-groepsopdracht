@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style/style-cms.css" />
-    <link rel="stylesheet" href="/style/createUser.css">
+    <link rel="stylesheet" href="/style/create.css">
 </head>
 
 <body>
@@ -30,6 +30,8 @@
                             <label for="mail">Email:</label>
                             <input name="email" type="email" id="mail" value="<%= user ? user.email : '' %>" required>
                         </div>
+                        <input class="btn" type="submit" value="<%= editMode ? 'Opslaan' : 'Gebruiker opslaan' %>">
+
                     </div>
                     <div class="rgt-clm">
                         <div>
@@ -52,8 +54,8 @@
                                 </p>
                             </div>
                         </div>
+                        
                     </div>
-                    <input class="btn" type="submit" value="<%= editMode ? 'Opslaan' : 'Gebruiker opslaan' %>">
                 </form>
             </div>
         </div>
