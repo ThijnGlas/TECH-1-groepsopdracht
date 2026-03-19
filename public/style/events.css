@@ -78,6 +78,7 @@ select {
   background-position: right 12px center;
   background-size: 20px;
   background-color: black;
+  border: black 1px solid;
 }
 
 select:hover{
