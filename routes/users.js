@@ -58,13 +58,53 @@ router.get("/edit/:id", async (req, res) => {
   // --- READ all users ---
   router.get("/", async (req, res) => {
     try {
-      const users = await db.collection("users").find().toArray();
-      res.render("users-cms", { users }); // stuur users door naar EJS
+      const search = req.query.search || "";
+
+      let query = {};
+
+      if (search) {
+        query = {
+          $or: [
+            { username: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } },
+            { role: { $regex: search, $options: "i" } }
+          ]
+        };
+      }
+
+      const users = await db.collection("users").find(query).toArray();
+      res.render("users-cms", { users, search });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
       res.status(500).send("Fout bij ophalen gebruikers");
     }
   });
+
+  // ajax route
+
+  router.get("/search/ajax", async (req, res) => {
+  try {
+    const search = req.query.search || "";
+
+    let query = {};
+
+    if (search) {
+      query = {
+        $or: [
+          { username: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+          { role: { $regex: search, $options: "i" } }
+        ]
+      };
+    }
+
+    const users = await db.collection("users").find(query).toArray();
+    res.json(users);
+  } catch (err) {
+    console.error("Fout bij AJAX zoeken users:", err);
+    res.status(500).json({ error: "Fout bij zoeken" });
+  }
+});
 
   // --- UPDATE existing user ---
 router.post("/edit/:id", async (req, res) => {
