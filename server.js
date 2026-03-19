@@ -49,6 +49,11 @@ app.get("/login", (req, res) => {
 app.get("/contact", (req, res) => {
   res.render("contact");
 });
+
+app.get("/cms/createLocation", (req, res) => {
+  res.render("createLocation-cms");
+});
+
 app.get("/pre-register", (req, res) => {
   res.render("pre-register");
 });
