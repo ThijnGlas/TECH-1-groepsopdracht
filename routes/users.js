@@ -19,7 +19,7 @@ export default function usersRoutes(db) {
 
       const newUser = {
         username,
-        email,
+        email: email.trim().toLowerCase(),
         password: hashedPassword,
         role: "admin",
         createdAt: new Date(),
@@ -48,7 +48,7 @@ export default function usersRoutes(db) {
       }
 
       res.render("createUser-cms", {
-        user, // bestaande data om in form te vullen
+        user,
         editMode: true,
       });
     } catch (err) {
@@ -61,7 +61,7 @@ export default function usersRoutes(db) {
   router.get("/", async (req, res) => {
     try {
       const users = await db.collection("users").find().toArray();
-      res.render("users-cms", { users }); // stuur users door naar EJS
+      res.render("users-cms", { users });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
       res.status(500).send("Fout bij ophalen gebruikers");

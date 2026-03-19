@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locatie aanmaken</title>
+    <link rel="stylesheet" href="../style/style-cms.css" />
+    <link rel="stylesheet" href="../style/create.css">
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="../img/logo.svg" alt="">
+    </header>
+    <div class="dashboard-wrapper">
+        <div class="content-wrapper">
+            <div>
+                <div class="top">
+                    <h1>Locatie aanmaken</h1>
+                </div>
+                <form action="/cms/locations/create" method="POST">
+                    <div class="lft-clm">
+                        <div>
+                            <label for="name">Naam locatie:</label>
+                            <input name="name" type="text" id="name" required>
+                        </div>
+                        <div>
+                            <label for="address">Adres:</label>
+                            <input name="address" type="text" id="address" required>
+                        </div>
+                    </div>
+
+                    <div class="rgt-clm">
+                        <div>
+                            <label for="city">Stad:</label>
+                            <input name="city" type="text" id="city" required>
+                        </div>
+
+                        <div>
+                            <label for="capacity">Capaciteit:</label>
+                            <input name="capacity" type="number" id="capacity" required>
+                        </div>
+                    </div>
+
+                    <input class="btn" type="submit" value="Locatie opslaan">
+                </form>
+            </div>
+        </div>
+        <%- include('partials/sidebar-cms') %>
+    </div>
+</body>
+
+</html>

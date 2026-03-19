@@ -4,8 +4,10 @@ import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
 import path from "path";
-import usersRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js"; // ✅ login routes
+import usersRoutes from "./routes/users.js"; // je bestaande users router
+import eventsRoutes from "./routes/events.js";
+import locationsRoutes from "./routes/locations.js";
 
 dotenv.config();
 
@@ -79,11 +81,34 @@ app.get("/cms/events", (req, res) => {
   res.render("events-cms");
 });
 
+app.get("/cms/createLocation", (req, res) => {
+  res.render("createLocation-cms");
+});
+
+app.get("/pre-register", (req, res) => {
+  res.render("pre-register");
+});
+app.get("/houserules", (req, res) => {
+  res.render("houserules");
+});
+
 app.get("/cms/createuser", (req, res) => {
   if (!req.session.userId) return res.redirect("/cms/login"); // ✅ beveiligd
   res.render("createUser-cms", {
     editMode: false,
     user: null,
+  });
+});
+app.get("/cms/createlocation", (req, res) => {
+  res.render("createLocation-cms", {
+    editMode: false,
+    location: null,
+  });
+});
+app.get("/cms/createevent", (req, res) => {
+  res.render("createevent-cms", {
+    editMode: false,
+    event: null,
   });
 });
 
@@ -100,6 +125,10 @@ async function start() {
 
     // bestaande users CMS routes
     app.use("/cms/users", usersRoutes(db));
+
+    app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
+    app.use("/cms/events", eventsRoutes(db));
+    app.use("/cms/locations", locationsRoutes(db));
 
     app.listen(PORT, () => {
       console.log(`Server draait op http://localhost:${PORT}`);

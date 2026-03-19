@@ -57,7 +57,6 @@ h2{
 
 h3{
     font-family: 'helveticaneue', arial;
-    font-style:italic;
     font-weight: lighter;
 }
 
@@ -239,6 +238,7 @@ a:hover {
     box-sizing: border-box;
     gap: 16px;
     height: min-content;
+    border: none;
 }
 
 .btn img{
@@ -247,22 +247,8 @@ a:hover {
 }
 
 .btn-hover{
-
     background-color: var(--cendo-red);
-
 }
-
-/* HEADER */
-
-header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 50px;
-    height: 100px;
-    background-color: #fff;
-  }
   
   /* SOCIALS */
   
@@ -304,45 +290,6 @@ transition: color 0.15s ease;
   .logo img {
     height: 40px;
     display: block;
-  }
-  
-  /* HAMBURGER */
-  
-  .hamburger {
-    width: 30px;
-    height: 22px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 1100;
-  
-    background: none;
-    border: none;
-    padding: 0;
-  }
-  
-  .hamburger span {
-    display: block;
-    height: 4px;
-    width: 100%;
-    background: #000;
-    border-radius: 3px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-  }
-  
-  .hamburger.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-  
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  
-  .hamburger.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
   }
   
   /* MENU */

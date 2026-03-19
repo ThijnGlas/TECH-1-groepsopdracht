@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= editMode ? "Event aanpassen" : "Event aanmaken" %></title>
+    <link rel="stylesheet" href="/style/style-cms.css" />
+    <link rel="stylesheet" href="/style/create.css">
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="/img/logo.svg" alt="">
+    </header>
+
+    <div class="dashboard-wrapper">
+        <div class="content-wrapper">
+            <div>
+                <div class="top">
+                    <h1><%= editMode ? "Event aanpassen" : "Evenement aanmaken" %></h1>
+                </div>
+
+                <form action="<%= editMode ? '/cms/events/edit/' + event._id : '/cms/events/create' %>" method="POST">
+
+                    <div class="lft-clm">
+                        <div>
+                            <label for="title">Titel:</label>
+                            <input name="title" type="text" id="title" value="<%= event ? event.title : '' %>" required>
+                        </div>
+
+                        <div>
+                            <label for="location">Locatie:</label>
+                            <input name="location" type="text" id="location"
+                                value="<%= event ? event.location : '' %>">
+                        </div>
+
+                        <!-- LINEUP -->
+                        <div class="lineup-wrapper">
+                            <label>Lineup:</label>
+
+                            <div class="lineup-input">
+                                <input type="text" id="lineupInput" placeholder="Artiest toevoegen">
+                                <button type="button" id="addLineupBtn">add</button>
+                            </div>
+
+                            <ul id="lineupList">
+                                <% if (event && event.lineup) { %>
+                                    <% event.lineup.forEach((artist) => { %>
+                                        <li>
+                                            <span><%= artist %></span>
+                                            <button type="button" class="removeLineup">x</button>
+                                        </li>
+                                    <% }) %>
+                                <% } %>
+                            </ul>
+
+                            <input type="hidden" name="lineup" id="lineupHidden"
+                                value="<%= event && event.lineup ? event.lineup.join(',') : '' %>">
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="rgt-clm">
+                        <div>
+                            <label for="date">Datum:</label>
+                            <input name="date" type="date" id="date"
+                                value="<%= event && event.date ? event.date.toISOString().split('T')[0] : '' %>"
+                                required>
+                        </div>
+
+                        <div>
+                            <label for="eventLink">Event link:</label>
+                            <input name="eventLink" type="text" id="eventLink"
+                                value="<%= event ? event.eventLink : '' %>">
+                        </div>
+
+                        <div>
+                            <p>Event aangemaakt:</p>
+                            <p><%= event && event.createdAt ? event.createdAt.toLocaleString() : "Nieuw event" %></p>
+                        </div>
+                        <input class="btn" type="submit" value="<%= editMode ? 'Evenement opslaan' : 'Evenement opslaan' %>">
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <%- include('partials/sidebar-cms') %>
+    </div>
+
+    <script>
+        const input = document.getElementById("lineupInput");
+        const addBtn = document.getElementById("addLineupBtn");
+        const list = document.getElementById("lineupList");
+        const hidden = document.getElementById("lineupHidden");
+
+        function updateHidden() {
+            const items = [...list.querySelectorAll("li span")].map(span => span.textContent.trim());
+            hidden.value = items.join(",");
+        }
+
+        addBtn.addEventListener("click", () => {
+            if (!input.value.trim()) return;
+
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${input.value}</span> <button type="button" class="removeLineup">x</button>`;
+            list.appendChild(li);
+
+            input.value = "";
+            updateHidden();
+        });
+
+        list.addEventListener("click", (e) => {
+            if (e.target.classList.contains("removeLineup")) {
+                e.target.parentElement.remove();
+                updateHidden();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

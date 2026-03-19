@@ -92,6 +92,7 @@ a {
     align-items: center;
     box-sizing: border-box;
     gap: 16px;
+    border: none;
     height: min-content;
 }
 
@@ -202,8 +203,10 @@ form {
 
 form input[type="text"],
 form input[type="email"],
+form input[type="number"],
+form input[type="date"],
 form input[type="password"] {
-  width: 300px; /* lengte van de zoekbalk */
+  width: 300px;
   padding: 10px;
   border: 3px solid black;
   font-size: 16px;
@@ -212,7 +215,7 @@ form input[type="password"] {
 }
 
 form input[type="text"]::placeholder {
-  color: #555;
+  color: hsl(0, 0%, 20%);
 }
 
 
@@ -246,3 +249,9 @@ td, th {
 button{
    all: unset;
 }
+
+
+
+
+
+

@@ -43,6 +43,12 @@ main article {
     box-sizing: border-box;
 }
 
+.click-here {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #EB4C4B;
+}
+
 /* ======================= openklappende article styling ======================= */
 
 article.open {
