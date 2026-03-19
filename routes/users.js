@@ -21,7 +21,7 @@ export default function usersRoutes(db) {
         username,
         email,
         password: hashedPassword,
-        role: "admin",          // je kunt dit uitbreiden later
+        role: "admin",
         createdAt: new Date(),
       };
 
@@ -36,24 +36,26 @@ export default function usersRoutes(db) {
   });
 
   // --- GET edit user form ---
-router.get("/edit/:id", async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
+  router.get("/edit/:id", async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const user = await db
+        .collection("users")
+        .findOne({ _id: new ObjectId(userId) });
 
-    if (!user) {
-      return res.status(404).send("Gebruiker niet gevonden");
+      if (!user) {
+        return res.status(404).send("Gebruiker niet gevonden");
+      }
+
+      res.render("createUser-cms", {
+        user, // bestaande data om in form te vullen
+        editMode: true,
+      });
+    } catch (err) {
+      console.error("Fout bij ophalen gebruiker:", err);
+      res.status(500).send("Fout bij ophalen gebruiker");
     }
-
-    res.render("createUser-cms", { 
-      user,      // bestaande data om in form te vullen
-      editMode: true
-    });
-  } catch (err) {
-    console.error("Fout bij ophalen gebruiker:", err);
-    res.status(500).send("Fout bij ophalen gebruiker");
-  }
-});
+  });
 
   // --- READ all users ---
   router.get("/", async (req, res) => {
@@ -67,34 +69,33 @@ router.get("/edit/:id", async (req, res) => {
   });
 
   // --- UPDATE existing user ---
-router.post("/edit/:id", async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const { username, email, password } = req.body;
+  router.post("/edit/:id", async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { username, email, password } = req.body;
 
-    if (!username || !email) {
-      return res.status(400).send("Username en email zijn verplicht");
+      if (!username || !email) {
+        return res.status(400).send("Username en email zijn verplicht");
+      }
+
+      const updateData = { username, email };
+
+      if (password) {
+        // alleen update wachtwoord als er iets is ingevuld
+        const hashedPassword = await bcrypt.hash(password, 10);
+        updateData.password = hashedPassword;
+      }
+
+      await db
+        .collection("users")
+        .updateOne({ _id: new ObjectId(userId) }, { $set: updateData });
+
+      res.redirect("/cms/users");
+    } catch (err) {
+      console.error("Fout bij updaten gebruiker:", err);
+      res.status(500).send("Fout bij updaten gebruiker");
     }
-
-    const updateData = { username, email };
-
-    if (password) {
-      // alleen update wachtwoord als er iets is ingevuld
-      const hashedPassword = await bcrypt.hash(password, 10);
-      updateData.password = hashedPassword;
-    }
-
-    await db.collection("users").updateOne(
-      { _id: new ObjectId(userId) },
-      { $set: updateData }
-    );
-
-    res.redirect("/cms/users");
-  } catch (err) {
-    console.error("Fout bij updaten gebruiker:", err);
-    res.status(500).send("Fout bij updaten gebruiker");
-  }
-});
+  });
 
   // --- DELETE user ---
   router.post("/delete/:id", async (req, res) => {

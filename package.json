@@ -13,13 +13,23 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
     "dotenv": "^17.3.1",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "mongodb": "^7.1.0",
     "xss": "^1.0.15"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThijnGlas/TECH-1-groepsopdracht.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ThijnGlas/TECH-1-groepsopdracht/issues"
+  },
+  "homepage": "https://github.com/ThijnGlas/TECH-1-groepsopdracht#readme"
 }

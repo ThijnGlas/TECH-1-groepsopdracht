@@ -3,14 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style/style.css">
+    <title>Login CMS</title>
+    <link rel="stylesheet" href="/style/style-cms.css" />
+    <link rel="stylesheet" href="../style/login-cms.css"> 
+     
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 </head>
 <body>
-    <%- include('partials/header') %>
-    <main>
+    <%- include('partials/header-cms') %>
 
+    <main class="login-wrapper">
+        <h1>Login CMS</h1>
+
+        <!-- Foutmelding als login mislukt -->
+        <% if (typeof error !== 'undefined') { %>
+            <p class="error"><%= error %></p>
+        <% } %>
+
+        <!-- Login formulier -->
+        <form method="POST" action="/cms/login" class="login-form">
+  <label for="email">E-mail</label>
+  <input type="email" id="email" name="email" placeholder="E-mail" required>
+
+  <label for="password">Wachtwoord</label>
+  <input type="password" id="password" name="password" placeholder="Wachtwoord" required>
+
+  <button type="submit">Login</button>
+</form>
+
+<% if (typeof error !== 'undefined') { %>
+  <p class="error"><%= error %></p>
+<% } %>
     </main>
-    <%- include('partials/footer') %>
 </body>
 </html>
