@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/style-cms.css" />
+    <link rel="stylesheet" href="/style/createUser.css">
+</head>
+
+<body>
+    <%- include('partials/header-cms') %>
+    <div class="dashboard-wrapper">
+        <div class="content-wrapper">
+            <div>
+                <div class="top">
+                    <h1>Nieuwe artiest aanmaken</h1>
+                    <a class="btn" href="/cms/artists">Terug naar overzicht</a>
+                </div>
+                <form action="/cms/artists/create" method="POST" enctype="multipart/form-data">
+                    <div class="lft-clm">
+                        <div>
+                            <label for="naam">Naam artiest:</label>
+                            <input name="name" type="text" id="naam" required>
+                        </div>
+                        <div>
+                            <label for="photo">Foto:</label>
+                            <input name="photo" type="file" id="photo" accept="image/*" required>
+                        </div>
+                    </div>
+                    <input class="btn" type="submit" value="Artiest opslaan">
+                </form>
+            </div>
+        </div>
+        <%- include('partials/sidebar-cms') %>
+    </div>
+</body>
+
+</html>
