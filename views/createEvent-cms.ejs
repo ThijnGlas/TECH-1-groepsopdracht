@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= editMode ? "Event aanpassen" : "Event aanmaken" %></title>
     <link rel="stylesheet" href="/style/style-cms.css" />
-    <link rel="stylesheet" href="/style/createUser.css">
+    <link rel="stylesheet" href="/style/create.css">
 </head>
 
 <body>
@@ -30,26 +30,10 @@
                         </div>
 
                         <div>
-                            <label for="date">Datum:</label>
-                            <input name="date" type="date" id="date"
-                                value="<%= event && event.date ? event.date.toISOString().split('T')[0] : '' %>"
-                                required>
-                        </div>
-
-                        <div>
                             <label for="location">Locatie:</label>
                             <input name="location" type="text" id="location"
                                 value="<%= event ? event.location : '' %>">
                         </div>
-
-                        <div>
-                            <label for="eventLink">Event link:</label>
-                            <input name="eventLink" type="text" id="eventLink"
-                                value="<%= event ? event.eventLink : '' %>">
-                        </div>
-                    </div>
-
-                    <div class="rgt-clm">
 
                         <!-- LINEUP -->
                         <div class="lineup-wrapper">
@@ -75,23 +59,35 @@
                                 value="<%= event && event.lineup ? event.lineup.join(',') : '' %>">
                         </div>
 
-                        <!-- INFO -->
-                        <div class="info">
-                            <div>
-                                <p>Event aangemaakt:</p>
-                                <p><%= event && event.createdAt ? event.createdAt.toLocaleString() : "Nieuw event" %></p>
-                            </div>
-                            <div>
-                                <p>Status:</p>
-                                <p><%= editMode ? "Bewerken" : "Nog niet opgeslagen" %></p>
-                            </div>
-                        </div>
+                        
                     </div>
 
-                    <input class="btn" type="submit" value="<%= editMode ? 'Evenement opslaan' : 'Evenement opslaan' %>">
+                    <div class="rgt-clm">
+                        <div>
+                            <label for="date">Datum:</label>
+                            <input name="date" type="date" id="date"
+                                value="<%= event && event.date ? event.date.toISOString().split('T')[0] : '' %>"
+                                required>
+                        </div>
+
+                        <div>
+                            <label for="eventLink">Event link:</label>
+                            <input name="eventLink" type="text" id="eventLink"
+                                value="<%= event ? event.eventLink : '' %>">
+                        </div>
+
+                        <div>
+                            <p>Event aangemaakt:</p>
+                            <p><%= event && event.createdAt ? event.createdAt.toLocaleString() : "Nieuw event" %></p>
+                        </div>
+                        <input class="btn" type="submit" value="<%= editMode ? 'Evenement opslaan' : 'Evenement opslaan' %>">
+
+                    </div>
+
                 </form>
             </div>
         </div>
+        <%- include('partials/sidebar-cms') %>
     </div>
 
     <script>

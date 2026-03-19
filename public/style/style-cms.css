@@ -204,6 +204,7 @@ form {
 form input[type="text"],
 form input[type="email"],
 form input[type="number"],
+form input[type="date"],
 form input[type="password"] {
   width: 300px;
   padding: 10px;
@@ -214,7 +215,7 @@ form input[type="password"] {
 }
 
 form input[type="text"]::placeholder {
-  color: #555;
+  color: hsl(0, 0%, 20%);
 }
 
 
@@ -248,8 +249,6 @@ td, th {
 button{
    all: unset;
 }
-
-
 
 
 
