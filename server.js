@@ -5,6 +5,7 @@ import path from "path";
 import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
 import locationsRoutes from "./routes/locations.js";
+import artistsRoutes from "./routes/artists.js";
 
 dotenv.config();
 
@@ -39,9 +40,6 @@ app.get("/events", (req, res) => {
 });
 app.get("/huisregels", (req, res) => {
   res.render("huisregels");
-});
-app.get("/artists", (req, res) => {
-  res.render("artists");
 });
 app.get("/login", (req, res) => {
   res.render("login-cms");
@@ -80,6 +78,12 @@ app.get("/cms/createevent", (req, res) => {
     event: null
   });
 });
+app.get("/cms/createartist", (req, res) => {
+  res.render("createArtist-cms", {
+    editMode: false,
+    artist: null
+  });
+});
 
 
 // --- Users routes via users.js ---
@@ -89,9 +93,21 @@ async function start() {
     console.log("Verbonden met MongoDB");
 
     const db = client.db("CENDO");
+<<<<<<< Ruben-dev
+
+    // ↓ hier toevoegen
+    app.get("/artists", async (req, res) => {
+      const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
+      res.render("artists", { artists });
+    });
+
+    app.use("/cms/users", usersRoutes(db));
+=======
     
     app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
+>>>>>>> main
     app.use("/cms/events", eventsRoutes(db));
+    app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
 
     app.listen(PORT, () => {

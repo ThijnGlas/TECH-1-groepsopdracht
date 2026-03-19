@@ -226,6 +226,7 @@ table {
   width: 100%;
   border: 3px #000000 solid;
   margin-top: 2em;
+  margin-bottom: 4em;
 }
 
 td, th {

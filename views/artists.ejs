@@ -1,51 +1,99 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/artists.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <title>Document</title>
-  </head>
-  <body>
-    <%- include('partials/header') %>
-    <img src="img/complete-artists-bg-vec.png" class="bg-img" alt="background">
-    <main>
-      <section>
-        <article class="content-box">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./style/artists.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>Document</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <img src="img/complete-artists-bg-vec.png" class="bg-img" alt="background">
+  <img id="artist-hover-img" src="" alt="" />
+  <main>
+    <section>
+      <article class="content-box">
+        <h2>COMPLETE ARTISTS</h2>
+        <p class="a-tot-z">(A-Z)</p>
+        <p class="artists">
+          <% artists.forEach((artist, index) => { %>
+            <% const positionInRow = index % 5; %>
+            <% const isRed = positionInRow % 2 === 1; %>
+            <% const isLastInRow = (index + 1) % 5 === 0; %>
+            <% const isLast = index === artists.length - 1; %>
+            <span class="artist-name <%= isRed ? 'red' : '' %>" data-photo="<%= artist.photoPath %>">
+              <%= artist.name %>
+            </span>
+            <% if (!isLast) { %>
+              <% if (isLastInRow) { %><br><% } else { %> · <% } %>
+            <% } %>
+          <% }) %>
+        </p>
+      </article>
+    </section>
+  </main>
+  <%- include('partials/footer') %>
 
-            <h2>COMPLETE ARTISTS</h2>
-            <p>(A-Z)</p>
+  <script>
+    const hoverImg = document.querySelector("#artist-hover-img");
+    const artistNames = document.querySelectorAll(".artist-name");
 
-            <p class="artists">
-                AAT • <span>Anil Aras</span> • Benny Rodrigues • <span>Boss Priester</span> • Easttown
-                <br>
-                <span>Hidde van wee</span> • Jamback • <span>Jesse Maas</span> • Job de Jong • <span>Julian Anthony</span>
-                <br>
-                Julian Fijma • <span>L.P. Rhythm</span> • Lasse Top • <span>Locklead</span> • Loek van Loenen
-                <br>
-                <span>Luuk van Dijk</span> • M-High • <span>Marsolo</span> • Michel de Hey • <span>Prunk</span>
-                <br>
-                Robbie Doherty • <span>Rooléh</span> • Ruben Verhoeven • <span>Samuel Deep</span> • Thijn Glas
-            </p>
+    let muisX = 0;
+    let muisY = 0;
+    let hoverX = 0;
+    let hoverY = 0;
+    let verbergTimeout = null;
+    let verbergDisplayTimeout = null;
 
-            <h2 class="h2venues">VENUES</h2>
-            <p>(A-Z)</p>
+    artistNames.forEach(function(name) {
+      name.addEventListener("mouseenter", function() {
+        clearTimeout(verbergTimeout);
+        clearTimeout(verbergDisplayTimeout);
+        hoverImg.src = name.dataset.photo;
+        hoverImg.style.display = "block";
+        hoverImg.classList.add("zichtbaar");
+        name.classList.add("hovered");
 
-            <p class="venues">
-                BRET • <span>Gashouder</span> • Helling 7 • <span>Lagerwal</span> • Levenslang
-                • <span>Lofi</span> • Paradiso 
-                <br> 
-                <span>Parallel</span> • Sieraad • <span>Tivoli</span> • Westweelde
-            </p>
+        artistNames.forEach(function(other) {
+          if (other !== name) {
+            other.style.zIndex = "0";
+          }
+        });
+      });
 
-        </article>
-      </section>
-    </main>
-    <%- include('partials/footer') %>
-  </body>
+      name.addEventListener("mouseleave", function() {
+        name.classList.remove("hovered");
+
+        artistNames.forEach(function(other) {
+          other.style.zIndex = "";
+        });
+
+        verbergTimeout = setTimeout(function() {
+          hoverImg.classList.remove("zichtbaar");
+          verbergDisplayTimeout = setTimeout(function() {
+            hoverImg.style.display = "none";
+            hoverImg.src = "";
+          }, 300);
+        }, 50);
+      });
+    });
+
+    document.addEventListener("mousemove", function(e) {
+      muisX = e.clientX;
+      muisY = e.clientY;
+    });
+
+    function beweegFoto() {
+      hoverX = hoverX + (muisX - hoverX) * 0.08;
+      hoverY = hoverY + (muisY - hoverY) * 0.08;
+      hoverImg.style.left = hoverX + "px";
+      hoverImg.style.top = hoverY + "px";
+      requestAnimationFrame(beweegFoto);
+    }
+
+    beweegFoto();
+  </script>
+</body>
 </html>
