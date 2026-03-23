@@ -3,7 +3,7 @@ import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
-import path from "path";
+// import path from "path";
 import authRoutes from "./routes/auth.js"; // login routes
 import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
@@ -19,7 +19,7 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
-import xss from "xss";
+// import xss from "xss";
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
@@ -120,9 +120,8 @@ async function start() {
     app.use("/events", publicEventsRoutes(db));
 
     app.use("/cms", authRoutes(db));
-    app.use("/cms", authRoutes(db));
-    app.use("/cms/users", usersRoutes(db));
     app.use("/cms/events", eventsRoutes(db));
+    app.use("/cms/users", usersRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
 
