@@ -37,126 +37,32 @@
           </div>
         </div>
         <div class="event-wrapper">
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
+          <% events.forEach(event => { %>
+            <article class="event" onclick="location.href='/event/<%= event._id %>'">
+              <img src="/uploads/events/<%= event.imageSmall %>" alt="<%= event.title %>" />
+        
+              <div>
+                <div class="event-naam">
+                  <h2><%= event.title %></h2>
+        
+                  <div class="event-beschrijving">
+                    <p><%= event.locationData.name %></p>
+                    <p>
+                      <%= new Date(event.date).toLocaleDateString("en-US", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                      }) %>
+                    </p>
+                  </div>
                 </div>
+        
+                <a class="btn" href="<%= event.eventLink %>">
+                  Tickets <img src="/img/arrow.svg" alt="arrow" />
+                </a>
               </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
-          <article class="event" onclick="location.href = '/evenement'">
-            <img src="./img/lagerwal.png" alt="foto van lagerwal" />
-            <div>
-              <div class="event-naam">
-                <h2>Lagerwal</h2>
-                <div class="event-beschrijving">
-                  <p>Amsterdam-Noord</p>
-                  <p>21 July 2026</p>
-                </div>
-              </div>
-              <a class="btn" href=""
-                >Tickets <img src="./img/arrow.svg" alt="arrow"
-              /></a>
-            </div>
-          </article>
+            </article>
+          <% }) %>
         </div>
       </section>
     </main>

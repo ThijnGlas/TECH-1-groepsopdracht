@@ -115,11 +115,10 @@ header{
     background-color: white;
 }
 
-.logo{
-    height:40px;
-    width: 105px;
-    display: block;
-  }
+.logo {
+  height: 30px;
+  display: block;
+}
 
   .menu{
     background-color: white;
