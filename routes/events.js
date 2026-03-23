@@ -1,6 +1,6 @@
 import express from "express";
 import { ObjectId } from "mongodb";
-import { upload } from "../config/multer.js";
+import { uploadEvent } from "../config/multer.js";
 
 export default function eventsRoutes(db) {
   const router = express.Router();
@@ -8,10 +8,10 @@ export default function eventsRoutes(db) {
   // -------------------------------------------------------
   // GET: Event aanmaken
   // -------------------------------------------------------
-  router.get("/create", async (req, res) => {
+  router.get("/createevent", async (req, res) => {
     const locations = await db.collection("locations").find().toArray();
-
-    res.render("createEvent-cms", {
+  
+    res.render("createevent-cms", {
       editMode: false,
       event: null,
       locations
@@ -23,7 +23,7 @@ export default function eventsRoutes(db) {
   // -------------------------------------------------------
   router.post(
     "/create",
-    upload.fields([
+    uploadEvent.fields([
       { name: "imageSmall", maxCount: 1 },
       { name: "imageLarge", maxCount: 1 }
     ]),
@@ -50,7 +50,7 @@ export default function eventsRoutes(db) {
         await db.collection("events").insertOne(newEvent);
         res.redirect("/cms/events");
       } catch (err) {
-        console.error(err);
+        console.error("Fout bij aanmaken event:", err);
         res.status(500).send("Fout bij aanmaken event");
       }
     }
@@ -66,7 +66,7 @@ export default function eventsRoutes(db) {
 
     const locations = await db.collection("locations").find().toArray();
 
-    res.render("createEvent-cms", {
+    res.render("createevent-cms", {
       editMode: true,
       event,
       locations
@@ -78,7 +78,7 @@ export default function eventsRoutes(db) {
   // -------------------------------------------------------
   router.post(
     "/edit/:id",
-    upload.fields([
+    uploadEvent.fields([
       { name: "imageSmall", maxCount: 1 },
       { name: "imageLarge", maxCount: 1 }
     ]),
@@ -113,7 +113,7 @@ export default function eventsRoutes(db) {
 
         res.redirect("/cms/events");
       } catch (err) {
-        console.error(err);
+        console.error("Fout bij updaten event:", err);
         res.status(500).send("Fout bij updaten event");
       }
     }

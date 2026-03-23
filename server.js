@@ -60,8 +60,6 @@ app.get("/pre-register", (req, res) => {
 app.get("/houserules", (req, res) => {
   res.render("houserules");
 });
-
-
 app.get("/cms/createuser", (req, res) => {
   res.render("createUser-cms", {
     editMode: false,
@@ -74,12 +72,6 @@ app.get("/cms/createlocation", (req, res) => {
     location: null
   });
 });
-app.get("/cms/createevent", (req, res) => {
-  res.render("createevent-cms", {
-    editMode: false,
-    event: null
-  });
-});
 app.get("/cms/createartist", (req, res) => {
   res.render("createArtist-cms", {
     editMode: false,
@@ -88,7 +80,7 @@ app.get("/cms/createartist", (req, res) => {
 });
 
 
-// --- Users routes via users.js ---
+
 async function start() {
   try {
     await client.connect();
@@ -96,13 +88,14 @@ async function start() {
 
     const db = client.db("CENDO");
 
-    // hier toevoegen
     app.get("/artists", async (req, res) => {
       const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
       res.render("artists", { artists });
     });
 
-    app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
+    // ✔ ALLE CMS ROUTES
+    app.use("/cms", eventsRoutes(db));      
+    app.use("/cms/users", usersRoutes(db));
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
@@ -114,5 +107,8 @@ async function start() {
     console.error("Fout bij starten:", err.message);
   }
 }
+
+start();
+
 
 start();

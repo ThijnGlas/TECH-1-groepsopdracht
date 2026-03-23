@@ -21,7 +21,8 @@
                     <h1><%= editMode ? "Event aanpassen" : "Evenement aanmaken" %></h1>
                 </div>
 
-                <form action="<%= editMode ? '/cms/events/edit/' + event._id : '/cms/events/create' %>" method="POST">
+                <form action="<%= editMode ? '/cms/events/edit/' + event._id : '/cms/events/create' %>" 
+                      method="POST" enctype="multipart/form-data">
 
                     <div class="lft-clm">
                         <div>
@@ -81,6 +82,26 @@
                             <label for="eventLink">Event link:</label>
                             <input name="eventLink" type="text" id="eventLink"
                                 value="<%= event ? event.eventLink : '' %>">
+                        </div>
+
+                        <!-- KLEINE AFBEELDING -->
+                        <div>
+                            <label>Kleine afbeelding:</label>
+                            <input type="file" name="imageSmall" accept="image/*">
+
+                            <% if (event && event.imageSmall) { %>
+                                <img src="/uploads/events/<%= event.imageSmall %>" width="120">
+                            <% } %>
+                        </div>
+
+                        <!-- GROTE AFBEELDING -->
+                        <div>
+                            <label>Grote afbeelding:</label>
+                            <input type="file" name="imageLarge" accept="image/*">
+
+                            <% if (event && event.imageLarge) { %>
+                                <img src="/uploads/events/<%= event.imageLarge %>" width="200">
+                            <% } %>
                         </div>
 
                         <div>
