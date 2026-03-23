@@ -25,6 +25,8 @@
             <a class="btn" href="/cms/createlocation">Locatie aanmaken</a>
           </div>
 
+          <!-- table content -->
+
           <table>
             <tbody id="locations-table-body">
             <% if (locations.length > 0) { %>
@@ -32,7 +34,16 @@
                 <tr class="btn-position">
                   <td><%= index + 1 %></td>
                   <td><%= location.name %></td>
-                  <td><%= location.address %></td>
+                  <td>
+                    <a
+                      class="address-link"
+                      href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(location.address + ', ' + location.city) %>"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <%= location.address %>
+                    </a>
+                  </td>
                   <td><%= location.city %></td>
                   <td><%= location.capacity %></td>
                   <td>
@@ -58,6 +69,8 @@
           </table>
         </div>
       </div>
+
+      <!-- AJAX code -->
 
       <%- include('partials/sidebar-cms') %>
     </div>
@@ -85,7 +98,16 @@
             <tr class="btn-position">
               <td>${index + 1}</td>
               <td>${location.name}</td>
-              <td>${location.address}</td>
+              <td>
+                <a
+                  class="address-link"
+                  href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address + ', ' + location.city)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ${location.address}
+                </a>
+              </td>
               <td>${location.city}</td>
               <td>${location.capacity}</td>
               <td>
