@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/evenement.css" />
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/evenement.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -16,27 +16,38 @@
     <main>
       <section>
         <div class="buttons-naast-elklaar">
-          <a href="/events" class="btn-evenementen1"><img src="./img/arrow.svg" alt="arrow"> Back to events overview</a>
-          <a href="" class="btn-evenementen2">Get tickets <img src="./img/arrow.svg" alt="arrow"></a>
+          <a href="/events" class="btn-evenementen1"><img src="../img/arrow.svg" alt="arrow"> Back to events overview</a>
+          <a href="<%= event.eventLink %>" class="btn-evenementen2">
+            Get tickets <img src="../img/arrow.svg" alt="arrow">
+          </a>
         </div>
         <article class="event-card">
           <div class="event-content">
-            <h1>Lagerwal</h1>
+            <h1><%= event.title %></h1>
             <div class="event-info">
-              <p>3 August 2026, 16:00 - 23:00</p>
-              <p>Amsterdam-Noord</p>
+              <!-- <a href="<%= event.locationData.addresslink %>"><%= event.locationData.address %></a> -->
+              <p><%= event.locationData.address %></p>
+              <p>
+                <%= new Date(event.date).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric"
+                }) %>
+              </p>
+            
+             
             </div>
             <div class="line-up">
-              <p>Ruben Verhoeven B2B Thijn Glas</p>
-              <p>Lasse top</p>
-              <p>Job de Jong</p>
-              <p>Rooléh</p> 
-            </div>
+              <% event.lineup.forEach(item => { %>
+                <p><%= item %></p>
+              <% }) %>
+            </div>            
           </div>
 
           <div class="event-image-wrapper">
-            <img src="./img/lagerwal-groot.png" alt="foto van lagerwal">
+            <img src="/uploads/events/<%= event.imageLarge %>" alt="<%= event.title %>">
           </div>
+          
         </article>
       </section>
     </main>

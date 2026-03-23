@@ -7,10 +7,10 @@ export default function usersRoutes(db) {
 
   const usersCollection = db.collection("users");
 
-  // --- Middleware voor beveiliging ✅ toegevoegd ---
+  // --- Middleware voor beveiliging toegevoegd ---
   function checkAuth(req, res, next) {
     if (!req.session.userId) {
-      return res.redirect("/cms/login"); // stuur niet-ingelogde gebruiker naar login
+      return res.redirect("/cms/login"); 
     }
     next();
   }
@@ -70,7 +70,10 @@ export default function usersRoutes(db) {
     // ✅ checkAuth toegevoegd
     try {
       const users = await usersCollection.find().toArray();
-      res.render("users-cms", { users });
+      res.render("users-cms", {
+        users,
+        search: ""   // <— DIT IS WAT JE MIST
+      });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
       res.status(500).send("Fout bij ophalen gebruikers");

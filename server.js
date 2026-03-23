@@ -7,6 +7,7 @@ import path from "path";
 import authRoutes from "./routes/auth.js"; // login routes
 import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
+import publicEventsRoutes from "./routes/events-public.js";
 import locationsRoutes from "./routes/locations.js";
 import artistsRoutes from "./routes/artists.js";
 
@@ -55,13 +56,6 @@ app.get("/faq", (req, res) => {
   res.render("FAQ");
 });
 
-app.get("/evenement", (req, res) => {
-  res.render("evenement");
-});
-
-app.get("/events", (req, res) => {
-  res.render("events");
-});
 
 app.get("/huisregels", (req, res) => {
   res.render("huisregels");
@@ -81,10 +75,6 @@ app.get("/contact", (req, res) => {
 });
 
 // --- CMS routes ---
-app.get("/cms/events", (req, res) => {
-  if (!req.session.userId) return res.redirect("/cms/login");
-  res.render("events-cms");
-});
 
 app.get("/cms/createLocation", (req, res) => {
   res.render("createLocation-cms");
@@ -126,16 +116,16 @@ async function start() {
 
     const db = client.db("CENDO");
 
-    // LOGIN ROUTES (nieuw)
+    app.use("/event", publicEventsRoutes(db));
+    app.use("/events", publicEventsRoutes(db));
+
     app.use("/cms", authRoutes(db));
-
-    // bestaande users CMS routes
+    app.use("/cms", authRoutes(db));
     app.use("/cms/users", usersRoutes(db));
-
-    app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
+
 
     app.listen(PORT, () => {
       console.log(`Server draait op http://localhost:${PORT}`);
