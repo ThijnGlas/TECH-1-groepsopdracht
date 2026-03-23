@@ -29,6 +29,34 @@ export default function locationsRoutes(db) {
     }
   });
 
+  // --- AJAX search ---
+  router.get("/search/ajax", async (req, res) => {
+    try {
+      const search = req.query.search || "";
+      console.log("AJAX zoekopdracht:", search);
+
+      let query = {};
+
+      if (search) {
+        query = {
+          $or: [
+            { name: { $regex: search, $options: "i" } },
+            { address: { $regex: search, $options: "i" } },
+            { city: { $regex: search, $options: "i" } }
+          ]
+        };
+      }
+
+      const locations = await db.collection("locations").find(query).toArray();
+      console.log("Gevonden locaties:", locations.length);
+
+      res.json(locations);
+    } catch (err) {
+      console.error("Fout bij AJAX zoeken locaties:", err);
+      res.status(500).json({ error: "Fout bij zoeken" });
+    }
+  });
+
   // --- READ all locations ---
   router.get("/", async (req, res) => {
     try {
@@ -37,7 +65,11 @@ export default function locationsRoutes(db) {
 
       if (search) {
         query = {
-          name: { $regex: search, $options: "i" }
+          $or: [
+            { name: { $regex: search, $options: "i" } },
+            { address: { $regex: search, $options: "i" } },
+            { city: { $regex: search, $options: "i" } }
+          ]
         };
       }
 
@@ -101,7 +133,9 @@ export default function locationsRoutes(db) {
   router.post("/delete/:id", async (req, res) => {
     try {
       const locationId = req.params.id;
-      await db.collection("locations").deleteOne({ _id: new ObjectId(locationId) });
+      await db.collection("locations").deleteOne({
+        _id: new ObjectId(locationId)
+      });
       res.redirect("/cms/locations");
     } catch (err) {
       console.error("Fout bij verwijderen locatie:", err);

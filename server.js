@@ -8,6 +8,11 @@ import authRoutes from "./routes/auth.js"; // login routes
 import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
 import locationsRoutes from "./routes/locations.js";
+import artistsRoutes from "./routes/artists.js";
+
+// import path from "path";
+// import xss from "xss";
+// const xss = require("xss");
 
 dotenv.config();
 
@@ -105,14 +110,15 @@ app.get("/cms/createlocation", (req, res) => {
     location: null,
   });
 });
-app.get("/cms/createevent", (req, res) => {
-  res.render("createevent-cms", {
+app.get("/cms/createartist", (req, res) => {
+  res.render("createArtist-cms", {
     editMode: false,
-    event: null,
+    artist: null
   });
 });
 
-// --- Start server + routes ---
+
+
 async function start() {
   try {
     await client.connect();
@@ -128,6 +134,7 @@ async function start() {
 
     app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
     app.use("/cms/events", eventsRoutes(db));
+    app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
 
     app.listen(PORT, () => {

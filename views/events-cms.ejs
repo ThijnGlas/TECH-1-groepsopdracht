@@ -28,7 +28,8 @@
                 <td><%= index + 1 %></td>
                 <td><%= event.title %></td>
                 <td><%= new Date(event.date).toLocaleDateString('nl-NL') %></td>
-                <td><%= event.location || 'Geen locatie' %></td>
+                <td><%= event.locationData.name %></td>
+                <td><%= event.status %></td>
                 <td>
                   <a class="btn" href="/cms/events/edit/<%= event._id %>">Evenement wijzigen</a>
                   <form action="/cms/events/delete/<%= event._id %>" method="POST" style="display:inline;">

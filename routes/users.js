@@ -77,6 +77,32 @@ export default function usersRoutes(db) {
     }
   });
 
+  // ajax route
+
+  router.get("/search/ajax", async (req, res) => {
+  try {
+    const search = req.query.search || "";
+
+    let query = {};
+
+    if (search) {
+      query = {
+        $or: [
+          { username: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+          { role: { $regex: search, $options: "i" } }
+        ]
+      };
+    }
+
+    const users = await db.collection("users").find(query).toArray();
+    res.json(users);
+  } catch (err) {
+    console.error("Fout bij AJAX zoeken users:", err);
+    res.status(500).json({ error: "Fout bij zoeken" });
+  }
+});
+
   // --- UPDATE existing user ---
   router.post("/edit/:id", checkAuth, async (req, res) => {
     // ✅ checkAuth toegevoegd

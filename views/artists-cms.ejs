@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/style-cms.css" />
+</head>
+
+<body>
+    <%- include('partials/header-cms') %>
+    <div class="dashboard-wrapper">
+        <div class="content-wrapper">
+            <div>
+                <div class="top">
+                    <h1>Artiesten</h1>
+                    <a class="btn" href="/cms/createartist">Artiest aanmaken</a>
+                </div>
+                <table>
+                    <% artists.forEach((artist, index) => { %>
+                        <tr class="btn-position">
+                            <td><%= index + 1 %></td>
+                           
+                            <td><%= artist.name %></td>
+                            <td>
+                                <a class="btn" href="/cms/artists/edit/<%= artist._id %>">Artiest wijzigen</a>
+                                <form action="/cms/artists/delete/<%= artist._id %>" method="POST" style="display:inline;">
+                                    <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')">Verwijderen</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
+            </div>
+        </div>
+        <%- include('partials/sidebar-cms') %>
+    </div>
+</body>
+
+</html>

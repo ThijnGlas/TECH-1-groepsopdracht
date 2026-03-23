@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Locatie aanpassen</title>
     <link rel="stylesheet" href="/style/style-cms.css" />
-    <link rel="stylesheet" href="/style/createUser.css">
+    <link rel="stylesheet" href="/style/create.css">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
                     <h1>Locatie aanpassen</h1>
                 </div>
                 <form action="/cms/locations/edit/<%= location._id %>" method="POST">
-                    <div>
+                    <div class="lft-clm">
                         <div>
                             <label for="name">Naam locatie:</label>
                             <input name="name" type="text" id="name" value="<%= location.name %>" required>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="rgt-clm">
                         <div>
                             <label for="city">Stad:</label>
                             <input name="city" type="text" id="city" value="<%= location.city %>" required>
@@ -39,9 +39,10 @@
 
                         <div>
                             <label for="capacity">Capaciteit:</label>
-                            <input name="capacity" type="number" id="capacity" value="<%= location.capacity %>" required>
+                            <input name="capacity" type="number"  value="<%= location.capacity %>" id="capacity" required>
                         </div>
                     </div>
+                
                     <input class="btn" type="submit" value="Locatie opslaan">
                 </form>
             </div>
