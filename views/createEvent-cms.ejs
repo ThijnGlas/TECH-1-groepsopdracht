@@ -29,10 +29,19 @@
                             <input name="title" type="text" id="title" value="<%= event ? event.title : '' %>" required>
                         </div>
 
+                        <!-- LOCATIE SELECT -->
                         <div>
                             <label for="location">Locatie:</label>
-                            <input name="location" type="text" id="location"
-                                value="<%= event ? event.location : '' %>">
+                            <select name="location" id="location" required>
+                                <option value="">Kies een locatie</option>
+
+                                <% locations.forEach(loc => { %>
+                                    <option value="<%= loc._id %>"
+                                        <%= event && event.location == loc._id.toString() ? "selected" : "" %>>
+                                        <%= loc.name %>
+                                    </option>
+                                <% }) %>
+                            </select>
                         </div>
 
                         <!-- LINEUP -->
@@ -49,7 +58,7 @@
                                     <% event.lineup.forEach((artist) => { %>
                                         <li class="lineup-name">
                                             <span><%= artist %></span>
-                                            <button class="btn" type="button" class="removeLineup">x</button>
+                                            <button type="button" class="removeLineup">x</button>
                                         </li>
                                     <% }) %>
                                 <% } %>
@@ -58,8 +67,6 @@
                             <input type="hidden" name="lineup" id="lineupHidden"
                                 value="<%= event && event.lineup ? event.lineup.join(',') : '' %>">
                         </div>
-
-                        
                     </div>
 
                     <div class="rgt-clm">
@@ -80,13 +87,19 @@
                             <p>Event aangemaakt:</p>
                             <p><%= event && event.createdAt ? event.createdAt.toLocaleString() : "Nieuw event" %></p>
                         </div>
-                        <input class="btn" type="submit" value="<%= editMode ? 'Evenement opslaan' : 'Evenement opslaan' %>">
+
+                        <!-- STATUS KNOPPEN -->
+                        <div class="status-buttons">
+                            <button class="btn" name="status" value="concept" type="submit">Opslaan als concept</button>
+                            <button class="btn" name="status" value="gepubliceerd" type="submit">Publiceren</button>
+                        </div>
 
                     </div>
 
                 </form>
             </div>
         </div>
+
         <%- include('partials/sidebar-cms') %>
     </div>
 
