@@ -25,88 +25,93 @@
             <a class="btn" href="/cms/createlocation">Locatie aanmaken</a>
           </div>
 
-          <!-- table content -->
-
           <table>
             <tbody id="locations-table-body">
-            <% if (locations.length > 0) { %>
-              <% locations.forEach((location, index) => { %>
-                <tr class="btn-position">
-                  <td><%= index + 1 %></td>
-                  <td><%= location.name %></td>
-                  <td>
-                    <a
-                      class="address-link"
-                      href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(location.address + ', ' + location.city) %>"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <%= location.address %>
-                    </a>
-                  </td>
-                  <td><%= location.city %></td>
-                  <td><%= location.capacity %></td>
-                  <td>
-                    <a class="btn" href="/cms/locations/edit/<%= location._id %>">Locatie wijzigen</a>
-                    <form action="/cms/locations/delete/<%= location._id %>" method="POST" style="display:inline;">
-                      <button
-                        class="btn"
-                        type="submit"
-                        onclick="return confirm('Weet je zeker dat je deze locatie wilt verwijderen?')"
-                      >
-                        Verwijderen
-                      </button>
-                    </form>
-                  </td>
+              <% if (locations.length > 0) { %>
+                <% locations.forEach((location, index) => { %>
+                  <tr class="btn-position">
+                    <td><%= index + 1 %></td>
+                    <td><%= location.name %></td>
+                    <td>
+                      <% if (location.mapsLink) { %>
+                        <a
+                          class="address-link"
+                          href="<%= location.mapsLink %>"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <%= location.address %>
+                        </a>
+                      <% } else { %>
+                        <%= location.address %>
+                      <% } %>
+                    </td>
+                    <td><%= location.city %></td>
+                    <td><%= location.capacity %></td>
+                    <td>
+                      <a class="btn" href="/cms/locations/edit/<%= location._id %>">Locatie wijzigen</a>
+                      <form action="/cms/locations/delete/<%= location._id %>" method="POST" style="display:inline;">
+                        <button
+                          class="btn"
+                          type="submit"
+                          onclick="return confirm('Weet je zeker dat je deze locatie wilt verwijderen?')"
+                        >
+                          Verwijderen
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="6">Geen locaties gevonden.</td>
                 </tr>
-              <% }) %>
-            <% } else { %>
-              <tr>
-                <td colspan="6">Geen locaties gevonden.</td>
-              </tr>
-            <% } %>
+              <% } %>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- AJAX code -->
-
       <%- include('partials/sidebar-cms') %>
     </div>
+
     <script>
       const searchInput = document.getElementById("location-search");
       const tableBody = document.getElementById("locations-table-body");
 
       searchInput.addEventListener("input", async function () {
-      const searchValue = searchInput.value;
+        const searchValue = searchInput.value;
 
-      try {
-      const response = await fetch(`/cms/locations/search/ajax?search=${encodeURIComponent(searchValue)}`);
-      const locations = await response.json();
+        try {
+          const response = await fetch(`/cms/locations/search/ajax?search=${encodeURIComponent(searchValue)}`);
+          const locations = await response.json();
 
-      if (!locations.length) {
-        tableBody.innerHTML = `
-          <tr>
-            <td colspan="6">Geen locaties gevonden.</td>
-          </tr>
-        `;
-        return;
-      }
+          if (!locations.length) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="6">Geen locaties gevonden.</td>
+              </tr>
+            `;
+            return;
+          }
 
-      tableBody.innerHTML = locations.map((location, index) => `
+          tableBody.innerHTML = locations.map((location, index) => `
             <tr class="btn-position">
               <td>${index + 1}</td>
               <td>${location.name}</td>
               <td>
-                <a
-                  class="address-link"
-                  href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address + ', ' + location.city)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  ${location.address}
-                </a>
+                ${
+                  location.mapsLink
+                    ? `<a
+                        class="address-link"
+                        href="${location.mapsLink}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        ${location.address}
+                      </a>`
+                    : `${location.address}`
+                }
               </td>
               <td>${location.city}</td>
               <td>${location.capacity}</td>
