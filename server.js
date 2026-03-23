@@ -1,7 +1,11 @@
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
-import usersRoutes from "./routes/users.js"; 
+import path from "path";
+import authRoutes from "./routes/auth.js"; // login routes
+import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
 import locationsRoutes from "./routes/locations.js";
 import artistsRoutes from "./routes/artists.js";
@@ -14,15 +18,30 @@ dotenv.config();
 
 const app = express();
 const PORT = 3000;
-
+import xss from "xss";
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
-// Middleware
+// --- Middleware ---
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// --- Session middleware ---
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "supergeheimekey",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      dbName: "CENDO",
+      collectionName: "sessions",
+    }),
+    cookie: { maxAge: 1000 * 60 * 60 },
+  }),
+);
 
 // EJS view engine
 app.set("view engine", "ejs");
@@ -31,23 +50,40 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("index");
 });
+
 app.get("/faq", (req, res) => {
   res.render("FAQ");
 });
+
 app.get("/evenement", (req, res) => {
   res.render("evenement");
 });
+
 app.get("/events", (req, res) => {
   res.render("events");
 });
+
 app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
-app.get("/login", (req, res) => {
-  res.render("login-cms");
+
+app.get("/artists", (req, res) => {
+  res.render("artists");
 });
+
+//  BELANGRIJK: redirect /cms → /cms/login
+app.get("/cms", (req, res) => {
+  res.redirect("/cms/login"); //
+});
+
 app.get("/contact", (req, res) => {
   res.render("contact");
+});
+
+// --- CMS routes ---
+app.get("/cms/events", (req, res) => {
+  if (!req.session.userId) return res.redirect("/cms/login");
+  res.render("events-cms");
 });
 
 app.get("/cms/createLocation", (req, res) => {
@@ -60,16 +96,18 @@ app.get("/pre-register", (req, res) => {
 app.get("/houserules", (req, res) => {
   res.render("houserules");
 });
+
 app.get("/cms/createuser", (req, res) => {
+  if (!req.session.userId) return res.redirect("/cms/login");
   res.render("createUser-cms", {
     editMode: false,
-    user: null
+    user: null,
   });
 });
 app.get("/cms/createlocation", (req, res) => {
   res.render("createLocation-cms", {
     editMode: false,
-    location: null
+    location: null,
   });
 });
 app.get("/cms/createartist", (req, res) => {
@@ -88,14 +126,13 @@ async function start() {
 
     const db = client.db("CENDO");
 
-    app.get("/artists", async (req, res) => {
-      const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
-      res.render("artists", { artists });
-    });
+    // LOGIN ROUTES (nieuw)
+    app.use("/cms", authRoutes(db));
 
-    // ✔ ALLE CMS ROUTES
-    app.use("/cms", eventsRoutes(db));      
+    // bestaande users CMS routes
     app.use("/cms/users", usersRoutes(db));
+
+    app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
@@ -107,8 +144,5 @@ async function start() {
     console.error("Fout bij starten:", err.message);
   }
 }
-
-start();
-
 
 start();
