@@ -7,7 +7,10 @@ export default function locationsRoutes(db) {
   // --- CREATE location ---
   router.post("/create", async (req, res) => {
     try {
-      const { name, address, city, capacity } = req.body;
+      console.log("CREATE ROUTE HIT");
+      console.log("REQ BODY:", req.body);
+
+      const { name, address, city, capacity, mapsLink } = req.body;
 
       if (!name || !address || !city || !capacity) {
         return res.status(400).send("Alle velden zijn verplicht");
@@ -18,6 +21,7 @@ export default function locationsRoutes(db) {
         address,
         city,
         capacity: Number(capacity),
+        mapsLink: mapsLink || "",
         createdAt: new Date(),
       };
 
@@ -39,11 +43,7 @@ export default function locationsRoutes(db) {
 
       if (search) {
         query = {
-          $or: [
-            { name: { $regex: search, $options: "i" } },
-            { address: { $regex: search, $options: "i" } },
-            { city: { $regex: search, $options: "i" } }
-          ]
+          name: { $regex: search, $options: "i" }
         };
       }
 
@@ -65,11 +65,7 @@ export default function locationsRoutes(db) {
 
       if (search) {
         query = {
-          $or: [
-            { name: { $regex: search, $options: "i" } },
-            { address: { $regex: search, $options: "i" } },
-            { city: { $regex: search, $options: "i" } }
-          ]
+          name: { $regex: search, $options: "i" }
         };
       }
 
@@ -104,7 +100,7 @@ export default function locationsRoutes(db) {
   router.post("/edit/:id", async (req, res) => {
     try {
       const locationId = req.params.id;
-      const { name, address, city, capacity } = req.body;
+      const { name, address, city, capacity, mapsLink } = req.body;
 
       if (!name || !address || !city || !capacity) {
         return res.status(400).send("Alle velden zijn verplicht");
@@ -118,6 +114,7 @@ export default function locationsRoutes(db) {
             address,
             city,
             capacity: Number(capacity),
+            mapsLink: mapsLink || "",
           }
         }
       );
