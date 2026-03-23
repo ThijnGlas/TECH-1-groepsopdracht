@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
 import path from "path";
-import authRoutes from "./routes/auth.js"; // ✅ login routes
+import authRoutes from "./routes/auth.js"; // login routes
 import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
 import locationsRoutes from "./routes/locations.js";
@@ -66,9 +66,9 @@ app.get("/artists", (req, res) => {
   res.render("artists");
 });
 
-// ❗ BELANGRIJK: redirect /cms → /cms/login
+//  BELANGRIJK: redirect /cms → /cms/login
 app.get("/cms", (req, res) => {
-  res.redirect("/cms/login"); // ✅ toegevoegd
+  res.redirect("/cms/login"); //
 });
 
 app.get("/contact", (req, res) => {
@@ -77,7 +77,7 @@ app.get("/contact", (req, res) => {
 
 // --- CMS routes ---
 app.get("/cms/events", (req, res) => {
-  if (!req.session.userId) return res.redirect("/cms/login"); // ✅ aangepast
+  if (!req.session.userId) return res.redirect("/cms/login");
   res.render("events-cms");
 });
 
@@ -93,7 +93,7 @@ app.get("/houserules", (req, res) => {
 });
 
 app.get("/cms/createuser", (req, res) => {
-  if (!req.session.userId) return res.redirect("/cms/login"); // ✅ beveiligd
+  if (!req.session.userId) return res.redirect("/cms/login");
   res.render("createUser-cms", {
     editMode: false,
     user: null,
@@ -120,7 +120,7 @@ async function start() {
 
     const db = client.db("CENDO");
 
-    // ✅ LOGIN ROUTES (nieuw)
+    // LOGIN ROUTES (nieuw)
     app.use("/cms", authRoutes(db));
 
     // bestaande users CMS routes

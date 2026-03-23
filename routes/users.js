@@ -5,12 +5,22 @@ import { ObjectId } from "mongodb";
 export default function usersRoutes(db) {
   const router = express.Router();
 
+  const usersCollection = db.collection("users");
+
+  // --- Middleware voor beveiliging ✅ toegevoegd ---
+  function checkAuth(req, res, next) {
+    if (!req.session.userId) {
+      return res.redirect("/cms/login"); // stuur niet-ingelogde gebruiker naar login
+    }
+    next();
+  }
+
   // --- CREATE user ---
-  router.post("/create", async (req, res) => {
+  router.post("/create", checkAuth, async (req, res) => {
+    // ✅ checkAuth toegevoegd
     try {
       const { username, email, password } = req.body;
 
-      // simpele validatie
       if (!username || !email || !password) {
         return res.status(400).send("Alle velden zijn verplicht");
       }
@@ -25,9 +35,8 @@ export default function usersRoutes(db) {
         createdAt: new Date(),
       };
 
-      await db.collection("users").insertOne(newUser);
+      await usersCollection.insertOne(newUser);
 
-      // redirect naar de users lijst
       res.redirect("/cms/users");
     } catch (err) {
       console.error("Fout bij aanmaken gebruiker:", err);
@@ -36,12 +45,11 @@ export default function usersRoutes(db) {
   });
 
   // --- GET edit user form ---
-  router.get("/edit/:id", async (req, res) => {
+  router.get("/edit/:id", checkAuth, async (req, res) => {
+    // ✅ checkAuth toegevoegd
     try {
       const userId = req.params.id;
-      const user = await db
-        .collection("users")
-        .findOne({ _id: new ObjectId(userId) });
+      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
 
       if (!user) {
         return res.status(404).send("Gebruiker niet gevonden");
@@ -58,9 +66,10 @@ export default function usersRoutes(db) {
   });
 
   // --- READ all users ---
-  router.get("/", async (req, res) => {
+  router.get("/", checkAuth, async (req, res) => {
+    // ✅ checkAuth toegevoegd
     try {
-      const users = await db.collection("users").find().toArray();
+      const users = await usersCollection.find().toArray();
       res.render("users-cms", { users });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
@@ -69,7 +78,8 @@ export default function usersRoutes(db) {
   });
 
   // --- UPDATE existing user ---
-  router.post("/edit/:id", async (req, res) => {
+  router.post("/edit/:id", checkAuth, async (req, res) => {
+    // ✅ checkAuth toegevoegd
     try {
       const userId = req.params.id;
       const { username, email, password } = req.body;
@@ -78,17 +88,16 @@ export default function usersRoutes(db) {
         return res.status(400).send("Username en email zijn verplicht");
       }
 
-      const updateData = { username, email };
+      const updateData = { username, email: email.trim().toLowerCase() };
 
       if (password) {
-        // alleen update wachtwoord als er iets is ingevuld
-        const hashedPassword = await bcrypt.hash(password, 10);
-        updateData.password = hashedPassword;
+        updateData.password = await bcrypt.hash(password, 10);
       }
 
-      await db
-        .collection("users")
-        .updateOne({ _id: new ObjectId(userId) }, { $set: updateData });
+      await usersCollection.updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: updateData },
+      );
 
       res.redirect("/cms/users");
     } catch (err) {
@@ -98,10 +107,11 @@ export default function usersRoutes(db) {
   });
 
   // --- DELETE user ---
-  router.post("/delete/:id", async (req, res) => {
+  router.post("/delete/:id", checkAuth, async (req, res) => {
+    // ✅ checkAuth toegevoegd
     try {
       const userId = req.params.id;
-      await db.collection("users").deleteOne({ _id: new ObjectId(userId) });
+      await usersCollection.deleteOne({ _id: new ObjectId(userId) });
       res.redirect("/cms/users");
     } catch (err) {
       console.error("Fout bij verwijderen gebruiker:", err);
