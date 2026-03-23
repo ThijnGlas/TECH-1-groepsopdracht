@@ -28,7 +28,15 @@
     "eslint": "^10.0.3",
     "globals": "^17.4.0",
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThijnGlas/TECH-1-groepsopdracht.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ThijnGlas/TECH-1-groepsopdracht/issues"
+  },
+  "homepage": "https://github.com/ThijnGlas/TECH-1-groepsopdracht#readme"
 }
 
 
