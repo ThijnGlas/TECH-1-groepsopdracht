@@ -254,7 +254,7 @@ button{
 
 /* ======================= Search input (CMS) ======================= */
 
-#location-search {
+#location-search, #artist-search {
   width: 300px;
   padding: 10px 14px;
   border: 3px solid var(--black);
@@ -264,18 +264,18 @@ button{
 }
 
 /* placeholder */
-#location-search::placeholder {
+#location-search,#artist-search::placeholder {
   color: #777;
 }
 
 /* focus effect */
-#location-search:focus {
+#location-search,#artist-search:focus {
   border-color: var(--cendo-red);
   outline: none;
 }
 
 /* hover effect */
-#location-search:hover {
+#location-search,#artist-search:hover {
   border-color: var(--cendo-red);
 }
 
