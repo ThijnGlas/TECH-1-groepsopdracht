@@ -93,7 +93,6 @@ async function start() {
     console.log("Verbonden met MongoDB");
 
     const db = client.db("CENDO");
-<<<<<<< Ruben-dev
 
     // ↓ hier toevoegen
     app.get("/artists", async (req, res) => {
@@ -102,10 +101,6 @@ async function start() {
     });
 
     app.use("/cms/users", usersRoutes(db));
-=======
-    
-    app.use("/cms/users", usersRoutes(db)); // koppelt GET /cms/users en POST /cms/users/create
->>>>>>> main
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
