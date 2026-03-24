@@ -1,5 +1,5 @@
 {
-  "name": "tech-groep",
+  "name": "cendo-events",
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",
@@ -8,10 +8,10 @@
     "start": "nodemon server.js",
     "lint": "eslint ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["house", "events", "party", "music", "fun"],
+  "author": "Thijn Glas, Ruben Verhoeven, Tin Phan en Finn Mulder",
   "license": "ISC",
-  "description": "",
+  "description": "CMS en website voor het bekijken van house evenementen en het beheren van deze evenementen. Gebruikers kunnen verschillende evenementen bekijken en gemakkelijk kaartjes kopen.",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "connect-mongo": "^6.0.0",
