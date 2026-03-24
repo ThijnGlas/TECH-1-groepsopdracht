@@ -26,6 +26,16 @@ form input{
     font-size: 16px 10px;
 }
 
+form  .lineupList{
+    list-style: none;
+}
+
+form .lineup-name{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
 form .btn{
     min-width: 0px;
 }

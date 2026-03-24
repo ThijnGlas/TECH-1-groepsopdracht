@@ -20,10 +20,31 @@ export default function artistsRoutes(db) {
   // --- READ alle artiesten ---
   router.get("/", async (req, res) => {
     try {
+      const search = req.query.search || "";
       const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
-      res.render("artists-cms", { artists });
+
+      res.render("artists-cms", {
+        artists,
+        search
+      });
     } catch (err) {
       res.status(500).send("Fout bij ophalen artiesten");
+    }
+  });
+
+  // --- AJAX SEARCH artiesten ---
+  router.get("/search/ajax", async (req, res) => {
+    const search = req.query.search || "";
+
+    try {
+      const artists = await db.collection("artists").find({
+        name: { $regex: search, $options: "i" }
+      }).sort({ name: 1 }).toArray();
+
+      res.json(artists);
+    } catch (err) {
+      console.error("Fout bij zoeken artiesten:", err);
+      res.status(500).json({ error: "Zoeken mislukt" });
     }
   });
 

@@ -1,0 +1,103 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ======================= custom properties ======================= */
+
+:root {
+    --background-clr: #F8F8F8;
+    --white: #FFFFFF;
+    --black: #000000;
+    --cendo-red: #EB4C4C;
+}
+
+
+/* ======================= fonts ======================= */
+
+@font-face {
+	font-display: swap;
+	font-family: 'helveticaneue';
+	font-style: normal;
+	font-weight: 400;
+	src: url(./fonts/helveticaneue.woff2) format("woff2"),
+		url(./fonts/helveticaneue.woff2) format("woff")
+}
+
+/* Algemeen */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Login wrapper */
+.login-wrapper {
+    max-width: 400px;
+    margin: 80px auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Titel */
+.login-wrapper h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* Form styling */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form label {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.login-wrapper .login-form input[type="text"],
+.login-wrapper .login-form input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Submit knop */
+.login-form button {
+    padding: 0.75rem;
+    background-color: var(--cendo-red);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-form button:hover {
+    background-color: #2980b9;
+}
+
+/* Foutmelding */
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}

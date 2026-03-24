@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -23,8 +24,19 @@
     "xss": "^1.0.15"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0",
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThijnGlas/TECH-1-groepsopdracht.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ThijnGlas/TECH-1-groepsopdracht/issues"
+  },
+  "homepage": "https://github.com/ThijnGlas/TECH-1-groepsopdracht#readme"
 }
 
 
