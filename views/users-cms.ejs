@@ -3,40 +3,108 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../style/style-cms.css" />
+    <title>Gebruikers</title>
+    <link rel="stylesheet" href="/style/style-cms.css" />
   </head>
   <body>
     <%- include('partials/header-cms') %>
+
     <div class="dashboard-wrapper">
       <div class="content-wrapper">
         <div>
           <div class="top">
             <h1>Gebruikers</h1>
-            <form action="">
-              <input type="text" name="search" placeholder="Gebruiker zoeken" />
-            </form>
+
+            <input
+              id="user-search"
+              type="text"
+              placeholder="Gebruiker zoeken"
+              value="<%= search || '' %>"
+            />
+
             <a class="btn" href="/cms/createuser">Gebruiker aanmaken</a>
           </div>
+
           <table>
-            <% users.forEach((user, index) => { %>
-              <tr class="btn-position">
-                <td><%= index + 1 %></td>
-                <td><%= user.username %></td>
-                <td><%= user.email %></td>
-                <td><%= user.role || 'Geen rol' %></td>
-                <td>
-                  <a class="btn" href="/cms/users/edit/<%= user._id %>">Gebruiker wijzigen</a>
-                  <form action="/cms/users/delete/<%= user._id %>" method="POST" style="display:inline;">
-                    <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')">Verwijderen</button>
-                  </form>
-                </td>
-              </tr>
-            <% }) %>
+            <tbody id="users-table-body">
+              <% if (users.length > 0) { %>
+                <% users.forEach((user, index) => { %>
+                  <tr class="btn-position">
+                    <td><%= index + 1 %></td>
+                    <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.role || 'Geen rol' %></td>
+                    <td>
+                      <a class="btn" href="/cms/users/edit/<%= user._id %>">Gebruiker wijzigen</a>
+                      <form action="/cms/users/delete/<%= user._id %>" method="POST" style="display:inline;">
+                        <button
+                          class="btn"
+                          type="submit"
+                          onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')"
+                        >
+                          Verwijderen
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="5">Geen gebruikers gevonden.</td>
+                </tr>
+              <% } %>
+            </tbody>
           </table>
         </div>
       </div>
+
       <%- include('partials/sidebar-cms') %>
     </div>
+
+    <script>
+      const searchInput = document.getElementById("user-search");
+      const tableBody = document.getElementById("users-table-body");
+
+      searchInput.addEventListener("input", async function () {
+        const searchValue = searchInput.value;
+
+        try {
+          const response = await fetch(`/cms/users/search/ajax?search=${encodeURIComponent(searchValue)}`);
+          const users = await response.json();
+
+          if (!users.length) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="5">Geen gebruikers gevonden.</td>
+              </tr>
+            `;
+            return;
+          }
+
+          tableBody.innerHTML = users.map((user, index) => `
+            <tr class="btn-position">
+              <td>${index + 1}</td>
+              <td>${user.username}</td>
+              <td>${user.email}</td>
+              <td>${user.role || 'Geen rol'}</td>
+              <td>
+                <a class="btn" href="/cms/users/edit/${user._id}">Gebruiker wijzigen</a>
+                <form action="/cms/users/delete/${user._id}" method="POST" style="display:inline;">
+                  <button
+                    class="btn"
+                    type="submit"
+                    onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')"
+                  >
+                    Verwijderen
+                  </button>
+                </form>
+              </td>
+            </tr>
+          `).join("");
+        } catch (error) {
+          console.error("Fout bij live zoeken gebruikers:", error);
+        }
+      });
+    </script>
   </body>
 </html>

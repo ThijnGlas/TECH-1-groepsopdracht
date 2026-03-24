@@ -4,6 +4,11 @@
     gap: 32px;
 }
 
+form{
+    display: flex;
+    gap: 32px;
+}
+
 form > div{
     display: flex;
     gap: 32px;
@@ -42,4 +47,12 @@ form .info div{
     display: flex;
     flex-direction:column;
     gap: 10px;
+}
+
+.lft-clm{
+    flex-direction: column;
+}
+
+.rgt-clm{
+    flex-direction: column;
 }

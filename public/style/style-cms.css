@@ -204,6 +204,7 @@ form {
 form input[type="text"],
 form input[type="email"],
 form input[type="number"],
+form input[type="date"],
 form input[type="password"] {
   width: 300px;
   padding: 10px;
@@ -214,7 +215,7 @@ form input[type="password"] {
 }
 
 form input[type="text"]::placeholder {
-  color: #555;
+  color: hsl(0, 0%, 20%);
 }
 
 
@@ -251,8 +252,60 @@ button{
 }
 
 
+/* ======================= Search input (CMS) ======================= */
+
+#location-search {
+  width: 300px;
+  padding: 10px 14px;
+  border: 3px solid var(--black);
+  font-size: 16px;
+  background-color: var(--white);
+  transition: all 0.2s ease;
+}
+
+/* placeholder */
+#location-search::placeholder {
+  color: #777;
+}
+
+/* focus effect */
+#location-search:focus {
+  border-color: var(--cendo-red);
+  outline: none;
+}
+
+/* hover effect */
+#location-search:hover {
+  border-color: var(--cendo-red);
+}
 
 
+
+
+#user-search {
+  width: 300px;
+  padding: 10px 14px;
+  border: 3px solid var(--black);
+  font-size: 16px;
+  background-color: var(--white);
+  transition: all 0.2s ease;
+}
+
+/* placeholder */
+#user-search::placeholder {
+  color: #777;
+}
+
+/* focus effect */
+#user-search:focus {
+  border-color: var(--cendo-red);
+  outline: none;
+}
+
+/* hover effect */
+#user-search:hover {
+  border-color: var(--cendo-red);
+}
 
 
 
