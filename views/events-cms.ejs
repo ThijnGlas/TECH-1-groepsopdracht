@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Events</title>
-    <link rel="stylesheet" href="../style/style-cms.css" />
+    <link rel="stylesheet" href="/style/style-cms.css" />
   </head>
   <body>
     <header>
-      <img class="logo" src="../img/logo.svg" alt="" />
+      <img class="logo" src="/img/logo.svg" alt="" />
     </header>
 
     <div class="dashboard-wrapper">
@@ -16,35 +16,90 @@
         <div>
           <div class="top">
             <h1>Events</h1>
-            <form action="">
-              <input type="text" name="search" placeholder="Evenement zoeken" />
-            </form>
+
+            <input
+              id="event-search"
+              type="text"
+              placeholder="Evenement zoeken"
+              value="<%= search || '' %>"
+            />
+
             <a class="btn" href="/cms/createevent">Evenement aanmaken</a>
           </div>
 
           <table>
-            <% events.forEach((event, index) => { %>
-              <tr class="btn-position">
-                <td><%= index + 1 %></td>
-                <td><%= event.title %></td>
-                <td><%= new Date(event.date).toLocaleDateString('nl-NL') %></td>
-                <td><%= event.locationData.name %></td>
-                <td><%= event.status %></td>
-                <td>
-                  <a class="btn" href="/cms/events/edit/<%= event._id %>">Evenement wijzigen</a>
-                  <form action="/cms/events/delete/<%= event._id %>" method="POST" style="display:inline;">
-                    <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?')">
-                      Verwijderen
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            <% }) %>
+            <tbody id="events-table-body">
+              <% if (events.length > 0) { %>
+                <% events.forEach((event, index) => { %>
+                  <tr class="btn-position">
+                    <td><%= index + 1 %></td>
+                    <td><%= event.title %></td>
+                    <td><%= new Date(event.date).toLocaleDateString('nl-NL') %></td>
+                    <td><%= event.locationData ? event.locationData.name : 'Geen locatie' %></td>
+                    <td><%= event.status || 'Geen status' %></td>
+                    <td>
+                      <a class="btn" href="/cms/events/edit/<%= event._id %>">Evenement wijzigen</a>
+                      <form action="/cms/events/delete/<%= event._id %>" method="POST" style="display:inline;">
+                        <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?')">
+                          Verwijderen
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="6">Geen evenementen gevonden.</td>
+                </tr>
+              <% } %>
+            </tbody>
           </table>
-
         </div>
       </div>
       <%- include('partials/sidebar-cms') %>
     </div>
+
+    <script>
+      const searchInput = document.getElementById("event-search");
+      const tableBody = document.getElementById("events-table-body");
+
+      searchInput.addEventListener("input", async function () {
+        const searchValue = searchInput.value;
+
+        try {
+          const response = await fetch(`/cms/events/search/ajax?search=${encodeURIComponent(searchValue)}`);
+          const events = await response.json();
+
+          if (!events.length) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="6">Geen evenementen gevonden.</td>
+              </tr>
+            `;
+            return;
+          }
+
+          tableBody.innerHTML = events.map((event, index) => `
+            <tr class="btn-position">
+              <td>${index + 1}</td>
+              <td>${event.title}</td>
+              <td>${new Date(event.date).toLocaleDateString('nl-NL')}</td>
+              <td>${event.locationData ? event.locationData.name : 'Geen locatie'}</td>
+              <td>${event.status || 'Geen status'}</td>
+              <td>
+                <a class="btn" href="/cms/events/edit/${event._id}">Evenement wijzigen</a>
+                <form action="/cms/events/delete/${event._id}" method="POST" style="display:inline;">
+                  <button class="btn" type="submit" onclick="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?')">
+                    Verwijderen
+                  </button>
+                </form>
+              </td>
+            </tr>
+          `).join("");
+        } catch (error) {
+          console.error("Fout bij live zoeken events:", error);
+        }
+      });
+    </script>
   </body>
 </html>
