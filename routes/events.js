@@ -119,10 +119,22 @@ export default function eventsRoutes(db) {
     }
   );
 
-  // -------------------------------------------------------
-  // GET: Events lijst
-  // -------------------------------------------------------
-  router.get("/", async (req, res) => {
+
+// -------------------------------------------------------
+// AJAX SEARCH EVENTS
+// -------------------------------------------------------
+router.get("/search/ajax", async (req, res) => {
+  try {
+    const search = req.query.search || "";
+
+    let matchStage = {};
+
+    if (search) {
+      matchStage = {
+        title: { $regex: search, $options: "i" }
+      };
+    }
+
     const events = await db.collection("events").aggregate([
       {
         $lookup: {
@@ -132,11 +144,53 @@ export default function eventsRoutes(db) {
           as: "locationData"
         }
       },
-      { $unwind: "$locationData" }
+      { $unwind: "$locationData" },
+      { $match: matchStage }
     ]).toArray();
 
-    res.render("events-cms", { events });
-  });
+    res.json(events);
+  } catch (err) {
+    console.error("Fout bij AJAX zoeken events:", err);
+    res.status(500).json({ error: "Fout bij zoeken" });
+  }
+});
+
+
+
+  // -------------------------------------------------------
+  // GET: Events lijst
+  // -------------------------------------------------------
+router.get("/", async (req, res) => {
+  try {
+    const search = req.query.search || "";
+
+    let matchStage = {};
+
+    if (search) {
+      matchStage = {
+        title: { $regex: search, $options: "i" }
+      };
+    }
+
+    const events = await db.collection("events").aggregate([
+      {
+        $lookup: {
+          from: "locations",
+          localField: "location",
+          foreignField: "_id",
+          as: "locationData"
+        }
+      },
+      { $unwind: "$locationData" },
+      { $match: matchStage }
+    ]).toArray();
+
+    res.render("events-cms", { events, search });
+  } catch (err) {
+    console.error("Fout bij ophalen events:", err);
+    res.status(500).send("Fout bij ophalen events");
+  }
+});
 
   // -------------------------------------------------------
   // DELETE
