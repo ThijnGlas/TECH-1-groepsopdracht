@@ -94,6 +94,16 @@ app.get("/cms/createuser", (req, res) => {
     user: null,
   });
 });
+
+app.get("/cms/createevent", async (req, res) => {
+  const db = client.db("CENDO");
+  const locations = await db.collection("locations").find().toArray();
+  res.render("createevent-cms", {
+    editMode: false,
+    event: null,
+    locations
+  });
+});
 app.get("/cms/createlocation", (req, res) => {
   res.render("createLocation-cms", {
     editMode: false,
@@ -120,6 +130,7 @@ async function start() {
     app.use("/events", publicEventsRoutes(db));
 
     app.use("/cms", authRoutes(db));
+
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/users", usersRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
