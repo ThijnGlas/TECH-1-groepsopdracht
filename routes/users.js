@@ -1,13 +1,14 @@
+// importeren van benodigde modules
 import express from "express";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 
 export default function usersRoutes(db) {
+  // aanmaken van de router en de users collectie
   const router = express.Router();
-
   const usersCollection = db.collection("users");
 
-  // --- Middleware voor beveiliging toegevoegd ---
+  // check om te kijken of de gebruiker is ingelogd, zo niet wordt hij doorgestuurd naar de login pagina
   function checkAuth(req, res, next) {
     if (!req.session.userId) {
       return res.redirect("/cms/login"); 
@@ -15,9 +16,9 @@ export default function usersRoutes(db) {
     next();
   }
 
-  // --- CREATE user ---
+  // --- GET create user form ---
   router.post("/create", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
+    
     try {
       const { username, email, password } = req.body;
 
@@ -67,7 +68,6 @@ export default function usersRoutes(db) {
 
   // --- READ all users ---
   router.get("/", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
     try {
       const users = await usersCollection.find().toArray();
       res.render("users-cms", {
