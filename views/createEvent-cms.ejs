@@ -125,28 +125,34 @@
     </div>
 
     <script>
+        // Haal de input, knop, lijst en hidden input op uit de DOM
         const input = document.getElementById("lineupInput");
         const addBtn = document.getElementById("addLineupBtn");
         const list = document.getElementById("lineupList");
         const hidden = document.getElementById("lineupHidden");
 
+        // Functie om de hidden input te updaten met alle namen uit de lijst
         function updateHidden() {
             const items = [...list.querySelectorAll("li span")].map(span => span.textContent.trim());
             hidden.value = items.join(",");
         }
 
+        // Event listener voor de add knop
         addBtn.addEventListener("click", () => {
             if (!input.value.trim()) return;
 
+            // Maak een nieuwe list item aan met de ingevoerde naam en een verwijderknop
             const li = document.createElement("li");
             li.classList.add("lineup-name");
             li.innerHTML = `<span>${input.value}</span> <button type="button" class="removeLineup">x</button>`;
             list.appendChild(li);
 
+            // Maak de input leeg en update de hidden input
             input.value = "";
             updateHidden();
         });
 
+        // Event listener voor de lijst om te luisteren naar clicks op de verwijderknoppen
         list.addEventListener("click", (e) => {
             if (e.target.classList.contains("removeLineup")) {
                 e.target.parentElement.remove();

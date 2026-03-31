@@ -3,14 +3,18 @@ import { ObjectId } from "mongodb";
 import { uploadEvent } from "../config/multer.js";
 
 export default function eventsRoutes(db) {
-  // router aanmaken
   const router = express.Router();
 
+  // controleren of de gebruiker is ingelogd, zo niet stuur hem dan door naar de loginpagina
+  function checkAuth(req, res, next) {
+    if (!req.session.userId) {
+      return res.redirect("/cms/login");
+    }
+    next();
+  }
 
-  // GET: Event aanmaken  
   // formulier ophalen om een nieuw event aan te maken
-  router.get("/createevent", async (req, res) => {
-
+  router.get("/createevent", checkAuth, async (req, res) => {
     // locaties ophalen zodat je die kan kiezen in het formulier
     const locations = await db.collection("locations").find().toArray();
 
@@ -21,11 +25,11 @@ export default function eventsRoutes(db) {
     });
   });
 
-  // POST: Event aanmaken
   // nieuw event opslaan in de database
   // uploadEvent.fields zorgt ervoor dat je meerdere afbeeldingen tegelijk kan uploaden
   router.post(
     "/create",
+    checkAuth,
     uploadEvent.fields([
       { name: "imageSmall", maxCount: 1 },
       { name: "imageLarge", maxCount: 1 }
@@ -67,11 +71,8 @@ export default function eventsRoutes(db) {
     }
   );
 
-
-  // GET: Event bewerken
-
   // edit formulier ophalen voor het gekozen event
-  router.get("/edit/:id", async (req, res) => {
+  router.get("/edit/:id", checkAuth, async (req, res) => {
     // event ophalen uit de database op basis van het id in de url
     const event = await db.collection("events").findOne({
       _id: new ObjectId(req.params.id)
@@ -88,11 +89,11 @@ export default function eventsRoutes(db) {
     });
   });
 
-
-  // POST: Event updaten
   // gewijzigde gegevens opslaan in de database
+  // uploadEvent.fields zorgt ervoor dat je meerdere afbeeldingen tegelijk kan uploaden
   router.post(
     "/edit/:id",
+    checkAuth,
     uploadEvent.fields([
       { name: "imageSmall", maxCount: 1 },
       { name: "imageLarge", maxCount: 1 }
@@ -141,10 +142,8 @@ export default function eventsRoutes(db) {
     }
   );
 
-
-
-  // AJAX SEARCH EVENTS
-  router.get("/search/ajax", async (req, res) => {
+  // ajax route voor de zoekfunctie, geeft resultaten terug als json
+  router.get("/search/ajax", checkAuth, async (req, res) => {
     try {
       const search = req.query.search || "";
 
@@ -183,18 +182,13 @@ export default function eventsRoutes(db) {
     }
   });
 
-
-
-
-  // GET: Events lijst
   // alle events ophalen en weergeven, met optionele zoekfunctie
-  router.get("/", async (req, res) => {
+  router.get("/", checkAuth, async (req, res) => {
     try {
       const search = req.query.search || "";
 
       // als er niks ingevuld is, alle events teruggeven
       let matchStage = {};
-
 
       if (search) {
         matchStage = {
@@ -224,10 +218,8 @@ export default function eventsRoutes(db) {
     }
   });
 
-
-  // DELETE
   // event verwijderen op basis van id
-  router.post("/delete/:id", async (req, res) => {
+  router.post("/delete/:id", checkAuth, async (req, res) => {
     await db.collection("events").deleteOne({
       _id: new ObjectId(req.params.id)
     });
