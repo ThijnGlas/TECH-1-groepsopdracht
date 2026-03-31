@@ -5,26 +5,49 @@ export default function publicEventsRoutes(db) {
   const router = express.Router();
 
   // Event lijst
-  router.get("/", async (req, res) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+router.get("/", async (req, res) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-    const events = await db.collection("events").aggregate([
-      { $match: { date: { $gte: today }, status: "gepubliceerd" } },
-      {
-        $lookup: {
-          from: "locations",
-          localField: "location",
-          foreignField: "_id",
-          as: "locationData"
-        }
-      },
-      { $unwind: "$locationData" },
-      { $sort: { date: 1 } }
-    ]).toArray();
+  const selectedLocation = req.query.location || "";
+  const selectedMonth = req.query.month || "";
 
-    res.render("events", { events });
+  const events = await db.collection("events").aggregate([
+    { $match: { date: { $gte: today }, status: "gepubliceerd" } },
+    {
+      $lookup: {
+        from: "locations",
+        localField: "location",
+        foreignField: "_id",
+        as: "locationData"
+      }
+    },
+    { $unwind: "$locationData" },
+    { $sort: { date: 1 } }
+  ]).toArray();
+
+  let filteredEvents = events;
+
+  if (selectedLocation && selectedLocation !== "All") {
+    filteredEvents = filteredEvents.filter(event =>
+      event.locationData.city &&
+      event.locationData.city.toLowerCase() === selectedLocation.toLowerCase()
+    );
+  }
+
+  if (selectedMonth && selectedMonth !== "All") {
+    filteredEvents = filteredEvents.filter(event => {
+      const eventMonth = new Date(event.date).getMonth() + 1;
+      return eventMonth === Number(selectedMonth);
+    });
+  }
+
+  res.render("events", {
+    events: filteredEvents,
+    selectedLocation,
+    selectedMonth
   });
+});
 
   // Event detail
   router.get("/:id", async (req, res) => {
@@ -58,3 +81,5 @@ export default function publicEventsRoutes(db) {
 
   return router;
 }
+
+
