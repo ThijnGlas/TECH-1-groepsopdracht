@@ -61,8 +61,10 @@ app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
 
-app.get("/artists", (req, res) => {
-  res.render("artists");
+app.get("/artists", async (req, res) => {
+  const db = client.db("CENDO");
+  const artists = await db.collection("artists").find({}).sort({ name: 1 }).toArray();
+  res.render("artists", { artists });
 });
 
 //  BELANGRIJK: redirect /cms → /cms/login
