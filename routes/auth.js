@@ -15,10 +15,6 @@ export default function authRoutes(db) {
     try {
       let { email, password } = req.body;
 
-      //  FIX: email opschonen
-      //   email: email.trim().toLowerCase();
-      //   console.log(email);
-
       // 1 Zoek gebruiker
       const user = await usersCollection.findOne({ email: email });
 

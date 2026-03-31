@@ -3,14 +3,17 @@ import { ObjectId } from "mongodb";
 import { uploadEvent } from "../config/multer.js";
 
 export default function eventsRoutes(db) {
+  // router aanmaken
   const router = express.Router();
 
-  // -------------------------------------------------------
-  // GET: Event aanmaken
-  // -------------------------------------------------------
+
+  // GET: Event aanmaken  
+  // formulier ophalen om een nieuw event aan te maken
   router.get("/createevent", async (req, res) => {
+
+    // locaties ophalen zodat je die kan kiezen in het formulier
     const locations = await db.collection("locations").find().toArray();
-  
+
     res.render("createevent-cms", {
       editMode: false,
       event: null,
@@ -18,9 +21,9 @@ export default function eventsRoutes(db) {
     });
   });
 
-  // -------------------------------------------------------
   // POST: Event aanmaken
-  // -------------------------------------------------------
+  // nieuw event opslaan in de database
+  // uploadEvent.fields zorgt ervoor dat je meerdere afbeeldingen tegelijk kan uploaden
   router.post(
     "/create",
     uploadEvent.fields([
@@ -29,25 +32,33 @@ export default function eventsRoutes(db) {
     ]),
     async (req, res) => {
       try {
+        // gegevens uit het formulier halen
         const { title, date, location, eventLink, lineup, status } = req.body;
 
+        // lineup is een string die word gescheiden met een komma, dus die splits ik op naar een array
+        // filter zorgt ervoor dat lege strings er niet in komen
         const lineupArray = lineup
           ? lineup.split(",").map(i => i.trim()).filter(Boolean)
           : [];
 
+        // nieuw event object aanmaken
         const newEvent = {
           title,
           date: new Date(date),
-          location: new ObjectId(location),
+          location: new ObjectId(location), // string omzetten naar MongoDB ObjectId
           eventLink,
           lineup: lineupArray,
-          status: status || "concept",
+          status: status || "concept", // als er geen status is, concept als standaard gebruiken
           createdAt: new Date(),
+          // afbeelding opslaan als die geüpload is, anders null
           imageSmall: req.files.imageSmall ? req.files.imageSmall[0].filename : null,
           imageLarge: req.files.imageLarge ? req.files.imageLarge[0].filename : null
         };
 
+        // event opslaan in de database
         await db.collection("events").insertOne(newEvent);
+
+        // na het aanmaken van het event, terug naar de events pagina
         res.redirect("/cms/events");
       } catch (err) {
         console.error("Fout bij aanmaken event:", err);
@@ -56,16 +67,20 @@ export default function eventsRoutes(db) {
     }
   );
 
-  // -------------------------------------------------------
+
   // GET: Event bewerken
-  // -------------------------------------------------------
+
+  // edit formulier ophalen voor het gekozen event
   router.get("/edit/:id", async (req, res) => {
+    // event ophalen uit de database op basis van het id in de url
     const event = await db.collection("events").findOne({
       _id: new ObjectId(req.params.id)
     });
 
+    // locaties ophalen zodat je die kan kiezen in het formulier
     const locations = await db.collection("locations").find().toArray();
 
+    // formulier invullen met de bestaande gegevens van het event, zodat je deze kan aanpassen
     res.render("createevent-cms", {
       editMode: true,
       event,
@@ -73,9 +88,9 @@ export default function eventsRoutes(db) {
     });
   });
 
-  // -------------------------------------------------------
+
   // POST: Event updaten
-  // -------------------------------------------------------
+  // gewijzigde gegevens opslaan in de database
   router.post(
     "/edit/:id",
     uploadEvent.fields([
@@ -84,12 +99,15 @@ export default function eventsRoutes(db) {
     ]),
     async (req, res) => {
       try {
+        // gegevens uit het formulier halen
         const { title, date, location, eventLink, lineup, status } = req.body;
 
+        // lineup weer omzetten naar een array, zelfde als bij aanmaken
         const lineupArray = lineup
           ? lineup.split(",").map(i => i.trim()).filter(Boolean)
           : [];
 
+        // object aanmaken met de gegevens die we willen updaten
         const updateData = {
           title,
           date: new Date(date),
@@ -99,6 +117,8 @@ export default function eventsRoutes(db) {
           status
         };
 
+        // afbeeldingen alleen updaten als er nieuwe geüpload zijn
+        // anders houden we de oude afbeeldingen
         if (req.files.imageSmall) {
           updateData.imageSmall = req.files.imageSmall[0].filename;
         }
@@ -106,11 +126,13 @@ export default function eventsRoutes(db) {
           updateData.imageLarge = req.files.imageLarge[0].filename;
         }
 
+        // event updaten in de database met $set, zodat alleen de gewijzigde velden worden aangepast
         await db.collection("events").updateOne(
           { _id: new ObjectId(req.params.id) },
           { $set: updateData }
         );
 
+        // na het updaten van het event, terug naar de events pagina
         res.redirect("/cms/events");
       } catch (err) {
         console.error("Fout bij updaten event:", err);
@@ -120,81 +142,91 @@ export default function eventsRoutes(db) {
   );
 
 
-// -------------------------------------------------------
-// AJAX SEARCH EVENTS
-// -------------------------------------------------------
-router.get("/search/ajax", async (req, res) => {
-  try {
-    const search = req.query.search || "";
 
-    let matchStage = {};
+  // AJAX SEARCH EVENTS
+  router.get("/search/ajax", async (req, res) => {
+    try {
+      const search = req.query.search || "";
 
-    if (search) {
-      matchStage = {
-        title: { $regex: search, $options: "i" }
-      };
+      // als er niks ingevuld is, alle events teruggeven
+      let matchStage = {};
+
+      // zoeken op titel van het event
+      if (search) {
+        matchStage = {
+          title: { $regex: search, $options: "i" } // i = hoofdletterongevoelig
+        };
+      }
+
+      // aggregate gebruiken zodat we ook de locatiegegevens erbij kunnen ophalen
+      const events = await db.collection("events").aggregate([
+        {
+          // locatie koppelen aan het event via het location id
+          $lookup: {
+            from: "locations",
+            localField: "location",
+            foreignField: "_id",
+            as: "locationData"
+          }
+        },
+        // locationData is een array, unwind maakt er een object van
+        { $unwind: "$locationData" },
+        // zoekfilter toepassen
+        { $match: matchStage }
+      ]).toArray();
+
+      // resultaten terugsturen als json
+      res.json(events);
+    } catch (err) {
+      console.error("Fout bij AJAX zoeken events:", err);
+      res.status(500).json({ error: "Fout bij zoeken" });
     }
-
-    const events = await db.collection("events").aggregate([
-      {
-        $lookup: {
-          from: "locations",
-          localField: "location",
-          foreignField: "_id",
-          as: "locationData"
-        }
-      },
-      { $unwind: "$locationData" },
-      { $match: matchStage }
-    ]).toArray();
-
-    res.json(events);
-  } catch (err) {
-    console.error("Fout bij AJAX zoeken events:", err);
-    res.status(500).json({ error: "Fout bij zoeken" });
-  }
-});
+  });
 
 
 
-  // -------------------------------------------------------
+
   // GET: Events lijst
-  // -------------------------------------------------------
-router.get("/", async (req, res) => {
-  try {
-    const search = req.query.search || "";
+  // alle events ophalen en weergeven, met optionele zoekfunctie
+  router.get("/", async (req, res) => {
+    try {
+      const search = req.query.search || "";
 
-    let matchStage = {};
+      // als er niks ingevuld is, alle events teruggeven
+      let matchStage = {};
 
-    if (search) {
-      matchStage = {
-        title: { $regex: search, $options: "i" }
-      };
+
+      if (search) {
+        matchStage = {
+          title: { $regex: search, $options: "i" }
+        };
+      }
+
+      // zelfde aggregate als bij de zoekroute
+      const events = await db.collection("events").aggregate([
+        {
+          $lookup: {
+            from: "locations",
+            localField: "location",
+            foreignField: "_id",
+            as: "locationData"
+          }
+        },
+        { $unwind: "$locationData" },
+        { $match: matchStage }
+      ]).toArray();
+
+      // events en de zoekterm meegeven aan de view
+      res.render("events-cms", { events, search });
+    } catch (err) {
+      console.error("Fout bij ophalen events:", err);
+      res.status(500).send("Fout bij ophalen events");
     }
+  });
 
-    const events = await db.collection("events").aggregate([
-      {
-        $lookup: {
-          from: "locations",
-          localField: "location",
-          foreignField: "_id",
-          as: "locationData"
-        }
-      },
-      { $unwind: "$locationData" },
-      { $match: matchStage }
-    ]).toArray();
 
-    res.render("events-cms", { events, search });
-  } catch (err) {
-    console.error("Fout bij ophalen events:", err);
-    res.status(500).send("Fout bij ophalen events");
-  }
-});
-
-  // -------------------------------------------------------
   // DELETE
-  // -------------------------------------------------------
+  // event verwijderen op basis van id
   router.post("/delete/:id", async (req, res) => {
     await db.collection("events").deleteOne({
       _id: new ObjectId(req.params.id)
