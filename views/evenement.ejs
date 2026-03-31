@@ -25,8 +25,7 @@
           <div class="event-content">
             <h1><%= event.title %></h1>
             <div class="event-info">
-              <!-- <a href="<%= event.locationData.addresslink %>"><%= event.locationData.address %></a> -->
-              <p><%= event.locationData.address %></p>
+              <a href="<%= event.locationData.addresslink %>"><%= event.locationData.address %></a>
               <p>
                 <%= new Date(event.date).toLocaleDateString("en-US", {
                   day: "numeric",
