@@ -36,7 +36,7 @@ export default function publicEventsRoutes(db) {
       { $sort: { date: 1 } }
     ]).toArray();
 
-    // filteren gebeurt in javascript omdat je anders twee keer een aggregate query moet doen
+    // filteren gebeurt in javascript na het ophalen van de events
     let filteredEvents = events;
 
     // filteren op stad als er een locatie geselecteerd is
@@ -48,7 +48,7 @@ export default function publicEventsRoutes(db) {
     }
 
     // filteren op maand als er een maand geselecteerd is
-    // getMonth() geeft 0-11 terug, dus +1 om het gelijk te maken aan de echte maandnummers
+    // getMonth() geeft 0-11 terug, dus +1 om het gelijk te maken aan echte maandnummers
     if (selectedMonth && selectedMonth !== "All") {
       filteredEvents = filteredEvents.filter(event => {
         const eventMonth = new Date(event.date).getMonth() + 1;
@@ -56,11 +56,21 @@ export default function publicEventsRoutes(db) {
       });
     }
 
-    // gefilterde events en de geselecteerde filterwaarden meegeven aan de view
+    // hier halen we alle unieke steden uit de locations collectie
+    // distinct zorgt ervoor dat elke stad maar 1 keer voorkomt
+    const cities = await db.collection("locations").distinct("city");
+
+    // lege waardes eruit halen en alfabetisch sorteren
+    const filteredCities = cities
+      .filter(city => city && city.trim() !== "")
+      .sort((a, b) => a.localeCompare(b));
+
+    // gefilterde events, geselecteerde filters en steden meegeven aan de view
     res.render("events", {
       events: filteredEvents,
       selectedLocation,
-      selectedMonth
+      selectedMonth,
+      cities: filteredCities
     });
   });
 
