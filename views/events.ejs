@@ -21,18 +21,33 @@
           <form method="GET" action="/events">
             <div>
               <select name="location" id="locatie" onchange="this.form.submit()">
-                <option value="All" <%= selectedLocation === "All" ? "selected" : "" %>> All locations</option>
-                <option value="Amsterdam" <%= selectedLocation === "Amsterdam" ? "selected" : "" %>>Amsterdam</option>
-                <option value="Haarlem" <%= selectedLocation === "Haarlem" ? "selected" : "" %>>Haarlem</option>
-                <option value="Utrecht" <%= selectedLocation === "Utrecht" ? "selected" : "" %>>Utrecht</option>
+                <option value="All" <%= selectedLocation === "All" ? "selected" : "" %>>All locations</option>
+
+                <% cities.forEach(city => { %>
+                  <option value="<%= city %>" <%= selectedLocation === city ? "selected" : "" %>>
+                    <%= city %>
+                  </option>
+                <% }) %>
               </select>
 
-              <select name="month" id="Datum" onchange="this.form.submit()">
-                <option value="All" <%= selectedLocation === "All" ? "selected" : "" %>> All months</option>
-                <option value="7" <%= selectedMonth === "7" ? "selected" : "" %>>July</option>
-                <option value="8" <%= selectedMonth === "8" ? "selected" : "" %>>August</option>
-                <option value="9" <%= selectedMonth === "9" ? "selected" : "" %>>September</option>
+              <select name="month" onchange="this.form.submit()">
+                  <option value="All" <%= selectedMonth === "All" ? "selected" : "" %>>
+                    All months
+                  </option>
+
+                  <option value="7" <%= selectedMonth === "7" ? "selected" : "" %>>
+                    July
+                  </option>
+
+                  <option value="8" <%= selectedMonth === "8" ? "selected" : "" %>>
+                    August
+                  </option>
+
+                  <option value="9" <%= selectedMonth === "9" ? "selected" : "" %>>
+                    September
+                  </option>
               </select>
+
             </div>
           </form>
         </div>
