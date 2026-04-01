@@ -56,7 +56,6 @@ app.get("/faq", (req, res) => {
   res.render("FAQ");
 });
 
-
 app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
@@ -103,11 +102,9 @@ app.get("/cms/createlocation", (req, res) => {
 app.get("/cms/createartist", (req, res) => {
   res.render("createArtist-cms", {
     editMode: false,
-    artist: null
+    artist: null,
   });
 });
-
-
 
 async function start() {
   try {
@@ -115,6 +112,33 @@ async function start() {
     console.log("Verbonden met MongoDB");
 
     const db = client.db("CENDO");
+
+    // PRE-REGISTER ROUTE TOEGEVOEGD
+    app.post("/pre-register", async (req, res) => {
+      try {
+        let { email } = req.body;
+
+        email = email.trim().toLowerCase();
+
+        // check of email al bestaat
+        const existing = await db.collection("preregister").findOne({ email });
+
+        if (existing) {
+          return res.send("Je bent al geregistreerd!");
+        }
+
+        // opslaan in jouw collection
+        await db.collection("preregister").insertOne({
+          email,
+          createdAt: new Date(),
+        });
+
+        return res.redirect("/pre-register");
+      } catch (err) {
+        console.error(err);
+        res.send("Er ging iets mis");
+      }
+    });
 
     app.use("/event", publicEventsRoutes(db));
     app.use("/events", publicEventsRoutes(db));
@@ -124,7 +148,6 @@ async function start() {
     app.use("/cms/users", usersRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));
     app.use("/cms/locations", locationsRoutes(db));
-
 
     app.listen(PORT, () => {
       console.log(`Server draait op http://localhost:${PORT}`);

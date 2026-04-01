@@ -10,14 +10,14 @@ export default function usersRoutes(db) {
   // --- Middleware voor beveiliging toegevoegd ---
   function checkAuth(req, res, next) {
     if (!req.session.userId) {
-      return res.redirect("/cms/login"); 
+      return res.redirect("/cms/login");
     }
     next();
   }
 
   // --- CREATE user ---
   router.post("/create", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
+    // checkAuth toegevoegd
     try {
       const { username, email, password } = req.body;
 
@@ -72,7 +72,7 @@ export default function usersRoutes(db) {
       const users = await usersCollection.find().toArray();
       res.render("users-cms", {
         users,
-        search: ""   // <— DIT IS WAT JE MIST
+        search: "", // <— DIT IS WAT JE MIST
       });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
@@ -83,28 +83,28 @@ export default function usersRoutes(db) {
   // ajax route
 
   router.get("/search/ajax", async (req, res) => {
-  try {
-    const search = req.query.search || "";
+    try {
+      const search = req.query.search || "";
 
-    let query = {};
+      let query = {};
 
-    if (search) {
-      query = {
-        $or: [
-          { username: { $regex: search, $options: "i" } },
-          { email: { $regex: search, $options: "i" } },
-          { role: { $regex: search, $options: "i" } }
-        ]
-      };
+      if (search) {
+        query = {
+          $or: [
+            { username: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } },
+            { role: { $regex: search, $options: "i" } },
+          ],
+        };
+      }
+
+      const users = await db.collection("users").find(query).toArray();
+      res.json(users);
+    } catch (err) {
+      console.error("Fout bij AJAX zoeken users:", err);
+      res.status(500).json({ error: "Fout bij zoeken" });
     }
-
-    const users = await db.collection("users").find(query).toArray();
-    res.json(users);
-  } catch (err) {
-    console.error("Fout bij AJAX zoeken users:", err);
-    res.status(500).json({ error: "Fout bij zoeken" });
-  }
-});
+  });
 
   // --- UPDATE existing user ---
   router.post("/edit/:id", checkAuth, async (req, res) => {

@@ -4,12 +4,24 @@ import { ObjectId } from "mongodb";
 export default function locationsRoutes(db) {
   const router = express.Router();
 
-  // --- CREATE location ---
+  // -------------------------------------------------------
+  // 🔐 Middleware (AUTH)
+  // -------------------------------------------------------
+  function checkAuth(req, res, next) {
+    if (!req.session.userId) {
+      return res.redirect("/cms/login");
+    }
+    next();
+  }
+
+  // 👉 ALLES beveiligen
+  router.use(checkAuth);
+
+  // -------------------------------------------------------
+  // CREATE location
+  // -------------------------------------------------------
   router.post("/create", async (req, res) => {
     try {
-      console.log("CREATE ROUTE HIT");
-      console.log("REQ BODY:", req.body);
-
       const { name, address, city, capacity, mapsLink } = req.body;
 
       if (!name || !address || !city || !capacity) {
@@ -33,23 +45,22 @@ export default function locationsRoutes(db) {
     }
   });
 
-  // --- AJAX search ---
+  // -------------------------------------------------------
+  // AJAX search
+  // -------------------------------------------------------
   router.get("/search/ajax", async (req, res) => {
     try {
       const search = req.query.search || "";
-      console.log("AJAX zoekopdracht:", search);
 
       let query = {};
 
       if (search) {
         query = {
-          name: { $regex: search, $options: "i" }
+          name: { $regex: search, $options: "i" },
         };
       }
 
       const locations = await db.collection("locations").find(query).toArray();
-      console.log("Gevonden locaties:", locations.length);
-
       res.json(locations);
     } catch (err) {
       console.error("Fout bij AJAX zoeken locaties:", err);
@@ -57,7 +68,9 @@ export default function locationsRoutes(db) {
     }
   });
 
-  // --- READ all locations ---
+  // -------------------------------------------------------
+  // READ all locations
+  // -------------------------------------------------------
   router.get("/", async (req, res) => {
     try {
       const search = req.query.search || "";
@@ -65,7 +78,7 @@ export default function locationsRoutes(db) {
 
       if (search) {
         query = {
-          name: { $regex: search, $options: "i" }
+          name: { $regex: search, $options: "i" },
         };
       }
 
@@ -77,12 +90,13 @@ export default function locationsRoutes(db) {
     }
   });
 
-  // --- OPEN edit page ---
+  // -------------------------------------------------------
+  // OPEN edit page
+  // -------------------------------------------------------
   router.get("/edit/:id", async (req, res) => {
     try {
-      const locationId = req.params.id;
       const location = await db.collection("locations").findOne({
-        _id: new ObjectId(locationId)
+        _id: new ObjectId(req.params.id),
       });
 
       if (!location) {
@@ -96,10 +110,11 @@ export default function locationsRoutes(db) {
     }
   });
 
-  // --- UPDATE location ---
+  // -------------------------------------------------------
+  // UPDATE location
+  // -------------------------------------------------------
   router.post("/edit/:id", async (req, res) => {
     try {
-      const locationId = req.params.id;
       const { name, address, city, capacity, mapsLink } = req.body;
 
       if (!name || !address || !city || !capacity) {
@@ -107,7 +122,7 @@ export default function locationsRoutes(db) {
       }
 
       await db.collection("locations").updateOne(
-        { _id: new ObjectId(locationId) },
+        { _id: new ObjectId(req.params.id) },
         {
           $set: {
             name,
@@ -115,8 +130,8 @@ export default function locationsRoutes(db) {
             city,
             capacity: Number(capacity),
             mapsLink: mapsLink || "",
-          }
-        }
+          },
+        },
       );
 
       res.redirect("/cms/locations");
@@ -126,13 +141,15 @@ export default function locationsRoutes(db) {
     }
   });
 
-  // --- DELETE location ---
+  // -------------------------------------------------------
+  // DELETE location
+  // -------------------------------------------------------
   router.post("/delete/:id", async (req, res) => {
     try {
-      const locationId = req.params.id;
       await db.collection("locations").deleteOne({
-        _id: new ObjectId(locationId)
+        _id: new ObjectId(req.params.id),
       });
+
       res.redirect("/cms/locations");
     } catch (err) {
       console.error("Fout bij verwijderen locatie:", err);
