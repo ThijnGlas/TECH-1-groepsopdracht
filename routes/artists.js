@@ -6,6 +6,22 @@ import { ObjectId } from "mongodb";
 export default function artistsRoutes(db) {
   const router = express.Router();
 
+  // -------------------------------------------------------
+  // 🔐 Middleware (AUTH)
+  // -------------------------------------------------------
+  function checkAuth(req, res, next) {
+    if (!req.session.userId) {
+      return res.redirect("/cms/login");
+    }
+    next();
+  }
+
+  // 👉 alles beschermen
+  router.use(checkAuth);
+
+  // -------------------------------------------------------
+  // Multer config
+  // -------------------------------------------------------
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "public/uploads/artists/");
@@ -15,31 +31,48 @@ export default function artistsRoutes(db) {
       cb(null, unique + path.extname(file.originalname));
     },
   });
+
   const upload = multer({ storage });
 
-  // --- READ alle artiesten ---
+  // -------------------------------------------------------
+  // READ alle artiesten
+  // -------------------------------------------------------
   router.get("/", async (req, res) => {
     try {
       const search = req.query.search || "";
-      const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
+
+      const query = search ? { name: { $regex: search, $options: "i" } } : {};
+
+      const artists = await db
+        .collection("artists")
+        .find(query)
+        .sort({ name: 1 })
+        .toArray();
 
       res.render("artists-cms", {
         artists,
-        search
+        search,
       });
     } catch (err) {
+      console.error("Fout bij ophalen artiesten:", err);
       res.status(500).send("Fout bij ophalen artiesten");
     }
   });
 
-  // --- AJAX SEARCH artiesten ---
+  // -------------------------------------------------------
+  // AJAX SEARCH
+  // -------------------------------------------------------
   router.get("/search/ajax", async (req, res) => {
-    const search = req.query.search || "";
-
     try {
-      const artists = await db.collection("artists").find({
-        name: { $regex: search, $options: "i" }
-      }).sort({ name: 1 }).toArray();
+      const search = req.query.search || "";
+
+      const artists = await db
+        .collection("artists")
+        .find({
+          name: { $regex: search, $options: "i" },
+        })
+        .sort({ name: 1 })
+        .toArray();
 
       res.json(artists);
     } catch (err) {
@@ -48,7 +81,9 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // --- CREATE artiest ---
+  // -------------------------------------------------------
+  // CREATE artiest
+  // -------------------------------------------------------
   router.post("/create", upload.single("photo"), async (req, res) => {
     try {
       const { name } = req.body;
@@ -65,16 +100,18 @@ export default function artistsRoutes(db) {
 
       res.redirect("/cms/artists");
     } catch (err) {
+      console.error("Fout bij aanmaken artiest:", err);
       res.status(500).send("Fout bij aanmaken artiest");
     }
   });
 
-  // --- OPEN edit page ---
+  // -------------------------------------------------------
+  // OPEN edit page
+  // -------------------------------------------------------
   router.get("/edit/:id", async (req, res) => {
     try {
-      const artistId = req.params.id;
       const artist = await db.collection("artists").findOne({
-        _id: new ObjectId(artistId)
+        _id: new ObjectId(req.params.id),
       });
 
       if (!artist) {
@@ -88,10 +125,11 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // --- UPDATE artist ---
+  // -------------------------------------------------------
+  // UPDATE artist
+  // -------------------------------------------------------
   router.post("/edit/:id", upload.single("photo"), async (req, res) => {
     try {
-      const artistId = req.params.id;
       const { name } = req.body;
 
       if (!name) {
@@ -104,10 +142,12 @@ export default function artistsRoutes(db) {
         updateFields.photoPath = "/uploads/artists/" + req.file.filename;
       }
 
-      await db.collection("artists").updateOne(
-        { _id: new ObjectId(artistId) },
-        { $set: updateFields }
-      );
+      await db
+        .collection("artists")
+        .updateOne(
+          { _id: new ObjectId(req.params.id) },
+          { $set: updateFields },
+        );
 
       res.redirect("/cms/artists");
     } catch (err) {
@@ -116,11 +156,15 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // --- DELETE artist ---
+  // -------------------------------------------------------
+  // DELETE artist
+  // -------------------------------------------------------
   router.post("/delete/:id", async (req, res) => {
     try {
-      const artistId = req.params.id;
-      await db.collection("artists").deleteOne({ _id: new ObjectId(artistId) });
+      await db.collection("artists").deleteOne({
+        _id: new ObjectId(req.params.id),
+      });
+
       res.redirect("/cms/artists");
     } catch (err) {
       console.error("Fout bij verwijderen artiest:", err);

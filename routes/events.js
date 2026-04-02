@@ -28,7 +28,7 @@ export default function eventsRoutes(db) {
     "/create",
     uploadEvent.fields([
       { name: "imageSmall", maxCount: 1 },
-      { name: "imageLarge", maxCount: 1 }
+      { name: "imageLarge", maxCount: 1 },
     ]),
     async (req, res) => {
       try {
@@ -38,7 +38,10 @@ export default function eventsRoutes(db) {
         // lineup is een string die word gescheiden met een komma, dus die splits ik op naar een array
         // filter zorgt ervoor dat lege strings er niet in komen
         const lineupArray = lineup
-          ? lineup.split(",").map(i => i.trim()).filter(Boolean)
+          ? lineup
+              .split(",")
+              .map((i) => i.trim())
+              .filter(Boolean)
           : [];
 
         // nieuw event object aanmaken
@@ -64,7 +67,7 @@ export default function eventsRoutes(db) {
         console.error("Fout bij aanmaken event:", err);
         res.status(500).send("Fout bij aanmaken event");
       }
-    }
+    },
   );
 
 
@@ -95,7 +98,7 @@ export default function eventsRoutes(db) {
     "/edit/:id",
     uploadEvent.fields([
       { name: "imageSmall", maxCount: 1 },
-      { name: "imageLarge", maxCount: 1 }
+      { name: "imageLarge", maxCount: 1 },
     ]),
     async (req, res) => {
       try {
@@ -104,7 +107,10 @@ export default function eventsRoutes(db) {
 
         // lineup weer omzetten naar een array, zelfde als bij aanmaken
         const lineupArray = lineup
-          ? lineup.split(",").map(i => i.trim()).filter(Boolean)
+          ? lineup
+              .split(",")
+              .map((i) => i.trim())
+              .filter(Boolean)
           : [];
 
         // object aanmaken met de gegevens die we willen updaten
@@ -114,7 +120,7 @@ export default function eventsRoutes(db) {
           location: new ObjectId(location),
           eventLink,
           lineup: lineupArray,
-          status
+          status,
         };
 
         // afbeeldingen alleen updaten als er nieuwe geüpload zijn
@@ -122,7 +128,8 @@ export default function eventsRoutes(db) {
         if (req.files.imageSmall) {
           updateData.imageSmall = req.files.imageSmall[0].filename;
         }
-        if (req.files.imageLarge) {
+
+        if (req.files?.imageLarge) {
           updateData.imageLarge = req.files.imageLarge[0].filename;
         }
 
@@ -138,7 +145,7 @@ export default function eventsRoutes(db) {
         console.error("Fout bij updaten event:", err);
         res.status(500).send("Fout bij updaten event");
       }
-    }
+    },
   );
 
 
@@ -228,11 +235,16 @@ export default function eventsRoutes(db) {
   // DELETE
   // event verwijderen op basis van id
   router.post("/delete/:id", async (req, res) => {
-    await db.collection("events").deleteOne({
-      _id: new ObjectId(req.params.id)
-    });
+    try {
+      await db.collection("events").deleteOne({
+        _id: new ObjectId(req.params.id),
+      });
 
-    res.redirect("/cms/events");
+      res.redirect("/cms/events");
+    } catch (err) {
+      console.error("Fout bij verwijderen event:", err);
+      res.status(500).send("Fout bij verwijderen event");
+    }
   });
 
   return router;

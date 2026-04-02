@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/style.css" />
     <link rel="stylesheet" href="./style/pre-register.css" />
     <link
       rel="stylesheet"
@@ -24,8 +24,8 @@
           <h1>BE THE FIRST TO KNOW</h1>
           <h1>BE THE FIRST TO KNOW</h1>
           <h1>BE THE FIRST TO KNOW</h1>
-      </div>
-      <div class="marquee-group" aria-hidden="true">
+        </div>
+        <div class="marquee-group" aria-hidden="true">
           <h1>BE THE FIRST TO KNOW</h1>
           <h1>BE THE FIRST TO KNOW</h1>
           <h1>BE THE FIRST TO KNOW</h1>
@@ -34,14 +34,22 @@
           <h1>BE THE FIRST TO KNOW</h1>
           <h1>BE THE FIRST TO KNOW</h1>
           <h1>BE THE FIRST TO KNOW</h1>
-      </div>
+        </div>
       </section>
 
-      <p>Be the first to hear about our upcoming events, secret pop-ups, and exclusive drops.</p>
+      <p>
+        Be the first to hear about our upcoming events, secret pop-ups, and
+        exclusive drops.
+      </p>
 
       <section class="form-section">
-        <form onsubmit="handleSubmit(event)">
-          <input type="email" id="emailInput" placeholder="Your email here..." />
+        <form method="POST" action="/pre-register">
+          <input
+            type="email"
+            name="email"
+            placeholder="Your email here..."
+            required
+          />
           <button class="btn" type="submit">Pre-Register</button>
         </form>
       </section>

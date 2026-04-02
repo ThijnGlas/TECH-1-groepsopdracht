@@ -11,7 +11,7 @@ export default function usersRoutes(db) {
   // deze functie checkt of de gebruiker is ingelogd, zo niet stuur hem dan door naar de loginpagina
   function checkAuth(req, res, next) {
     if (!req.session.userId) {
-      return res.redirect("/cms/login"); 
+      return res.redirect("/cms/login");
     }
     next();
   }
@@ -84,13 +84,13 @@ export default function usersRoutes(db) {
       };
     }
 
-    const users = await db.collection("users").find(query).toArray();
-    res.json(users);
-  } catch (err) {
-    console.error("Fout bij AJAX zoeken users:", err);
-    res.status(500).json({ error: "Fout bij zoeken" });
-  }
-});
+      const users = await db.collection("users").find(query).toArray();
+      res.json(users);
+    } catch (err) {
+      console.error("Fout bij AJAX zoeken users:", err);
+      res.status(500).json({ error: "Fout bij zoeken" });
+    }
+  });
 
 
   // edit formulier ophalen voor de gekozen gebruiker
