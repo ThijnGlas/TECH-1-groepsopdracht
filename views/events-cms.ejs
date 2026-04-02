@@ -17,6 +17,8 @@
           <div class="top">
             <h1>Events</h1>
 
+        <!-- Zoekbalk voor live search in het CMS.
+             De huidige zoekterm blijft zichtbaar door de waarde uit de backend opnieuw in te vullen. -->
             <input
               id="event-search"
               type="text"
@@ -28,13 +30,20 @@
           </div>
 
           <table>
+            <!-- Deze tbody bevat de rijen van de eventtabel.
+                 Wanneer de pagina voor het eerst laadt, vult EJS deze met de events
+                 die vanuit de backend zijn meegegeven via res.render().
+                 Daarna gebruikt JavaScript dezelfde tbody om de zoekresultaten live
+                 te vervangen zonder dat de pagina opnieuw moet laden. -->
             <tbody id="events-table-body">
               <% if (events.length > 0) { %>
                 <% events.forEach((event, index) => { %>
                   <tr class="btn-position">
                     <td><%= index + 1 %></td>
                     <td><%= event.title %></td>
+                    <!-- Datum formatteren zodat die leesbaar wordt weergegeven in de tabel -->
                     <td><%= new Date(event.date).toLocaleDateString('nl-NL') %></td>
+                    <!-- locationData.name komt uit de $lookup in de backend-route -->
                     <td><%= event.locationData ? event.locationData.name : 'Geen locatie' %></td>
                     <td><%= event.status || 'Geen status' %></td>
                     <td>
@@ -59,6 +68,7 @@
       <%- include('partials/sidebar-cms') %>
     </div>
 
+    <!-- Dit script bevat de AJAX-logica voor live search in het CMS -->
     <script>
       const searchInput = document.getElementById("event-search");
       const tableBody = document.getElementById("events-table-body");
