@@ -60,8 +60,10 @@ app.get("/huisregels", (req, res) => {
   res.render("huisregels");
 });
 
-app.get("/artists", (req, res) => {
-  res.render("artists");
+app.get("/artists", async (req, res) => {
+  const db = client.db("CENDO");
+  const artists = await db.collection("artists").find({}).sort({ name: 1 }).toArray();
+  res.render("artists", { artists });
 });
 
 //  BELANGRIJK: redirect /cms → /cms/login
@@ -91,6 +93,16 @@ app.get("/cms/createuser", (req, res) => {
   res.render("createUser-cms", {
     editMode: false,
     user: null,
+  });
+});
+
+app.get("/cms/createevent", async (req, res) => {
+  const db = client.db("CENDO");
+  const locations = await db.collection("locations").find().toArray();
+  res.render("createevent-cms", {
+    editMode: false,
+    event: null,
+    locations
   });
 });
 app.get("/cms/createlocation", (req, res) => {
@@ -144,6 +156,7 @@ async function start() {
     app.use("/events", publicEventsRoutes(db));
 
     app.use("/cms", authRoutes(db));
+
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/users", usersRoutes(db));
     app.use("/cms/artists", artistsRoutes(db));

@@ -18,23 +18,38 @@
       <section>
         <div class="top-main">
           <h1>Events</h1>
-          <div>
-            <select name="locatie" id="locatie">
-              <option value="" disabled selected>Location</option>
-              <option value="All">All</option>
-              <option value="Amsterdam">Amsterdam</option>
-              <option value="Haarlem">Haarlem</option>
-              <option value="Utrecht">Utrecht</option>
-              <option value="Castricum">Castricum</option>
-            </select>
-            <select name="Datum" id="Datum">
-              <option value="" disabled selected>Date</option>
-              <option value="All">All</option>
-              <option value="Juli">July</option>
-              <option value="Augustus">August</option>
-              <option value="September">September</option>
-            </select>
-          </div>
+          <form method="GET" action="/events">
+            <div>
+              <select name="location" id="locatie" onchange="this.form.submit()">
+                <option value="All" <%= selectedLocation === "All" ? "selected" : "" %>>All locations</option>
+
+                <% cities.forEach(city => { %>
+                  <option value="<%= city %>" <%= selectedLocation === city ? "selected" : "" %>>
+                    <%= city %>
+                  </option>
+                <% }) %>
+              </select>
+
+              <select name="month" onchange="this.form.submit()">
+                  <option value="All" <%= selectedMonth === "All" ? "selected" : "" %>>
+                    All months
+                  </option>
+
+                  <option value="7" <%= selectedMonth === "7" ? "selected" : "" %>>
+                    July
+                  </option>
+
+                  <option value="8" <%= selectedMonth === "8" ? "selected" : "" %>>
+                    August
+                  </option>
+
+                  <option value="9" <%= selectedMonth === "9" ? "selected" : "" %>>
+                    September
+                  </option>
+              </select>
+
+            </div>
+          </form>
         </div>
         <div class="event-wrapper">
           <% events.forEach(event => { %>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,78 +11,82 @@
 <body>
   <%- include('partials/header-cms') %>
 
-  <div class="dashboard-wrapper">
-    <div class="content-wrapper">
-      <div>
-        <div class="top">
-          <h1>Artiesten</h1>
+    <div class="dashboard-wrapper">
+      <div class="content-wrapper">
+        <div>
+          <div class="top">
+            <h1>Artiesten</h1>
 
-          <input
-            id="artist-search"
-            type="text"
-            placeholder="Artiest zoeken"
-            value="<%= search || '' %>"
-          />
+            <input id="artist-search" type="text" placeholder="Artiest zoeken" value="<%= search || '' %>" />
 
-          <a class="btn" href="/cms/createartist">Artiest aanmaken</a>
+            <a class="btn" href="/cms/createartist">Artiest aanmaken</a>
+          </div>
+
+          <table>
+            <tbody id="artists-table-body">
+              <% if (artists.length> 0) { %>
+                <% artists.forEach((artist, index)=> { %>
+                  <tr class="btn-position">
+                    <td>
+                      <%= index + 1 %>
+                    </td>
+                    <td>
+                      <%= artist.name %>
+                    </td>
+                    <td>
+                      <a class="btn" href="/cms/artists/edit/<%= artist._id %>">Artiest wijzigen</a>
+
+                      <!-- verwijderknop zit in een form omdat je een POST request nodig hebt -->
+                      <form action="/cms/artists/delete/<%= artist._id %>" method="POST" style="display:inline;">
+                        <button class="btn" type="submit"
+                          onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')">
+                          Verwijderen
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+                    <% } else { %>
+                      <tr>
+                        <td colspan="3">Geen artiesten gevonden.</td>
+                      </tr>
+                      <% } %>
+            </tbody>
+          </table>
         </div>
-
-        <table>
-          <tbody id="artists-table-body">
-            <% if (artists.length > 0) { %>
-              <% artists.forEach((artist, index) => { %>
-                <tr class="btn-position">
-                  <td><%= index + 1 %></td>
-                  <td><%= artist.name %></td>
-                  <td>
-                    <a class="btn" href="/cms/artists/edit/<%= artist._id %>">Artiest wijzigen</a>
-
-                    <form action="/cms/artists/delete/<%= artist._id %>" method="POST" style="display:inline;">
-                      <button
-                        class="btn"
-                        type="submit"
-                        onclick="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')"
-                      >
-                        Verwijderen
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-              <% }) %>
-            <% } else { %>
-              <tr>
-                <td colspan="3">Geen artiesten gevonden.</td>
-              </tr>
-            <% } %>
-          </tbody>
-        </table>
       </div>
+
+      <%- include('partials/sidebar-cms') %>
     </div>
 
-    <%- include('partials/sidebar-cms') %>
-  </div>
+    <script>
+      // zoekbalk en tabel ophalen uit de DOM
+      const searchInput = document.getElementById("artist-search");
+      const tableBody = document.getElementById("artists-table-body");
 
-  <script>
-    const searchInput = document.getElementById("artist-search");
-    const tableBody = document.getElementById("artists-table-body");
+      // luisteren naar wat de gebruiker typt in de zoekbalk
+      searchInput.addEventListener("input", async function () {
+        const searchValue = searchInput.value;
 
-    searchInput.addEventListener("input", async function () {
-      const searchValue = searchInput.value;
+        try {
+          // ajax request naar de server sturen met de zoekterm
+          // encodeURIComponent zorgt ervoor dat spaties en speciale tekens goed in de url komen
+          const response = await fetch(`/cms/artists/search/ajax?search=${encodeURIComponent(searchValue)}`);
+          const artists = await response.json();
 
-      try {
-        const response = await fetch(`/cms/artists/search/ajax?search=${encodeURIComponent(searchValue)}`);
-        const artists = await response.json();
-
-        if (!artists.length) {
-          tableBody.innerHTML = `
+          // als er geen resultaten zijn, een melding in de tabel zetten
+          if (!artists.length) {
+            tableBody.innerHTML = `
             <tr>
               <td colspan="3">Geen artiesten gevonden.</td>
             </tr>
           `;
-          return;
-        }
+            return;
+          }
 
-        tableBody.innerHTML = artists.map((artist, index) => `
+          // tabel opnieuw opbouwen met de gevonden artiesten
+          // .map() maakt een array van html strings, .join("") plakt die aan elkaar
+          tableBody.innerHTML = artists.map((artist, index) => `
           <tr class="btn-position">
             <td>${index + 1}</td>
             <td>${artist.name}</td>
@@ -100,10 +105,12 @@
             </td>
           </tr>
         `).join("");
-      } catch (error) {
-        console.error("Fout bij live zoeken:", error);
-      }
-    });
-  </script>
+        } catch (error) {
+          // als de fetch mislukt, een foutmelding in de console zetten
+          console.error("Fout bij live zoeken:", error);
+        }
+      });
+    </script>
 </body>
+
 </html>
