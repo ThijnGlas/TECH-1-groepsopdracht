@@ -52,7 +52,7 @@ export default function locationsRoutes(db) {
       // zoeken op naam van de locatie
       if (search) {
         query = {
-          name: { $regex: search, $options: "i" }
+          name: { $regex: search, $options: "i" },
         };
       }
 
@@ -75,7 +75,7 @@ export default function locationsRoutes(db) {
       // zoeken op naam van de locatie
       if (search) {
         query = {
-          name: { $regex: search, $options: "i" }
+          name: { $regex: search, $options: "i" },
         };
       }
 
@@ -94,7 +94,7 @@ export default function locationsRoutes(db) {
 
       // locatie zoeken op id
       const location = await db.collection("locations").findOne({
-        _id: new ObjectId(locationId)
+        _id: new ObjectId(req.params.id),
       });
 
       // check om te zien of de locatie bestaat, zo niet stuurt hij je een 404 error
@@ -113,7 +113,6 @@ export default function locationsRoutes(db) {
   // locatie updaten, pakt de nieuwe gegevens uit het formulier
   router.post("/edit/:id", checkAuth, async (req, res) => {
     try {
-      const locationId = req.params.id;
       const { name, address, city, capacity, mapsLink } = req.body;
 
       // controleren of alle verplichte velden zijn ingevuld
@@ -123,7 +122,7 @@ export default function locationsRoutes(db) {
 
       // locatie updaten in de database met $set, zodat alleen de gewijzigde velden worden aangepast
       await db.collection("locations").updateOne(
-        { _id: new ObjectId(locationId) },
+        { _id: new ObjectId(req.params.id) },
         {
           $set: {
             name,
@@ -131,8 +130,8 @@ export default function locationsRoutes(db) {
             city,
             capacity: Number(capacity),
             mapsLink: mapsLink || "",
-          }
-        }
+          },
+        },
       );
 
       // na het updaten terug naar de locaties pagina
@@ -150,7 +149,7 @@ export default function locationsRoutes(db) {
 
       // locatie verwijderen uit de database
       await db.collection("locations").deleteOne({
-        _id: new ObjectId(locationId)
+        _id: new ObjectId(req.params.id),
       });
 
       // na het verwijderen terug naar de locaties pagina
