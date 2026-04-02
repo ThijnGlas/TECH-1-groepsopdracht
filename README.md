@@ -108,7 +108,7 @@ The project was created by:
 * Thijn Glas
 * Finn Mulder
 * Ruben Verhoeven
-* Thin Phan
+* Tin Phan
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
