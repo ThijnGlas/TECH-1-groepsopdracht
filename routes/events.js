@@ -149,37 +149,45 @@ export default function eventsRoutes(db) {
     },
   );
 
-  // ajax route voor de zoekfunctie, geeft resultaten terug als json
-  router.get("/search/ajax", checkAuth, async (req, res) => {
+
+
+  // AJAX SEARCH EVENTS gemaakt door Tin Phan ;D
+  router.get("/search/ajax", async (req, res) => {
     try {
+      //Haalt de zoekterm uit de querystring, bv. /search/ajax?search=rock
+      //Als er niets is ingevuld, gebruiken we een lege string
       const search = req.query.search || "";
 
-      // als er niks ingevuld is, alle events teruggeven
+      // Standaard geen filter: dan geven we alle events terug
       let matchStage = {};
 
-      // zoeken op titel van het event
+      //Als de gebruiker iets heeft ingevuld, filteren we op de titel van het event
       if (search) {
         matchStage = {
-          title: { $regex: search, $options: "i" } // i = hoofdletterongevoelig
+          // Zoekt gedeeltelijk op titel, zonder onderscheid tussen hoofdletters en kleine letters
+          title: { $regex: search, $options: "i" } 
         };
       }
 
-      // aggregate gebruiken zodat we ook de locatiegegevens erbij kunnen ophalen
+      // We gebruiken aggregate omdat we niet alleen de events willen ophalen,
+      // maar ook extra locatiegegevens uit de locations-collectie willen koppelen.
+      // Met deze pipeline kunnen we dus een soort join doen en daarna het resultaat filteren.
       const events = await db.collection("events").aggregate([
+        // zoekfilter toepassen
+        { $match: matchStage },
         {
           // locatie koppelen aan het event via het location id
           $lookup: {
-            from: "locations",
+            from: "locations",  
             localField: "location",
             foreignField: "_id",
             as: "locationData"
           }
         },
-        // locationData is een array, unwind maakt er een object van
+        // locationData is een array, unwind maakt er een object van,
+        // dit doen we omdat het dan makkelijker en netter is om mee te werken
         { $unwind: "$locationData" },
-        // zoekfilter toepassen
-        { $match: matchStage }
-      ]).toArray();
+      ]).toArray(); 
 
       // resultaten terugsturen als json
       res.json(events);

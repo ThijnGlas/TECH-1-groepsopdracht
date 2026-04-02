@@ -13,7 +13,9 @@ export default function publicEventsRoutes(db) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // filter opties uit de url halen, leeg als er niks geselecteerd is
+    // Hier lezen we de gekozen filters uit de URL.
+    // Voorbeeld: /events?location=Amsterdam&month=7
+    // Als de gebruiker niets kiest, blijft de waarde leeg.
     const selectedLocation = req.query.location || "";
     const selectedMonth = req.query.month || "";
 
@@ -36,22 +38,30 @@ export default function publicEventsRoutes(db) {
       { $sort: { date: 1 } }
     ]).toArray();
 
-    // filteren gebeurt in javascript na het ophalen van de events
+    // We starten met alle events die uit de database komen.
+    // Daarna halen we stap voor stap events weg die niet aan de filters voldoen.
     let filteredEvents = events;
 
-    // filteren op stad als er een locatie geselecteerd is
+    // Alleen als de gebruiker een locatie kiest, filteren we op stad.
+    // "All" betekent: geen filter toepassen, dus alles laten staan.
     if (selectedLocation && selectedLocation !== "All") {
       filteredEvents = filteredEvents.filter(event =>
+        // Controleert of het event een stad heeft
+        // en vergelijkt die stad met de gekozen locatie
         event.locationData.city &&
         event.locationData.city.toLowerCase() === selectedLocation.toLowerCase()
       );
     }
 
-    // filteren op maand als er een maand geselecteerd is
-    // getMonth() geeft 0-11 terug, dus +1 om het gelijk te maken aan echte maandnummers
+    // Daarna doen we hetzelfde voor de maand.
+    // Als de gebruiker een maand kiest, houden we alleen events uit die maand over.
+    // getMonth() geeft 0 t/m 11 terug, daarom doen we +1.
     if (selectedMonth && selectedMonth !== "All") {
       filteredEvents = filteredEvents.filter(event => {
+        // Haalt het maandnummer uit de eventdatum
         const eventMonth = new Date(event.date).getMonth() + 1;
+
+        // Vergelijkt de maand van het event met de gekozen maand uit de URL
         return eventMonth === Number(selectedMonth);
       });
     }
