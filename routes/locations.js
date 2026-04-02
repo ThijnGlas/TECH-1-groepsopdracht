@@ -145,7 +145,6 @@ export default function locationsRoutes(db) {
   // locatie verwijderen op basis van id
   router.post("/delete/:id", checkAuth, async (req, res) => {
     try {
-      const locationId = req.params.id;
 
       // locatie verwijderen uit de database
       await db.collection("locations").deleteOne({

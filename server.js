@@ -126,10 +126,7 @@ app.get("/cms/createartist", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 // server starten en verbinding maken met mongodb
-=======
->>>>>>> df3f8cf8cc0082cc424d2dce3d43816e3552019f
 async function start() {
   try {
     await client.connect();
@@ -137,37 +134,7 @@ async function start() {
 
     const db = client.db("CENDO");
 
-<<<<<<< HEAD
     // routes koppelen aan de juiste paden
-=======
-    // PRE-REGISTER ROUTE TOEGEVOEGD
-    app.post("/pre-register", async (req, res) => {
-      try {
-        let { email } = req.body;
-
-        email = email.trim().toLowerCase();
-
-        // check of email al bestaat
-        const existing = await db.collection("preregister").findOne({ email });
-
-        if (existing) {
-          return res.send("Je bent al geregistreerd!");
-        }
-
-        // opslaan in jouw collection
-        await db.collection("preregister").insertOne({
-          email,
-          createdAt: new Date(),
-        });
-
-        return res.redirect("/pre-register");
-      } catch (err) {
-        console.error(err);
-        res.send("Er ging iets mis");
-      }
-    });
-
->>>>>>> df3f8cf8cc0082cc424d2dce3d43816e3552019f
     app.use("/event", publicEventsRoutes(db));
     app.use("/events", publicEventsRoutes(db));
     app.use("/cms", authRoutes(db));

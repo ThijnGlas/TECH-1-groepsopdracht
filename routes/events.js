@@ -227,10 +227,11 @@ export default function eventsRoutes(db) {
 
   // event verwijderen op basis van id
   router.post("/delete/:id", checkAuth, async (req, res) => {
-    await db.collection("events").deleteOne({
-      _id: new ObjectId(req.params.id)
-    });
-
+    try {
+      await db.collection("events").deleteOne({
+        _id: new ObjectId(req.params.id)
+      });
+  
       res.redirect("/cms/events");
     } catch (err) {
       console.error("Fout bij verwijderen event:", err);
