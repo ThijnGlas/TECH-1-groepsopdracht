@@ -117,7 +117,11 @@ The project was created by:
 <!-- LICENSE -->
 ## License
 
-Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+This project is proprietary and not open source. All rights are reserved by the authors.
+
+The source code is provided for educational and review purposes only. It may not be copied, modified, distributed, or used without explicit permission from the authors.
+
+See the `LICENSE` file for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
