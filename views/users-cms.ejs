@@ -62,16 +62,20 @@
     </div>
 
     <script>
+      // haal de input en table body elementen op uit de DOM
       const searchInput = document.getElementById("user-search");
       const tableBody = document.getElementById("users-table-body");
 
+      // voeg een event listener toe aan de input voor het live zoeken
       searchInput.addEventListener("input", async function () {
         const searchValue = searchInput.value;
-
+        
         try {
+          // maak een fetch request naar de server met de zoekterm 
           const response = await fetch(`/cms/users/search/ajax?search=${encodeURIComponent(searchValue)}`);
           const users = await response.json();
 
+          // als er geen gebruikers gevonden worden, toon een bericht in de tabel
           if (!users.length) {
             tableBody.innerHTML = `
               <tr>
@@ -80,7 +84,8 @@
             `;
             return;
           }
-
+          
+          // update de tabel met de gevonden gebruikers
           tableBody.innerHTML = users.map((user, index) => `
             <tr class="btn-position">
               <td>${index + 1}</td>
