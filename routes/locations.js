@@ -90,7 +90,6 @@ export default function locationsRoutes(db) {
   // edit formulier ophalen voor de gekozen locatie
   router.get("/edit/:id", checkAuth, async (req, res) => {
     try {
-      const locationId = req.params.id;
 
       // locatie zoeken op id
       const location = await db.collection("locations").findOne({

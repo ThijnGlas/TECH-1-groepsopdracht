@@ -82,8 +82,6 @@ export default function artistsRoutes(db) {
   // edit formulier ophalen voor de gekozen artiest
   router.get("/edit/:id", checkAuth, async (req, res) => {
     try {
-      const artistId = req.params.id;
-
       // artiest zoeken op id
       const artist = await db.collection("artists").findOne({
         _id: new ObjectId(req.params.id),
@@ -122,7 +120,7 @@ export default function artistsRoutes(db) {
 
       // artiest updaten in de database met $set, zodat alleen de gewijzigde velden worden aangepast
       await db.collection("artists").updateOne(
-        { _id: new ObjectId(artistId) },
+        { _id: new ObjectId(req.params.id) },
         { $set: updateFields }
       );
 
