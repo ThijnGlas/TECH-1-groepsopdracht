@@ -28,14 +28,18 @@
 
         <table>
           <tbody id="artists-table-body">
+            <!-- controleer of er artiesten zijn -->
             <% if (artists.length > 0) { %>
+              <!-- loop door alle artiesten en maak een rij aan voor elke artiest -->
               <% artists.forEach((artist, index) => { %>
                 <tr class="btn-position">
                   <td><%= index + 1 %></td>
                   <td><%= artist.name %></td>
                   <td>
+                    <!-- knop om de artiest te bewerken -->
                     <a class="btn" href="/cms/artists/edit/<%= artist._id %>">Artiest wijzigen</a>
 
+                    <!-- formulier om de artiest te verwijderen -->
                     <form action="/cms/artists/delete/<%= artist._id %>" method="POST" style="display:inline;">
                       <button
                         class="btn"
@@ -49,6 +53,7 @@
                 </tr>
               <% }) %>
             <% } else { %>
+              <!-- als er geen artiesten zijn laat een melding zien -->
               <tr>
                 <td colspan="3">Geen artiesten gevonden.</td>
               </tr>
@@ -62,16 +67,20 @@
   </div>
 
   <script>
+    // pak de zoekbalk en de tabel op uit de pagina
     const searchInput = document.getElementById("artist-search");
     const tableBody = document.getElementById("artists-table-body");
 
+    // luister of er iets wordt ingetypt in de zoekbalk
     searchInput.addEventListener("input", async function () {
       const searchValue = searchInput.value;
 
       try {
+        // stuur een verzoek naar de server met wat er is ingetypt
         const response = await fetch(`/cms/artists/search/ajax?search=${encodeURIComponent(searchValue)}`);
         const artists = await response.json();
 
+        // als er geen artiesten zijn gevonden laat een melding zien
         if (!artists.length) {
           tableBody.innerHTML = `
             <tr>
@@ -81,13 +90,16 @@
           return;
         }
 
+        // vul de tabel met de gevonden artiesten
         tableBody.innerHTML = artists.map((artist, index) => `
           <tr class="btn-position">
             <td>${index + 1}</td>
             <td>${artist.name}</td>
             <td>
+              <!-- knop om de artiest te bewerken -->
               <a class="btn" href="/cms/artists/edit/${artist._id}">Artiest wijzigen</a>
 
+              <!-- formulier om de artiest te verwijderen -->
               <form action="/cms/artists/delete/${artist._id}" method="POST" style="display:inline;">
                 <button
                   class="btn"
@@ -101,6 +113,7 @@
           </tr>
         `).join("");
       } catch (error) {
+        // als er iets mis gaat laat een foutmelding zien in de console
         console.error("Fout bij live zoeken:", error);
       }
     });
