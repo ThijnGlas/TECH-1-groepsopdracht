@@ -90,7 +90,6 @@ export default function artistsRoutes(db) {
   // open de bewerkpagina van een artiest
   router.get("/edit/:id", async (req, res) => {
     try {
-      const artistId = req.params.id;
 
       // zoek de artiest op via zijn id
       const artist = await db.collection("artists").findOne({
