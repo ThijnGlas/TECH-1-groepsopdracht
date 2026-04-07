@@ -1,9 +1,15 @@
+// express is waarmee we de server maken
 import express from "express";
+// multer gebruiken we om foto's te kunnen uploaden
 import multer from "multer";
+// path gebruiken we om de bestandsnamen van de foto te kunnen lezen (bv. .jpg of .png)
 import path from "path";
+// ObjectId hebben we nodig om een artiest op te zoeken via zijn id in de database
 import { ObjectId } from "mongodb";
 
+// deze functie maakt alle routes voor artiesten aan en krijgt de database mee
 export default function artistsRoutes(db) {
+  // router is een kleine express waarmee we routes kunnen maken
   const router = express.Router();
 
   // controleren of de gebruiker is ingelogd, zo niet stuur hem dan door naar de loginpagina
@@ -26,10 +32,11 @@ export default function artistsRoutes(db) {
     },
   });
 
+  // multer gebruikt de instellingen hierboven
   const upload = multer({ storage });
 
-  // alle artiesten ophalen en weergeven, alfabetisch gesorteerd
-  router.get("/", checkAuth, async (req, res) => {
+  // haal alle artiesten op uit de database en laat de pagina zien
+  router.get("/", async (req, res) => {
     try {
       const search = req.query.search || "";
       const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
@@ -44,7 +51,7 @@ export default function artistsRoutes(db) {
   router.get("/search/ajax", checkAuth, async (req, res) => {
     const search = req.query.search || "";
     try {
-      // zoeken op naam van de artiest, hoofdletterongevoelig
+      // zoek artiesten waarvan de naam overeenkomt met wat er is ingetypt
       const artists = await db.collection("artists").find({
         name: { $regex: search, $options: "i" }
       }).sort({ name: 1 }).toArray();
@@ -55,23 +62,24 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // artiest aanmaken, upload.single pakt één foto uit het formulier
-  router.post("/create", checkAuth, upload.single("photo"), async (req, res) => {
+  // sla een nieuwe artiest op in de database met naam en foto
+  router.post("/create", upload.single("photo"), async (req, res) => {
     try {
       const { name } = req.body;
 
-      // naam en foto zijn beide verplicht
+      // controleer of naam en foto zijn ingevuld
       if (!name || !req.file) {
         return res.status(400).send("Naam en foto zijn verplicht");
       }
 
-      // artiest opslaan in de database
+      // zet de artiest in de database
       await db.collection("artists").insertOne({
         name,
         photoPath: "/uploads/artists/" + req.file.filename,
         createdAt: new Date(),
       });
 
+      // ga terug naar de artiesten pagina
       res.redirect("/cms/artists");
     } catch (err) {
       console.error("Fout bij aanmaken artiest:", err);
@@ -79,15 +87,17 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // edit formulier ophalen voor de gekozen artiest
-  router.get("/edit/:id", checkAuth, async (req, res) => {
+  // open de bewerkpagina van een artiest
+  router.get("/edit/:id", async (req, res) => {
     try {
-      // artiest zoeken op id
+      const artistId = req.params.id;
+
+      // zoek de artiest op via zijn id
       const artist = await db.collection("artists").findOne({
         _id: new ObjectId(req.params.id),
       });
 
-      // check om te zien of de artiest bestaat, zo niet stuurt hij je een 404 error
+      // als de artiest niet bestaat geef een foutmelding
       if (!artist) {
         return res.status(404).send("Artiest niet gevonden");
       }
@@ -110,6 +120,7 @@ export default function artistsRoutes(db) {
         return res.status(400).send("Naam is verplicht");
       }
 
+      // begin met alleen de naam te updaten
       const updateFields = { name };
 
       // foto alleen updaten als er een nieuwe geüpload is

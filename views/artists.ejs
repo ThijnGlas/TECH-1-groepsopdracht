@@ -18,14 +18,27 @@
         <h2>COMPLETE ARTISTS</h2>
         <p class="a-tot-z">(A-Z)</p>
         <p class="artists">
+          <!-- loop door alle artiesten die uit de database komen -->
           <% artists.forEach((artist, index) => { %>
+
+            <!-- bereken de positie van de artiest in de rij -->
             <% const positionInRow = index % 5; %>
+
+            <!-- elke tweede artiest in een rij krijgt de kleur rood -->
             <% const isRed = positionInRow % 2 === 1; %>
+
+            <!-- controleer of dit de laatste artiest in een rij is -->
             <% const isLastInRow = (index + 1) % 5 === 0; %>
+
+            <!-- controleer of dit de allerlaatste artiest is -->
             <% const isLast = index === artists.length - 1; %>
+
+            <!-- laat de naam van de artiest zien, sla het fotopad op als data-photo -->
             <span class="artist-name <%= isRed ? 'red' : '' %>" data-photo="<%= artist.photoPath %>">
               <%= artist.name %>
             </span>
+
+            <!-- zet een punt tussen artiesten of een enters aan het einde van een rij -->
             <% if (!isLast) { %>
               <% if (isLastInRow) { %><br><% } else { %> · <% } %>
             <% } %>
@@ -34,28 +47,42 @@
       </article>
     </section>
   </main>
+
   <%- include('partials/footer') %>
 
   <script>
+    // pak de hover foto en alle artistnamen op uit de pagina
     const hoverImg = document.querySelector("#artist-hover-img");
     const artistNames = document.querySelectorAll(".artist-name");
 
+    // huidige positie van de muis
     let muisX = 0;
     let muisY = 0;
+
+    // huidige positie van de foto
     let hoverX = 0;
     let hoverY = 0;
+
+    // timers om de foto met een kleine vertraging te verbergen
     let verbergTimeout = null;
     let verbergDisplayTimeout = null;
 
+    // voeg hover events toe aan elke artiest naam
     artistNames.forEach(function(name) {
+
+      // als de muis over een naam gaat
       name.addEventListener("mouseenter", function() {
+        // annuleer het verbergen als de muis snel terugkomt
         clearTimeout(verbergTimeout);
         clearTimeout(verbergDisplayTimeout);
+
+        // zet de foto van deze artiest en maak hem zichtbaar
         hoverImg.src = name.dataset.photo;
         hoverImg.style.display = "block";
         hoverImg.classList.add("zichtbaar");
         name.classList.add("hovered");
 
+        // zet alle andere namen naar achteren
         artistNames.forEach(function(other) {
           if (other !== name) {
             other.style.zIndex = "0";
@@ -63,15 +90,20 @@
         });
       });
 
+      // als de muis de naam verlaat
       name.addEventListener("mouseleave", function() {
         name.classList.remove("hovered");
 
+        // zet de zindex van alle namen terug naar normaal
         artistNames.forEach(function(other) {
           other.style.zIndex = "";
         });
 
+        // verberg de foto na een kleine vertraging
         verbergTimeout = setTimeout(function() {
           hoverImg.classList.remove("zichtbaar");
+
+          // verwijder de foto volledig na de fade out animatie
           verbergDisplayTimeout = setTimeout(function() {
             hoverImg.style.display = "none";
             hoverImg.src = "";
@@ -80,19 +112,25 @@
       });
     });
 
+    // houd de positie van de muis bij
     document.addEventListener("mousemove", function(e) {
       muisX = e.clientX;
       muisY = e.clientY;
     });
 
+    // beweeg de foto vloeiend mee met de muis
     function beweegFoto() {
+      // de foto beweegt langzaam naar de muis toe met 0.08 als snelheid
       hoverX = hoverX + (muisX - hoverX) * 0.08;
       hoverY = hoverY + (muisY - hoverY) * 0.08;
       hoverImg.style.left = hoverX + "px";
       hoverImg.style.top = hoverY + "px";
+
+      // roep deze functie opnieuw aan zodat de foto blijft bewegen
       requestAnimationFrame(beweegFoto);
     }
 
+    // start de animatie
     beweegFoto();
   </script>
 </body>
