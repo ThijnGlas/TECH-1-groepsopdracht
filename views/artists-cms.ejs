@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,21 +11,16 @@
 <body>
   <%- include('partials/header-cms') %>
 
-  <div class="dashboard-wrapper">
-    <div class="content-wrapper">
-      <div>
-        <div class="top">
-          <h1>Artiesten</h1>
+    <div class="dashboard-wrapper">
+      <div class="content-wrapper">
+        <div>
+          <div class="top">
+            <h1>Artiesten</h1>
 
-          <input
-            id="artist-search"
-            type="text"
-            placeholder="Artiest zoeken"
-            value="<%= search || '' %>"
-          />
+            <input id="artist-search" type="text" placeholder="Artiest zoeken" value="<%= search || '' %>" />
 
-          <a class="btn" href="/cms/createartist">Artiest aanmaken</a>
-        </div>
+            <a class="btn" href="/cms/createartist">Artiest aanmaken</a>
+          </div>
 
         <table>
           <tbody id="artists-table-body">
@@ -61,10 +57,9 @@
           </tbody>
         </table>
       </div>
-    </div>
 
-    <%- include('partials/sidebar-cms') %>
-  </div>
+      <%- include('partials/sidebar-cms') %>
+    </div>
 
   <script>
     // pak de zoekbalk en de tabel op uit de pagina
@@ -87,8 +82,8 @@
               <td colspan="3">Geen artiesten gevonden.</td>
             </tr>
           `;
-          return;
-        }
+            return;
+          }
 
         // vul de tabel met de gevonden artiesten
         tableBody.innerHTML = artists.map((artist, index) => `
@@ -119,4 +114,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -12,12 +12,20 @@ export default function artistsRoutes(db) {
   // router is een kleine express waarmee we routes kunnen maken
   const router = express.Router();
 
-// sla de foto op in de map public/uploads/artists
+  // controleren of de gebruiker is ingelogd, zo niet stuur hem dan door naar de loginpagina
+  function checkAuth(req, res, next) {
+    if (!req.session.userId) {
+      return res.redirect("/cms/login");
+    }
+    next();
+  }
+
+  // multer instellen om geüploade foto's op te slaan in de artists map
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "public/uploads/artists/");
     },
-    // geef de foto een unieke naam zodat ze elkaar niet overschrijven
+    // unieke bestandsnaam aanmaken zodat bestanden elkaar niet overschrijven
     filename: (req, file, cb) => {
       const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
       cb(null, unique + path.extname(file.originalname));
@@ -32,26 +40,21 @@ export default function artistsRoutes(db) {
     try {
       const search = req.query.search || "";
       const artists = await db.collection("artists").find().sort({ name: 1 }).toArray();
-
-      res.render("artists-cms", {
-        artists,
-        search
-      });
+      res.render("artists-cms", { artists, search });
     } catch (err) {
+      console.error("Fout bij ophalen artiesten:", err);
       res.status(500).send("Fout bij ophalen artiesten");
     }
   });
 
-  // zoek artiesten op naam, wordt gebruikt voor de zoekbalk
-  router.get("/search/ajax", async (req, res) => {
+  // ajax route voor de zoekfunctie, geeft resultaten terug als json
+  router.get("/search/ajax", checkAuth, async (req, res) => {
     const search = req.query.search || "";
-
     try {
       // zoek artiesten waarvan de naam overeenkomt met wat er is ingetypt
       const artists = await db.collection("artists").find({
         name: { $regex: search, $options: "i" }
       }).sort({ name: 1 }).toArray();
-
       res.json(artists);
     } catch (err) {
       console.error("Fout bij zoeken artiesten:", err);
@@ -79,6 +82,7 @@ export default function artistsRoutes(db) {
       // ga terug naar de artiesten pagina
       res.redirect("/cms/artists");
     } catch (err) {
+      console.error("Fout bij aanmaken artiest:", err);
       res.status(500).send("Fout bij aanmaken artiest");
     }
   });
@@ -90,7 +94,7 @@ export default function artistsRoutes(db) {
 
       // zoek de artiest op via zijn id
       const artist = await db.collection("artists").findOne({
-        _id: new ObjectId(artistId)
+        _id: new ObjectId(req.params.id),
       });
 
       // als de artiest niet bestaat geef een foutmelding
@@ -98,6 +102,7 @@ export default function artistsRoutes(db) {
         return res.status(404).send("Artiest niet gevonden");
       }
 
+      // formulier invullen met de bestaande gegevens van de artiest
       res.render("editArtist-cms", { artist });
     } catch (err) {
       console.error("Fout bij openen artiest:", err);
@@ -105,12 +110,12 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // sla de wijzigingen op van een artiest
-  router.post("/edit/:id", upload.single("photo"), async (req, res) => {
+  // artiest updaten, pakt de nieuwe gegevens uit het formulier
+  router.post("/edit/:id", checkAuth, upload.single("photo"), async (req, res) => {
     try {
-      const artistId = req.params.id;
       const { name } = req.body;
 
+      // naam is verplicht
       if (!name) {
         return res.status(400).send("Naam is verplicht");
       }
@@ -118,14 +123,15 @@ export default function artistsRoutes(db) {
       // begin met alleen de naam te updaten
       const updateFields = { name };
 
-      // als er een nieuwe foto is geüpload, ook de foto updaten
+      // foto alleen updaten als er een nieuwe geüpload is
+      // anders houden we de oude foto
       if (req.file) {
         updateFields.photoPath = "/uploads/artists/" + req.file.filename;
       }
 
-      // sla de wijzigingen op in de database
+      // artiest updaten in de database met $set, zodat alleen de gewijzigde velden worden aangepast
       await db.collection("artists").updateOne(
-        { _id: new ObjectId(artistId) },
+        { _id: new ObjectId(req.params.id) },
         { $set: updateFields }
       );
 
@@ -136,12 +142,12 @@ export default function artistsRoutes(db) {
     }
   });
 
-  // verwijder een artiest uit de database
-  router.post("/delete/:id", async (req, res) => {
+  // artiest verwijderen op basis van id
+  router.post("/delete/:id", checkAuth, async (req, res) => {
     try {
       const artistId = req.params.id;
 
-      // zoek de artiest op via zijn id en verwijder hem
+      // artiest verwijderen uit de database
       await db.collection("artists").deleteOne({ _id: new ObjectId(artistId) });
       res.redirect("/cms/artists");
     } catch (err) {

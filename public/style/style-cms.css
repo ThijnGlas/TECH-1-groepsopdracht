@@ -127,8 +127,8 @@ header{
     top: 0;
     right: 0;
     height: 100vh;
-    width: 350px;            /* pas breedte naar wens aan */
-    padding: 180px 20px 20px 20px; /* bovenpadding = headerhoogte zodat inhoud niet onder header begint */
+    width: 350px;           
+    padding: 180px 20px 20px 20px; 
     box-shadow: -6px 0 18px rgba(16,24,40,0.06);
     display: flex;
     flex-direction: column;
@@ -262,19 +262,19 @@ button{
   transition: all 0.2s ease;
 }
 
-/* placeholder */
+
 #location-search,#artist-search, #event-search::placeholder {
   color: #777;
 }
 
-/* focus effect */
-#location-search,#artist-search,#event-search:focus {
+
+#location-search:focus ,#artist-search:focus ,#event-search:focus {
   border-color: var(--cendo-red);
   outline: none;
 }
 
-/* hover effect */
-#location-search,#artist-search,#event-search:hover {
+
+#location-search:hover,#artist-search:hover,#event-search:hover {
   border-color: var(--cendo-red);
 }
 
