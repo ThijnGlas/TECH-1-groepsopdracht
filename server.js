@@ -7,6 +7,7 @@ import { MongoClient } from "mongodb";
 import authRoutes from "./routes/auth.js"; // login routes
 import usersRoutes from "./routes/users.js"; // je bestaande users router
 import eventsRoutes from "./routes/events.js";
+import preregisterRoutes from "./routes/preregister.js"; // ✅ toegevoegd
 import publicEventsRoutes from "./routes/events-public.js";
 import locationsRoutes from "./routes/locations.js";
 import artistsRoutes from "./routes/artists.js";
@@ -113,35 +114,9 @@ async function start() {
 
     const db = client.db("CENDO");
 
-    // PRE-REGISTER ROUTE TOEGEVOEGD
-    app.post("/pre-register", async (req, res) => {
-      try {
-        let { email } = req.body;
-
-        email = email.trim().toLowerCase();
-
-        // check of email al bestaat
-        const existing = await db.collection("preregister").findOne({ email });
-
-        if (existing) {
-          return res.send("Je bent al geregistreerd!");
-        }
-
-        // opslaan in jouw collection
-        await db.collection("preregister").insertOne({
-          email,
-          createdAt: new Date(),
-        });
-
-        return res.redirect("/pre-register");
-      } catch (err) {
-        console.error(err);
-        res.send("Er ging iets mis");
-      }
-    });
-
     app.use("/event", publicEventsRoutes(db));
     app.use("/events", publicEventsRoutes(db));
+    app.use("/pre-register", preregisterRoutes(db));
 
     app.use("/cms", authRoutes(db));
     app.use("/cms/events", eventsRoutes(db));

@@ -5,7 +5,7 @@ export default function locationsRoutes(db) {
   const router = express.Router();
 
   // -------------------------------------------------------
-  // 🔐 Middleware (AUTH)
+  // Middleware (AUTH)
   // -------------------------------------------------------
   function checkAuth(req, res, next) {
     if (!req.session.userId) {
@@ -14,7 +14,7 @@ export default function locationsRoutes(db) {
     next();
   }
 
-  // 👉 ALLES beveiligen
+  // ALLES beveiligen
   router.use(checkAuth);
 
   // -------------------------------------------------------

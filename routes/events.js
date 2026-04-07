@@ -6,7 +6,7 @@ export default function eventsRoutes(db) {
   const router = express.Router();
 
   // -------------------------------------------------------
-  // 🔐 Middleware (AUTH)
+  // Middleware (AUTH)
   // -------------------------------------------------------
   function checkAuth(req, res, next) {
     if (!req.session.userId) {
@@ -15,7 +15,7 @@ export default function eventsRoutes(db) {
     next();
   }
 
-  // 👉 ALLES hieronder is beschermd
+  // ALLES hieronder is beschermd
   router.use(checkAuth);
 
   // -------------------------------------------------------

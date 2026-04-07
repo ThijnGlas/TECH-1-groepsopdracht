@@ -46,7 +46,7 @@ export default function usersRoutes(db) {
 
   // --- GET edit user form ---
   router.get("/edit/:id", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
+    // checkAuth toegevoegd
     try {
       const userId = req.params.id;
       const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
@@ -67,12 +67,12 @@ export default function usersRoutes(db) {
 
   // --- READ all users ---
   router.get("/", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
+    // checkAuth toegevoegd
     try {
       const users = await usersCollection.find().toArray();
       res.render("users-cms", {
         users,
-        search: "", // <— DIT IS WAT JE MIST
+        search: "", //
       });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
@@ -108,7 +108,7 @@ export default function usersRoutes(db) {
 
   // --- UPDATE existing user ---
   router.post("/edit/:id", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
+    // checkAuth toegevoegd
     try {
       const userId = req.params.id;
       const { username, email, password } = req.body;
@@ -137,7 +137,7 @@ export default function usersRoutes(db) {
 
   // --- DELETE user ---
   router.post("/delete/:id", checkAuth, async (req, res) => {
-    // ✅ checkAuth toegevoegd
+    // checkAuth toegevoegd
     try {
       const userId = req.params.id;
       await usersCollection.deleteOne({ _id: new ObjectId(userId) });
