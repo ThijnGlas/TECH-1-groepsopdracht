@@ -90,7 +90,6 @@ export default function locationsRoutes(db) {
   // edit formulier ophalen voor de gekozen locatie
   router.get("/edit/:id", checkAuth, async (req, res) => {
     try {
-
       // locatie zoeken op id
       const location = await db.collection("locations").findOne({
         _id: new ObjectId(req.params.id),
@@ -144,7 +143,6 @@ export default function locationsRoutes(db) {
   // locatie verwijderen op basis van id
   router.post("/delete/:id", checkAuth, async (req, res) => {
     try {
-
       // locatie verwijderen uit de database
       await db.collection("locations").deleteOne({
         _id: new ObjectId(req.params.id),

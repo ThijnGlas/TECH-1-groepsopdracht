@@ -9,6 +9,7 @@ import { MongoClient } from "mongodb";
 import authRoutes from "./routes/auth.js";
 import usersRoutes from "./routes/users.js";
 import eventsRoutes from "./routes/events.js";
+import preregisterRoutes from "./routes/preregister.js"; // ✅ toegevoegd
 import publicEventsRoutes from "./routes/events-public.js";
 import locationsRoutes from "./routes/locations.js";
 import artistsRoutes from "./routes/artists.js";
@@ -50,7 +51,7 @@ app.use(
 // EJS instellen als view engine zodat je .ejs bestanden kan renderen
 app.set("view engine", "ejs");
 
-// Algemene pagina routes 
+// Algemene pagina routes
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -66,7 +67,11 @@ app.get("/huisregels", (req, res) => {
 // artiesten ophalen uit de database en alfabetisch sorteren
 app.get("/artists", async (req, res) => {
   const db = client.db("CENDO");
-  const artists = await db.collection("artists").find({}).sort({ name: 1 }).toArray();
+  const artists = await db
+    .collection("artists")
+    .find({})
+    .sort({ name: 1 })
+    .toArray();
   res.render("artists", { artists });
 });
 
@@ -108,7 +113,7 @@ app.get("/cms/createevent", async (req, res) => {
   res.render("createevent-cms", {
     editMode: false,
     event: null,
-    locations
+    locations,
   });
 });
 
@@ -134,9 +139,10 @@ async function start() {
 
     const db = client.db("CENDO");
 
-    // routes koppelen aan de juiste paden
     app.use("/event", publicEventsRoutes(db));
     app.use("/events", publicEventsRoutes(db));
+    app.use("/pre-register", preregisterRoutes(db));
+
     app.use("/cms", authRoutes(db));
     app.use("/cms/events", eventsRoutes(db));
     app.use("/cms/users", usersRoutes(db));

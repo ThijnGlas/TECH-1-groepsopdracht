@@ -18,7 +18,6 @@ export default function usersRoutes(db) {
 
   // gebruiker aanmaken, pakt de gegevens uit het formulier
   router.post("/create", checkAuth, async (req, res) => {
-    
     try {
       const { username, email, password } = req.body;
 
@@ -38,7 +37,7 @@ export default function usersRoutes(db) {
         role: "admin",
         createdAt: new Date(),
       };
-    
+
       // gebruiker opslaan in de database
       await usersCollection.insertOne(newUser);
 
@@ -56,7 +55,7 @@ export default function usersRoutes(db) {
       const users = await usersCollection.find().toArray();
       res.render("users-cms", {
         users,
-        search: "" // lege string meegeven zodat de zoekbalk geen error geeft
+        search: "", // lege string meegeven zodat de zoekbalk geen error geeft
       });
     } catch (err) {
       console.error("Fout bij ophalen users:", err);
@@ -64,25 +63,24 @@ export default function usersRoutes(db) {
     }
   });
 
-
   // ajax route voor de zoekfunctie, geeft resultaten terug als json
   router.get("/search/ajax", async (req, res) => {
-  try {
-    const search = req.query.search || "";
+    try {
+      const search = req.query.search || "";
 
-    // als er niks ingevuld is, alle gebruikers teruggeven
-    let query = {};
+      // als er niks ingevuld is, alle gebruikers teruggeven
+      let query = {};
 
-    // zoeken in username, email en role tegelijk
-    if (search) {
-      query = {
-        $or: [
-          { username: { $regex: search, $options: "i" } },
-          { email: { $regex: search, $options: "i" } },
-          { role: { $regex: search, $options: "i" } }
-        ]
-      };
-    }
+      // zoeken in username, email en role tegelijk
+      if (search) {
+        query = {
+          $or: [
+            { username: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } },
+            { role: { $regex: search, $options: "i" } },
+          ],
+        };
+      }
 
       const users = await db.collection("users").find(query).toArray();
       res.json(users);
@@ -92,13 +90,11 @@ export default function usersRoutes(db) {
     }
   });
 
-
   // edit formulier ophalen voor de gekozen gebruiker
   router.get("/edit/:id", checkAuth, async (req, res) => {
-
     try {
       const userId = req.params.id;
-      
+
       // gebruiker zoeken op id
       const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
 
@@ -158,7 +154,7 @@ export default function usersRoutes(db) {
 
       // verwijder de gebruiker uit de database
       await usersCollection.deleteOne({ _id: new ObjectId(userId) });
-      
+
       // na het verwijderen terug naar de gebruikerslijst sturen
       res.redirect("/cms/users");
     } catch (err) {

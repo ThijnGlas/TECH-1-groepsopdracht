@@ -21,7 +21,7 @@ export default function eventsRoutes(db) {
     res.render("createevent-cms", {
       editMode: false,
       event: null,
-      locations
+      locations,
     });
   });
 
@@ -58,8 +58,12 @@ export default function eventsRoutes(db) {
           status: status || "concept", // als er geen status is, concept als standaard gebruiken
           createdAt: new Date(),
           // afbeelding opslaan als die geüpload is, anders null
-          imageSmall: req.files.imageSmall ? req.files.imageSmall[0].filename : null,
-          imageLarge: req.files.imageLarge ? req.files.imageLarge[0].filename : null
+          imageSmall: req.files.imageSmall
+            ? req.files.imageSmall[0].filename
+            : null,
+          imageLarge: req.files.imageLarge
+            ? req.files.imageLarge[0].filename
+            : null,
         };
 
         // event opslaan in de database
@@ -78,7 +82,7 @@ export default function eventsRoutes(db) {
   router.get("/edit/:id", checkAuth, async (req, res) => {
     // event ophalen uit de database op basis van het id in de url
     const event = await db.collection("events").findOne({
-      _id: new ObjectId(req.params.id)
+      _id: new ObjectId(req.params.id),
     });
 
     // locaties ophalen zodat je die kan kiezen in het formulier
@@ -88,7 +92,7 @@ export default function eventsRoutes(db) {
     res.render("createevent-cms", {
       editMode: true,
       event,
-      locations
+      locations,
     });
   });
 
@@ -135,10 +139,12 @@ export default function eventsRoutes(db) {
         }
 
         // event updaten in de database met $set, zodat alleen de gewijzigde velden worden aangepast
-        await db.collection("events").updateOne(
-          { _id: new ObjectId(req.params.id) },
-          { $set: updateData }
-        );
+        await db
+          .collection("events")
+          .updateOne(
+            { _id: new ObjectId(req.params.id) },
+            { $set: updateData },
+          );
 
         // na het updaten van het event, terug naar de events pagina
         res.redirect("/cms/events");
@@ -148,8 +154,6 @@ export default function eventsRoutes(db) {
       }
     },
   );
-
-
 
   // AJAX SEARCH EVENTS gemaakt door Tin Phan ;D
   router.get("/search/ajax", async (req, res) => {
@@ -165,29 +169,32 @@ export default function eventsRoutes(db) {
       if (search) {
         matchStage = {
           // Zoekt gedeeltelijk op titel, zonder onderscheid tussen hoofdletters en kleine letters
-          title: { $regex: search, $options: "i" } 
+          title: { $regex: search, $options: "i" },
         };
       }
 
       // We gebruiken aggregate omdat we niet alleen de events willen ophalen,
       // maar ook extra locatiegegevens uit de locations-collectie willen koppelen.
       // Met deze pipeline kunnen we dus een soort join doen en daarna het resultaat filteren.
-      const events = await db.collection("events").aggregate([
-        // zoekfilter toepassen
-        { $match: matchStage },
-        {
-          // locatie koppelen aan het event via het location id
-          $lookup: {
-            from: "locations",  
-            localField: "location",
-            foreignField: "_id",
-            as: "locationData"
-          }
-        },
-        // locationData is een array, unwind maakt er een object van,
-        // dit doen we omdat het dan makkelijker en netter is om mee te werken
-        { $unwind: "$locationData" },
-      ]).toArray(); 
+      const events = await db
+        .collection("events")
+        .aggregate([
+          // zoekfilter toepassen
+          { $match: matchStage },
+          {
+            // locatie koppelen aan het event via het location id
+            $lookup: {
+              from: "locations",
+              localField: "location",
+              foreignField: "_id",
+              as: "locationData",
+            },
+          },
+          // locationData is een array, unwind maakt er een object van,
+          // dit doen we omdat het dan makkelijker en netter is om mee te werken
+          { $unwind: "$locationData" },
+        ])
+        .toArray();
 
       // resultaten terugsturen als json
       res.json(events);
@@ -207,23 +214,26 @@ export default function eventsRoutes(db) {
 
       if (search) {
         matchStage = {
-          title: { $regex: search, $options: "i" }
+          title: { $regex: search, $options: "i" },
         };
       }
 
       // zelfde aggregate als bij de zoekroute
-      const events = await db.collection("events").aggregate([
-        {
-          $lookup: {
-            from: "locations",
-            localField: "location",
-            foreignField: "_id",
-            as: "locationData"
-          }
-        },
-        { $unwind: "$locationData" },
-        { $match: matchStage }
-      ]).toArray();
+      const events = await db
+        .collection("events")
+        .aggregate([
+          {
+            $lookup: {
+              from: "locations",
+              localField: "location",
+              foreignField: "_id",
+              as: "locationData",
+            },
+          },
+          { $unwind: "$locationData" },
+          { $match: matchStage },
+        ])
+        .toArray();
 
       // events en de zoekterm meegeven aan de view
       res.render("events-cms", { events, search });
@@ -237,9 +247,9 @@ export default function eventsRoutes(db) {
   router.post("/delete/:id", checkAuth, async (req, res) => {
     try {
       await db.collection("events").deleteOne({
-        _id: new ObjectId(req.params.id)
+        _id: new ObjectId(req.params.id),
       });
-  
+
       res.redirect("/cms/events");
     } catch (err) {
       console.error("Fout bij verwijderen event:", err);
